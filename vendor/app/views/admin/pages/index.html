@@ -1,0 +1,74 @@
+{% extends 'wrap.html' %}
+
+{% block title %}{{ "Pages"|t }}{% endblock %}
+
+{#
+{% block container_title_actions %}
+{% endblock %}
+#}
+
+
+{% block rail %}
+
+	{{ parent() }}
+	
+	<h3>{{ "Languages"|t }}</h3>
+	<ul>
+		<li><a href="#">{{ "Slovak"|t }}</a></li>
+		<li><a href="#">{{ "English"|t }}</a></li>
+		<li><a href="#">{{ "German"|t }}</a></li>
+	</ul>
+
+	<h3>{{ "States"|t }}</h3>
+	<ul>
+		<li><a href="#">{{ "Active"|t }}</a></li>
+		<li><a href="#">{{ "Hidden"|t }}</a></li>
+	</ul>
+
+{% endblock %}
+
+{% block content %}
+
+	<p>
+		<a href="{{ link.to(":create") }}">{{ "Create new"|t }} &rarr;</a>
+	</p>
+
+	<table>
+
+		<thead>
+			<tr>
+				<th width="100%">{{ "Name"|t }}</th>
+				<th width="1" class="nowrap ar">{{ "State"|t }}</th>
+				<th width="1" class="nowrap ac sel">&uarr;</th>
+				<th width="1" class="nowrap ar">{{ "Last Update"|t }}</th>
+				<th width="1">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+			{% for _language in languages %}
+			
+				<tr>
+					<th>{{ _language.country.language }}</th>
+					<th colspan="4">&nbsp;</th>
+				</tr>
+				{% if (data[_language.id]) %}
+					{% include link.partial("list") with {"data": data[_language.id], "level": 0} %}
+				{% else %}
+				<tr>
+					<td><em>{{ "No items found..."|t }}</em></td>
+				</tr>
+				{% endif %}
+			
+			{% endfor %}
+			
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="6">&nbsp;</td>
+			</tr>
+		</tfoot>
+
+	</table>
+	
+{% endblock %}

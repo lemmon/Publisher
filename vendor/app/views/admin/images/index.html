@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+
+	<meta http-equiv="Content-language" content="sk">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>{% block header %}{{ "Danube4u" }}{% endblock %} | {% block title %}{{ "Home"|t }}{% endblock %}</title>
+
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Jakub Pelák">
+	<meta name="robots" content="noindex, nofollow">
+
+	{#
+	<link rel="stylesheet" href="{{ link.public("css/admin.css?" ~ "Today"|tTime("Ymd")) }}" type="text/css" media="screen" charset="utf-8">
+	#}
+	
+	<style type="text/css" media="screen">
+	.image { float:left; width:88px; height:88px; overflow:hidden; margin:0 1px 1px 0; }
+	.image img { cursor:move; opacity:0; }
+	.clear { clear:both; height:1em; }
+	{% for item in data %}
+	.image-{{ item.id }} { background:url({{ link.uploadURL ~ "088x88/" ~ item.image }}); }
+	{% endfor %}
+	</style>
+	
+</head>
+
+<body>
+
+	<form method="post" action="{{ link.to(":create") }}" enctype="multipart/form-data">
+	
+		{% import "_forms.html" as forms %}
+		{#
+		<label class="label">{{ "Image"|t }}<br></label>
+		#}
+		{{ forms.file("image") }}
+		<button type="submit">&rarr;</button>
+		<div class="clear"></div>
+		
+		{% for item in data %}
+		<div class="image image-{{ item.id }}"><img src="{{ link.uploadURL ~ "0780x780m/" ~ item.image }}" alt=""></div>
+		{% endfor %}
+		<div class="clear"></div>
+	
+	</form>
+	
+</body>
+</html>

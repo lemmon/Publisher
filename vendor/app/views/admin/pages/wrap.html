@@ -1,0 +1,11 @@
+{% extends 'admin/layout.html' %}
+
+{% block rail %}
+
+	<h3>{{ "Pages"|t }}</h3>
+	<ul>
+		<li {% if (not link.param(3)) %}class="active"{% endif %}><a href="{{ link.to(':section') }}">{{ "Browse All"|t }}</a></li>
+		<li {% if (link.param(3)=='create') %}class="active"{% endif %}><a href="{{ link.to(':create') }}">{{ "Create New"|t }}</a></li>
+	</ul>
+	
+{% endblock %}

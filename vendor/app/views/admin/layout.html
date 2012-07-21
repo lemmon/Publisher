@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>{% block header %}Le Publisher{% endblock %} | {% block title %}{{ "Home"|t }}{% endblock %}</title>
+
+	<meta name="description" content="">
+
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Jakub Pelák">
+	<meta name="robots" content="index, follow">
+
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" type="text/css" href="{{ link.vendor('admin/css/master.css') }}">
+</head>
+<body>
+	
+	
+	<header>
+		
+		<h1><a href="{{ link.to("admin") }}">{{ block("header") }}</a></h1>
+		
+		{% if (user) %}
+		<nav>
+			<ul>
+				<li {% if (not link.param(2)) %}class="active"{% endif %}><a href="{{ link.to("admin") }}">{{ "Dashboard"|t }}</a></li>
+				<li {% if (link.param(2)=='pages') %}class="active"{% endif %}><a href="{{ link.to("admin/pages") }}">{{ "Pages"|t }}</a></li>
+				{% if (_admin.is_admin) %}
+				<li {% if (link.param(2)=='users') %}class="active"{% endif %}><a href="{{ link.to("admin/users") }}">{{ "Users"|t }}</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+		{% endif %}
+		
+	</header>
+	
+	{% include 'admin/_notices.html' %}
+	
+	<div id="container">
+	{% block container %}
+	
+		<section id="rail">
+
+			{% block rail %}{% endblock %}
+			
+		</section>
+		<section id="content">
+
+			<h2>{{ block("title") }}</h2>
+
+			{% block content %}{% endblock %}
+
+		</section>
+
+	{% endblock %}
+	</div>
+	
+	<footer>
+
+		<p>
+			&copy; Copyright {{ 'Today'|tDate('Y') }} <a href="http://www.4am.sk/">4AM</a>
+		</p>
+
+	</footer>
+	
+</body>
+</html>

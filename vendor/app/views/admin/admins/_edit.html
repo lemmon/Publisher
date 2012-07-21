@@ -1,0 +1,45 @@
+{% import "_forms.html" as forms %}
+
+<div class="body left">
+
+	<label class="label" for="f_name">{{ "Name"|t }} <span class="required">({{ "required"|t }})</span><br></label>
+	<fieldset>
+
+		<p class="fit {{ flash.error.name ? "error" : "" }}">
+			{{ forms.input("name", f.name) }}
+		</p>
+
+	</fieldset>
+
+	<label class="label" for="f_email">{{ "Email"|t }} <span class="required">({{ "required"|t }})</span><br></label>
+	<fieldset>
+
+		<p class="fit {{ flash.error.email ? "error" : "" }}">
+			{{ forms.input("email", f.email) }}
+		</p>
+
+	</fieldset>
+
+	<label class="label" for="f_password">{{ "Password"|t }} <span class="required">({{ "required"|t }})</span><br></label>
+	<fieldset>
+
+		<p class="fit {{ flash.error.password ? "error" : "" }}">
+			{{ forms.input("password") }}
+		</p>
+
+	</fieldset>
+
+</div>
+<div class="rail right">
+
+	<label class="label" for="f_is_admin">{{ "Admin"|t }} <span class="required">({{ "required"|t }})</span><br></label>
+	<fieldset>
+
+		<p class="{{ flash.error.parent ? "error" : "" }}">
+			<label>{{ forms.checkbox("is_admin", f.is_admin) }} {{ "Check if this user has administrator access"|t }}</label>
+		</p>
+		
+	</fieldset>
+
+</div>
+<div class="clear"></div>

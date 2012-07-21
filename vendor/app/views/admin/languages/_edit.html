@@ -1,0 +1,37 @@
+{% import "_forms.html" as forms %}
+
+<div class="body left">
+
+	<label class="label" for="f_country_id">{{ "Country"|t }} <span class="required">({{ "required"|t }})</span><br></label>
+	<fieldset>
+
+		<p class="fit {{ flash.error.country_id ? "error" : "" }}">
+			{{ forms.select("country_id", f.country_id, languages_collection) }}
+		</p>
+
+	</fieldset>
+
+</div>
+<div class="rail right">
+
+	<label class="label" for="f_default">{{ "Default"|t }} <span class="optional">({{ "optional"|t }})</span><br></label>
+	<fieldset>
+
+		<p class="ln1 {{ flash.error.default ? "error" : "" }}">
+			<label>{{ forms.checkbox("default", f.default) }} {{ "This language is a default one"|t }}</label>
+		</p>
+		
+	</fieldset>
+
+	<label class="label" for="f_state_id">{{ "State"|t }} <span class="required">({{ "required"|t }})</span><br></label>
+	<fieldset>
+
+		<p class="fit">
+			{{ forms.radio_collection("state_id", f|hasKey("state_id"), item.getCollectionFor("state"), " ") }}
+		</p>
+		
+	</fieldset>
+
+</div>
+<div class="clear"></div>
+

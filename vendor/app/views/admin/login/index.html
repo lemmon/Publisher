@@ -1,0 +1,29 @@
+{% extends 'admin/layout.html' %}
+
+{% block title %}{{ "Account Login"|t }}{% endblock %}
+
+{% block container %}
+<section class="modal">
+	
+	<h2>{{ block("title") }}</h2>
+	
+	<form method="post" action="{{ link.self.includeQuery }}">
+		
+		<fieldset>
+			<p class="fit">
+				<label class="label" for="f_email">{{ "Email"|t }}<br></label>
+				<input type="text" id="f_email" name="email" value="{{ f.email }}">
+			</p>
+			<p class="fit">
+				<label class="label" for="f_password">{{ "Password"|t }}<br></label>
+				<input type="password" id="f_password" name="password">
+			</p>
+		</fieldset>
+		<p class="buttons">
+			<button class="primary" type="submit">{{ "Sign in"|t }}</button>
+		</p>
+		
+	</form>
+
+</section>
+{% endblock %}

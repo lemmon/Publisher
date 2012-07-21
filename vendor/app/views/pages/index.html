@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ page.name }}{% endblock %}
+
+{% block content %}
+<article>
+	
+	<h2 class="page-title">{{ block('title') }}</h2>
+	{{ page.content|raw }}
+	
+</article>
+{% endblock %}

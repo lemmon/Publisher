@@ -1,0 +1,21 @@
+{% extends 'admin/layout.html' %}
+
+{% block title %}{{ "New Language"|t }}{% endblock %}
+
+{% block content %}
+
+	<form method="post" action="{{ link.selfWithParams }}">
+
+		{% include link.partial("edit") %}
+
+		<p class="buttons">
+			<button type="submit">{{ "Create new language"|t }}</button>
+		</p>
+
+	</form>
+
+	<p>
+		<a href="{{ link.toBack(":section") }}">{{ "back"|t }}</a>
+	</p>
+
+{% endblock %}

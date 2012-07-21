@@ -1,0 +1,71 @@
+// Grid
+// ------------------------------------------------------------ //
+
+@headerHeight:  60px;
+@gutterWidth:   30px;
+@railWidth:    250px;
+@footerHeight:  30px;
+
+body {
+	padding-top:@headerHeight;
+	padding-bottom:@footerHeight;
+}
+
+header {
+	position:fixed;
+	left:0;
+	right:0;
+	top:0;
+	height:@headerHeight;
+}
+
+section {
+	margin:@gutterWidth;
+	&.modal {
+		background:fade(@black, 3%);
+		width:450px;
+		position:absolute;
+		left:50%;
+		top:50%;
+		padding:30px;
+		margin:-165px 0 0 -240px;
+	}
+}
+
+#rail {
+	position:fixed;
+	left:0;
+	top:@headerHeight;
+	bottom:@footerHeight;
+	width:@railWidth;
+	height:auto;
+	border-right:1px solid fade(@black, 10%);
+	margin:0;
+}
+#content {
+	margin-left:@railWidth + @gutterWidth + 1px;
+	.main-wrap {
+		float:left;
+		width:100%;
+		.main {
+			margin-right:@railWidth;
+		}
+	}
+	.side {
+		float:left;
+		margin-left:-@railWidth;
+		width:@railWidth - @gutterWidth;
+		padding-left:@gutterWidth;
+	}
+}
+
+footer {
+	position:fixed;
+	left:0;
+	right:0;
+	bottom:0;
+	height:@footerHeight;
+	line-height:@footerHeight;
+	border-top:1px solid fade(@black, 10%);
+	padding:0 10px;
+}
