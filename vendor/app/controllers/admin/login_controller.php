@@ -9,14 +9,20 @@ class Admin_Login_Controller extends Application
 	{
 		if ($f=$_POST)
 		{
-			if (Users::doAuth($f))
+			$authAdapter = new Auth($f['email'], $f['password']);
+			
+			$res = $this->auth->authenticate($authAdapter);
+			
+			switch ($res)
 			{
-				$this->flash->notice('You have been successfully logged in');
-				return $this->request->redir(':home');
-			}
-			else
-			{
-				$this->flash->error('Invalid email or password entered');
+				case Zend_Auth_Result::SUCCESS:
+					$this->flash->notice('You have been successfully logged in');
+					return $this->request->redir(':home');
+					break;
+				
+				default:
+					$this->flash->error('Invalid email or password entered');
+					break;
 			}
 		}
 	}

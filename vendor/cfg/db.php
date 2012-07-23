@@ -2,15 +2,27 @@
 /**
 * 
 */
-class Db extends Lemmon_MySQL_Connection
+class Db/* extends Lemmon\Db\Connection*/
 {
+	private $_adapter;
 
 
-	protected function define()
+	function __construct()
 	{
-		// dev
-		$this->user        = 'root';
-		$this->db          = 'publisher';
-		$this->tablePrefix = 'lp_';
+		$this->_adapter = $adapter = Zend_Db::factory('Pdo_Mysql', [
+			'host'     => '127.0.0.1',
+			'username' => 'root',
+			'password' => '',
+			'dbname'   => 'publisher',
+			'charset'  => 'utf8',
+		]);
+		
+		Zend_Db_Table_Abstract::setDefaultAdapter($adapter);
+	}
+
+
+	function getAdapter()
+	{
+		return $this->_adapter;
 	}
 }

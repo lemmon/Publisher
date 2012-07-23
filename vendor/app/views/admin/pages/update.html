@@ -1,21 +1,18 @@
-{% extends 'admin/layout.html' %}
+{% extends 'wrap.html' %}
 
 {% block title %}{{ item }}{% endblock %}
 
 {% block content %}
 
-	<form method="post" action="{{ link.selfWithParams }}">
+	<form method="post" action="{{ link.self.includeQuery }}">
 
-		{% include link.partial("edit") %}
+		{% include '_edit.html' %}
 
 		<p class="buttons">
 			<button type="submit">{{ "Update page"|t }}</button>
+			<a href="{{ link.toBack(":section") }}">{{ "back"|t }}</a>
 		</p>
 
 	</form>
-
-	<p>
-		<a href="{{ link.toBack(":section") }}">{{ "back"|t }}</a>
-	</p>
 
 {% endblock %}

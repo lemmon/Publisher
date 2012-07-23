@@ -1,0 +1,49 @@
+// Tables
+// ------------------------------------------------------------ //
+
+table {
+	font:inherit;
+	a {
+		text-decoration:none;
+		&:hover {
+			color:@black;
+			background:fade(@linkColor, 20%);
+		}
+	}
+	th, td {
+		padding:3px 7px 2px;
+		text-align:left;
+		white-space:nowrap;
+		&.sel {
+			background:fade(@blue, 15%);
+		}
+	}
+	td {
+		
+	}
+	th {
+		font-weight:600;
+		text-transform:uppercase;
+		border-bottom:1px solid fade(@black, 20%);
+		font-size:@baseFontSize - 2px;
+	}
+	thead {
+		th {
+			color:fade(@black, 20%);
+		}
+	}
+	tbody {
+		th {
+			background:fade(@black, 5%);
+			&.sel {
+				background:mix(fade(@blue, 15%), fade(@black, 5%), 50%);
+			}
+		}
+	}
+	.strong {
+		font-weight:600;
+	}
+	.tiny {
+		font-size:@baseFontSize - 2px;
+	}
+}

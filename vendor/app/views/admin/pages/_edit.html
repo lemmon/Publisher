@@ -1,4 +1,4 @@
-{% import "_forms.html" as forms %}
+{% import '_forms.html' as forms %}
 
 <div class="main-wrap"><div class="main">
 
@@ -37,8 +37,8 @@
 	<label class="label" for="f_state_id">{{ "State"|t }} <span class="required">({{ "required"|t }})</span><br></label>
 	<fieldset>
 
-		<p class="fit ln1">
-			{{ forms.radio_collection("state_id", f|hasKey("state_id"), item.collectionFor("state"), " ") }}
+		<p class="">
+			{{ forms.radio_collection('state_id', f|hasKey('state_id'), pages_states_collection, ' ') }}
 		</p>
 		
 	</fieldset>

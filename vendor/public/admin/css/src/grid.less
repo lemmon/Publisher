@@ -32,6 +32,20 @@ section {
 	}
 }
 
+#notices {
+	margin-left:@railWidth;
+	.flash_error, .flash_notice {
+		padding:@gutterWidth/2 @gutterWidth;
+		border-bottom:1px solid fade(@black, 20%);
+	}
+	.flash_error {
+		background:fade(@red, 35%);
+	}
+	.flash_notice {
+		background:fade(@yellow, 35%);
+	}
+}
+
 #rail {
 	position:fixed;
 	left:0;

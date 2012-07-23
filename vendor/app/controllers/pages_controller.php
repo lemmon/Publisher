@@ -7,6 +7,8 @@ class Pages_Controller extends Application
 
 	function index()
 	{
-		$this->data['page'] = (new Pages())->first();
+		dump(Languages::getActive());
+
+		die('__PF__');
 	}
 }

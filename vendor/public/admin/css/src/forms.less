@@ -7,15 +7,26 @@ form {
 		margin:0 0 5px;
 		&.buttons {
 			margin:15px 0 0;
+			a.back {
+				margin-left:10px;
+				color:@gray;
+				text-decoration:none;
+				&:hover {
+					text-decoration:underline;
+				}
+			}
 		}
 	}
 }
 
 label.label {
-	display:block;
+	display:inline-block;
+	position:relative;
+	top:2px;
 	font-size:11px;
 	line-height:1;
-	padding:2px 0;
+	//padding:2px 0;
+	//background:yellow;
 	color:fade(@black, 50%);
 	.required {
 		color:@red;

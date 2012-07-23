@@ -14,9 +14,9 @@
 	
 	<h3>{{ "Languages"|t }}</h3>
 	<ul>
-		<li><a href="#">{{ "Slovak"|t }}</a></li>
-		<li><a href="#">{{ "English"|t }}</a></li>
-		<li><a href="#">{{ "German"|t }}</a></li>
+		{% for _language in languages %}
+		<li><a href="#">{{ _language }}</a></li>
+		{% endfor %}
 	</ul>
 
 	<h3>{{ "States"|t }}</h3>
@@ -29,18 +29,20 @@
 
 {% block content %}
 
+	{#
 	<p>
 		<a href="{{ link.to(":create") }}">{{ "Create new"|t }} &rarr;</a>
 	</p>
-
+	#}
+	
 	<table>
 
 		<thead>
 			<tr>
 				<th width="100%">{{ "Name"|t }}</th>
-				<th width="1" class="nowrap ar">{{ "State"|t }}</th>
-				<th width="1" class="nowrap ac sel">&uarr;</th>
-				<th width="1" class="nowrap ar">{{ "Last Update"|t }}</th>
+				<th width="1" class="ar">{{ "State"|t }}</th>
+				<th width="1" class="ac sel">&uarr;</th>
+				<th width="1" class="ar">{{ "Last Update"|t }}</th>
 				<th width="1">&nbsp;</th>
 			</tr>
 		</thead>
@@ -49,16 +51,24 @@
 			{% for _language in languages %}
 			
 				<tr>
-					<th>{{ _language.country.language }}</th>
-					<th colspan="4">&nbsp;</th>
+					<th>{{ _language }}</th>
+					<th>&nbsp;</th>
+					<th class="sel">&nbsp;</th>
+					<th colspan="2">&nbsp;</th>
 				</tr>
-				{% if (data[_language.id]) %}
-					{% include link.partial("list") with {"data": data[_language.id], "level": 0} %}
-				{% else %}
+
+				{% for _page in _language.pages %}
 				<tr>
-					<td><em>{{ "No items found..."|t }}</em></td>
+					<td class="strong"><a href="{{ link.to(':update', _page) }}">{{ _page.name }}</a></td>
+					<td class="ar"><span class="tag state-{{ _page.state|asciize }}">{{ _page.state }}</span></td>
+					<td class="ac sel">{{ _page.top }}</td>
+					<td class="ar tiny">{{ _page.updated_at|tDateTime }}</td>
+					<td>
+						<a href="{{ link.to(':update', _page) }}">{{ "Update"|t }}</a> |
+						<a href="{{ link.to(':delete', _page) }}">{{ "Delete"|t }}</a>
+					</td>
 				</tr>
-				{% endif %}
+				{% endfor %}
 			
 			{% endfor %}
 			
