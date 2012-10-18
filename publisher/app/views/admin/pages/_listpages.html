@@ -1,0 +1,30 @@
+{% for page in _pages %}
+
+	<tr class="{% if (not page.state_id) %}state-hidden{% endif %}">
+
+		<td class="image">{% if (not level) %}<img src="{{ link.public('admin/img/subpath.png') }}" alt="">{% endif %}</td>
+		<td class="strong {% if (level) %}child-node{% endif %}" {% if (level) %}style="padding-left:{{ level*21 + 7 }}px;background-position:{{ level*21 - 16 }}px 5px"{% endif %}>
+			<a href="{{ link.to(':update', page) }}">{{ page.name }}</a>
+		</td>
+		<td class="ar">
+			{#
+			<span class="tag state-{{ page.state|asciize }}">{{ "Active"|t }}</span>
+			#}
+			{% if (page.state_id) %}
+			<span class="tag state-active">{{ "Active"|t }}</span>
+			{% else %}
+			<span class="tag state-hidden">{{ "Hidden"|t }}</span>
+			{% endif %}
+		</td>
+		<td class="ac sel">{{ page.top }}</td>
+		<td class="ar tiny">{{ page.updated_at|tDateTime }}</td>
+		<td class="controls">
+			<a href="{{ link.to(':update', page) }}">{{ "Update"|t }}</a> |
+			<a href="{{ link.to(':delete', page) }}">{{ "Delete"|t }}</a>
+		</td>
+
+	</tr>
+	
+	{% include '_listpages.html' with {'_pages': pages[page.id], 'level': level+1} %}
+
+{% endfor %}

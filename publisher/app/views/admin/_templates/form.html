@@ -1,0 +1,27 @@
+{% extends 'admin/layout.html' %}
+
+{% import '_forms.html' as forms %}
+
+{% block main %}
+<form method="post" action="{{ link.self.includeQuery }}">
+
+	{% block form_header %}<h2>{{ block('title') }}</h2>{% endblock %}
+	
+	<div id="main-second-wrap"><div id="main-second">
+		{% block form_primary %}
+		{% endblock %}
+	</div></div>
+	<div id="rail-second">
+		{% block form_secondary %}
+		{% endblock %}
+	</div>
+	<div class="clear"></div>
+	
+	<div class="buttons">
+		{% block form_buttons %}
+		<button class="primary" type="submit">{{ "Submit"|t }}</button>
+		{% endblock %}
+	</div>
+
+</form>
+{% endblock %}

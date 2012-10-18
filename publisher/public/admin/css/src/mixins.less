@@ -1,0 +1,48 @@
+// ?
+// ------------------------------------------------------------ //
+
+.imageReplace(@image, @w, @h) {
+	white-space:nowrap;
+	text-indent:100%;
+	overflow:hidden;
+	background-image:url(@image);
+	width:@w;
+	height:@h;
+}
+
+// CSS3 Properties
+// ------------------------------------------------------------ //
+
+// Border Radius
+.borderRadius(@radius: 5px) {
+	-webkit-border-radius:@radius;
+	   -moz-border-radius:@radius;
+	        border-radius:@radius;
+}
+
+// Drop shadows
+.boxShadow(@shadow) when (isstring(@shadow)) {
+	-webkit-box-shadow:e(@shadow);
+	   -moz-box-shadow:e(@shadow);
+	        box-shadow:e(@shadow);
+}
+.boxShadow(@shadow) when not (isstring(@shadow)) {
+	-webkit-box-shadow:@shadow;
+	   -moz-box-shadow:@shadow;
+	        box-shadow:@shadow;
+}
+
+// Transitions
+.transition(@transition: all .15s ease-out) {
+	-webkit-transition:@transition;
+	   -moz-transition:@transition;
+	    -ms-transition:@transition;
+	     -o-transition:@transition;
+	        transition:@transition;
+}
+.animate() {
+	.transition();
+}
+.animate(@transition) {
+	.transition(@transition);
+}

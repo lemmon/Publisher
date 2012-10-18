@@ -1,0 +1,11 @@
+{% for page in _pages %}
+
+	{% if (page.id != item.id) %}
+	<label class="inline" style="padding-left:{{ level*20 }}px"><input type="radio" name="parent_id" value="{{ page.id }}" {% if (page.id==f.parent_id) %}checked{% endif %}> {{ page.name }}</label>
+	{% include '_form_listpages.html' with {'_pages': pages[page.id], 'level': level+1} %}
+	{% endif %}
+
+{% endfor %}
+
+
+

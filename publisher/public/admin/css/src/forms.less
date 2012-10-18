@@ -1,0 +1,193 @@
+// General
+// ------------------------------------------------------------ //
+
+form {
+	fieldset {
+		p {
+			line-height:1;
+			margin-bottom:10px;
+		}
+	}
+	span.fieldset {
+		display:block;
+		background:mix(@black, @backgroundColor, 2%);
+		border:1px solid fade(@black, 5%);
+		.borderRadius(2px);
+		min-height:32px;
+		padding-right:9px;
+		line-height:32px;
+		label {
+			margin-left:9px;
+		}
+		input[type=radio] {
+			margin-left:0;
+		}
+	}
+	div.buttons {
+		clear:both;
+		margin-top:@gutterWidth / 2;
+		.back {
+			color:@gray;
+			margin-left:15px;
+		}
+	}
+}
+
+label.label {
+	display:inline;
+	line-height:19px;
+	position:relative;
+	top:-1px;
+	font-size:@baseFontSize - 2px;
+	color:fade(@black, 65%);
+	span {
+		font-size:@baseFontSize - 4px;
+		&.required {
+			color:@red;
+		}
+	}
+}
+
+// Notices
+// ------------------------------------------------------------ //
+
+#notices {
+	.flash_error,
+	.flash_notice {
+		padding:8px 0 7px;
+		text-align:center;
+	}
+	.flash_error {
+		background:fade(@red, 35%);
+		border-bottom:1px solid fade(@red, 65%);
+	}
+	.flash_notice {
+		background:fade(@yellow, 35%);
+		border-bottom:1px solid fade(@yellow, 65%);
+	}
+}
+
+// Input Fields
+// ------------------------------------------------------------ //
+
+input[type=text], input[type=password], select, textarea {
+	display:inline-block;
+	font-family:arial,sans-serif;
+	font-size:15px;
+	height:34px;
+	margin:0;
+	padding:7px;
+	outline:none;
+	text-shadow:none;
+	.borderRadius(2px);
+	
+	color:@black;
+	font-family:inherit;
+	background:mix(@black, @backgroundColor, 2%);
+	border:1px solid fade(@black, 5%);
+	-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	-webkit-box-sizing:border-box;
+	 -khtml-box-sizing:border-box;
+	   -moz-box-sizing:border-box;
+	    -ms-box-sizing:border-box;
+	        box-sizing:border-box;
+	
+	&:focus {
+		border-color:@linkColor !important;
+		border-width:2px;
+		padding:6px;
+		.borderRadius(3px);
+	}
+	&:hover, &:focus {
+		.boxShadow(inset 0 2px 5px fade(@black, 15%));
+	}
+	&:hover {
+		border-color:fade(@black, 35%);
+	}
+	
+	
+}
+select {
+	height:34px;
+}
+textarea {
+	width:500px;
+	height:150px;
+	min-height:50px;
+	resize:vertical;
+}
+
+p.fit {
+	input[type=text], input[type=password], textarea {
+		width:100%;
+	}
+}
+.error {
+	input[type=text], input[type=password], textarea {
+		border-color:fade(@red, 85%);
+		border-width:2px;
+		padding:6px;
+		.borderRadius(3px);
+	}
+}
+
+.modal {
+	input[type=text], input[type=password] {
+		background:@white;
+		border-color:fade(@black, 10%);
+		&:hover {
+			border-color:fade(@black, 35%);
+		}
+	}
+}
+
+// Buttons
+// ------------------------------------------------------------ //
+
+button {
+	font-family:arial,sans-serif;
+	width:auto;
+	height:34px;
+	padding:7px 25px;
+	margin:0;
+	font-size:14px;
+	font-weight:bold;
+	color:#fff;
+	background:#999;
+	border:1px solid fade(@black, 35%);
+	outline:none;
+	.borderRadius(3px);
+	
+	font-family:inherit;
+	font-weight:400;
+	.animate();
+	
+	&.primary {
+		background:@linkColor;
+	}
+	&:focus, &:hover {
+		background:@darkGray;
+	}
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) { /* webkit */
+	button {
+		height:34px;
+		padding-top:0;
+		padding-bottom:0;
+		position:relative;
+		top:-1px;
+	}
+}
+
+button::-moz-focus-inner {
+	border:0;
+}
+
+// Select2
+// ------------------------------------------------------------ //
+
+@import 'forms_select2.less';

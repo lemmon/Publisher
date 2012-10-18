@@ -1,0 +1,52 @@
+{% extends 'admin/_templates/list.html' %}
+
+{% block title %}{{ "Pages"|t }}{% endblock %}
+
+{% block form_action %}<a href="{{ link.to(":create") }}">{{ "Create new"|t }} &rarr;</a>{% endblock %}
+
+{% block main_content %}
+
+	<table>
+
+		<thead>
+			<tr>
+				<th width="1">&nbsp;</th>
+				<th width="100%">{{ "Name"|t }}</th>
+				<th width="1" class="ar">{{ "State"|t }}</th>
+				<th width="1" class="ac sel">&uarr;</th>
+				<th width="1" class="ar">{{ "Last Update"|t }}</th>
+				<th width="1">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+			{% for _language in languages %}
+			
+				<tr>
+					<th class="image"><img src="{{ link.vendor('flags/flags-iso/16/{$(country.code)}.png', _language) }}" alt="{{ _language.name }}"></th>
+					<th>{{ _language.name }}</th>
+					<th>&nbsp;</th>
+					<th class="sel">&nbsp;</th>
+					<th colspan="2">&nbsp;</th>
+				</tr>
+
+				{% include '_listpages.html' with {'pages': pages.pages, '_pages': pages.langs[_language.id]} %}
+
+			{% endfor %}
+
+		</tbody>
+		<tfoot class="line">
+			<tr>
+				<td colspan="6">&nbsp;</td>
+			</tr>
+		</tfoot>
+
+	</table>
+	
+{% endblock %}
+
+{% block rail %}
+
+	{% include '_sidebar.html' %}
+
+{% endblock %}

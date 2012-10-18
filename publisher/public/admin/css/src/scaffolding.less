@@ -1,0 +1,35 @@
+// Elements
+// ------------------------------------------------------------ //
+
+body {
+	overflow-x:hidden;
+	overflow-y:scroll;
+	font-family:@baseFontFamily;
+	font-size:@baseFontSize;
+	line-height:@baseLineHeight;
+	color:@textColor;
+	background-color:@backgroundColor;
+}
+a {
+	color:@linkColor;
+	text-decoration:underline;
+	.animate();
+}
+a:hover {
+	text-decoration:none;
+}
+
+::-moz-selection { background:#ff5e99; color:#fff; text-shadow:none; }
+::selection      { background:#ff5e99; color:#fff; text-shadow:none; }
+
+// Classes
+// ------------------------------------------------------------ //
+
+.clear { clear:both; height:0px; line-height:0px; font-size:0px; }
+
+.left  { float:left; }
+.right { float:right; }
+
+.al { text-align:left; }
+.ac { text-align:center; }
+.ar { text-align:right; }

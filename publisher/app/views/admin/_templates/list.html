@@ -1,0 +1,16 @@
+{% extends 'admin/layout.html' %}
+
+{% block main %}
+
+	<div id="page-title">
+		{% block form_header %}<h2>{{ block('title') }}</h2>{% endblock %}
+		<div class="form-action">{% block form_action %}{% endblock %}</div>
+	</div>
+	
+	{% block main_content %}{% endblock %}
+
+{% endblock %}
+
+{% block rail %}
+{% endblock %}
+

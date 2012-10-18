@@ -1,0 +1,94 @@
+// Tables
+// ------------------------------------------------------------ //
+
+table {
+	
+	@tbodyTh:         mix(@black, @backgroundColor, 5%);
+	@theadThSel:      @tbodyTdSel;
+	@tbodyThSel:      mix(@blue, @tbodyTh, 15%);
+	@tbodyTdSel:      mix(@blue, @backgroundColor, 15%);
+	@tbodyTdHover:    mix(@yellow, @backgroundColor, 10%);
+	@tbodyTdHoverSel: mix(@blue, @tbodyTdHover, 15%);
+	
+	font:inherit;
+	max-width:100%;
+	a {
+		text-decoration:none;
+	}
+	th, td {
+		line-height:@baseFontSize + 7px;
+		height:@baseFontSize + 7px;
+		padding:4px 7px 3px;
+		text-align:left;
+		white-space:nowrap;
+		vertical-align:middle;
+		/*
+		&.sel {
+			background:fade(@blue, 15%);
+		}
+		*/
+	}
+	th {
+		//border-bottom:1px solid fade(@black, 15%);
+	}
+	thead {
+		th {
+			border-bottom:1px solid fade(@black, 15%);
+			color:fade(@black, 35%);
+			font-size:@baseFontSize - 2px;
+			text-transform:uppercase;
+			font-weight:600;
+			&.sel {
+				background:@theadThSel;
+			}
+		}
+	}
+	tbody {
+		th {
+			background:@tbodyTh;
+			&.sel {
+				background:@tbodyThSel;
+			}
+		}
+		td {
+			border-top:1px solid fade(@black, 3%);
+			&.sel {
+				background:@tbodyTdSel;
+			}
+		}
+		tr:hover {
+			td {
+				background-color:@tbodyTdHover;
+				&.sel {
+					background-color:@tbodyTdHoverSel;
+				}
+			}
+		}
+	}
+	tfoot {
+		td {
+			border-top:1px solid fade(@black, 15%);
+		}
+		&.line {
+			td {
+				font-size:0px;
+				padding:0px;
+				height:0px;
+				line-height:0px;
+			}
+		}
+	}
+	.strong {
+		font-weight:600;
+	}
+	.tiny {
+		font-size:@baseFontSize - 2px;
+	}
+	.image {
+		padding-right:0;
+		line-height:0px;
+	}
+	.controls {
+		color:@lightGray;
+	}
+}
