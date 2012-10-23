@@ -11,6 +11,7 @@
 		<tr>
 			<th width="1">&nbsp;</th>
 			<th width="100%">{{ "Name"|t }}</th>
+			<th width="1">&nbsp;</th>
 			<th width="1" class="ar sel">{{ "Published"|t }} &darr;</th>
 			<th width="1">&nbsp;</th>
 		</tr>
@@ -18,15 +19,18 @@
 	<tbody>
 		
 		{% for item in data %}
-		<tr>
+		<tr class="state-{{ item.state.name|asciize }}">
 			<td class="image"><img src="{{ link.vendor('flags/flags-iso/16/{$(language.country.code)}.png', item) }}" alt="{{ item.language.name }}"></td>
 			<td class="strong">
 				<a href="{{ link.to(':update', item) }}">{{ item.name }}</a>
 			</td>
-			<td class="ar tiny sel">{{ page.published_at ? page.published_at|tDateTime : 'n/a' }}</td>
+			<td class="ar">
+				<span class="tag state-{{ item.state.name|asciize }}">{{ item.state.name|t }}</span>
+			</td>
+			<td class="ar tiny sel">{{ item.published_at|default(0)|tDateTime }}</td>
 			<td class="controls">
-				<a href="{{ link.to(':update', page) }}">{{ "Update"|t }}</a> |
-				<a href="{{ link.to(':delete', page) }}">{{ "Delete"|t }}</a>
+				<a href="{{ link.to(':update', item) }}">{{ "Update"|t }}</a> |
+				<a href="{{ link.to(':delete', item) }}">{{ "Delete"|t }}</a>
 			</td>
 		</tr>
 		{% endfor %}
@@ -34,7 +38,7 @@
 	</tbody>
 	<tfoot class="line">
 		<tr>
-			<td colspan="4">&nbsp;</td>
+			<td colspan="5">&nbsp;</td>
 		</tr>
 	</tfoot>
 

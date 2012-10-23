@@ -13,6 +13,18 @@ class Page extends \Lemmon\Model\AbstractRow
 	}
 
 
+	static function getOptionsForState()
+	{
+		return States::getOptions();
+	}
+
+
+	function getState()
+	{
+		return States::getOptions()[$this->state_id];
+	}
+
+
 	/*
 	function hasChildren()
 	{

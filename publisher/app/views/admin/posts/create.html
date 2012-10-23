@@ -3,6 +3,11 @@
 {% block title %}{{ "New Post"|t }}{% endblock %}
 
 {% block form_buttons %}
-<button class="primary" type="submit">{{ "Create new post"|t }}</button>
-<a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
+
+	<button class="primary" type="submit">{{ "Create new post"|t }}</button>
+	{#
+	<label><input type="checkbox" name="__scaffold[continue_edit]" value="1">{{ "..and continue editing" }}</label>
+	#}
+	<a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
+
 {% endblock %}

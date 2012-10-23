@@ -45,6 +45,9 @@
 	&.state-hidden {
 		background:@lightGray;
 	}
+	&.state-draft {
+		background:@orange;
+	}
 }
 
 // Header
@@ -123,11 +126,11 @@ nav {
 	@_linkBackgroundColor: fade(@yellow, 50%);
 	a:hover {
 		color:@black;
-		background:@_linkBackgroundColor;
+		background-color:@_linkBackgroundColor;
 	}
 	table {
-		a {
-			background:transparent !important;
+		a:hover {
+			background-color:transparent;
 		}
 	}
 }
@@ -167,9 +170,14 @@ nav {
 	}
 }
 
+tr.state-draft,
 tr.state-hidden {
 	.strong a {
 		color:@gray;
+	}
+}
+tr.state-draft {
+	.strong a {
 		font-weight:400;
 		font-style:italic;
 	}

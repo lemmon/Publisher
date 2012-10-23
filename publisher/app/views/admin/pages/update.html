@@ -25,10 +25,10 @@
 {% block form_secondary %}
 <fieldset>
 
-	{{ forms.p('state_id', flash, {'class': 'fit'}) }}
+	{{ forms.p('state_id', flash) }}
 		{{ forms.label('state_id', null, 'required') }}
 		<span class="fieldset">
-		{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, [{id: true, caption: 'Active'}, {id: false, caption: 'Hidden'}]) }}
+		{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, item.optionsForState) }}
 		</span>
 	</p>
 
@@ -129,6 +129,66 @@ $(function(){
 	}).filter(':checked').click();
 	
 })
+</script>
+<script src="{{ link.vendor('tiny_mce/tiny_mce.js') }}" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="{{ link.public('admin/css/forms_tinymce.css') }}">
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	// tinymce
+	tinyMCE.init({
+		mode : 'textareas',
+		plugins : 'table',
+		theme : 'advanced',
+
+		skin : 'lepublisher',
+		setup : function(ed){
+			ed.onInit.add(function(ed, e){
+				var dom = ed.dom;
+				var doc = ed.getDoc();
+				tinymce.dom.Event.add(doc, 'focus', function(e){
+				    console.log('focus');
+					$(ed.getContainer()).addClass('focus');
+				});
+				tinymce.dom.Event.add(doc, 'blur', function(e){
+					console.log('blur');
+					$(ed.getContainer()).removeClass('focus');
+				});
+			});
+		},
+
+		element_format : 'html',
+		plugins : 'paste',
+		height : '480',
+		theme_advanced_buttons1 : 'bold,italic,underline,|,pastetext,pasteword'
+			+ ',|,justifyleft,justifycenter,justifyright,justifyfull'
+			+ ',|,bullist,numlist,|,link,unlink,|,undo,redo'
+			+ ',|,cleanup,removeformat,|,spellchecker,|,styleselect,|,code',
+		theme_advanced_buttons2 : '',
+		theme_advanced_buttons3 : '',
+		theme_advanced_toolbar_location : 'top',
+		theme_advanced_toolbar_align : 'left',
+		theme_advanced_path_location : 'bottom',
+		theme_advanced_resizing : true,
+		theme_advanced_resize_horizontal : false,
+		content_css : '/public/tiny_mce/mycontent.css',
+		formats : {
+			alignleft : {selector : 'img', classes : 'left'},
+			alignright : {selector : 'img', classes : 'right'}
+		},
+		style_formats : [
+			{title : 'Heading', block : 'h3'},
+			{title : 'Subheading', block : 'h4'},
+			{title : 'Paragraph', block : 'p'}
+		],
+		fix_list_elements : true,
+		valid_elements : 'p,strong/b,em/i,br,h3,h4,ul,ol,li,blockquote,dl,dt,dd,a[href|target]'
+			+ ',img[src|width|height|class<left?right]'
+			+ ',iframe[width|height|src|frameborder:0|allowfullscreen]',
+		entity_encoding : 'raw',
+		convert_urls : false
+	});
+	//
+});
 </script>
 {% endblock %}
 

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>currentDocument</key>
+	<string>publisher/public/admin/css/src/forms_tinymce.less</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -66,7 +68,71 @@
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>200</integer>
 	<key>metaData</key>
-	<dict/>
+	<dict>
+		<key>publisher/app/views/admin/pages/update.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>84</integer>
+				<key>line</key>
+				<integer>133</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>115</integer>
+		</dict>
+		<key>publisher/public/admin/css/src/forms.less</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>publisher/public/admin/css/src/forms_tinymce.less</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>43</integer>
+				<key>line</key>
+				<integer>60</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>42</integer>
+		</dict>
+		<key>publisher/public/admin/css/src/master.less</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>9</integer>
+				<key>line</key>
+				<integer>131</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>66</integer>
+		</dict>
+	</dict>
+	<key>openDocuments</key>
+	<array>
+		<string>publisher/app/views/admin/pages/update.html</string>
+		<string>publisher/public/admin/css/src/forms_tinymce.less</string>
+		<string>publisher/public/admin/css/src/forms.less</string>
+		<string>publisher/public/admin/css/src/master.less</string>
+	</array>
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>

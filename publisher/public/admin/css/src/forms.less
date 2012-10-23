@@ -13,14 +13,14 @@ form {
 		background:mix(@black, @backgroundColor, 2%);
 		border:1px solid fade(@black, 5%);
 		.borderRadius(2px);
-		min-height:32px;
-		padding-right:9px;
-		line-height:32px;
+		min-height:30px;
+		line-height:30px;
+		padding:1px;
 		label {
-			margin-left:9px;
+			//margin-left:9px;
 		}
 		input[type=radio] {
-			margin-left:0;
+			margin-left:9px;
 		}
 	}
 	div.buttons {
@@ -127,11 +127,14 @@ p.fit {
 	}
 }
 .error {
-	input[type=text], input[type=password], textarea {
+	input[type=text], input[type=password], textarea, span.fieldset {
 		border-color:fade(@red, 85%);
 		border-width:2px;
 		padding:6px;
 		.borderRadius(3px);
+	}
+	span.fieldset {
+		padding:0px;
 	}
 }
 
@@ -187,7 +190,8 @@ button::-moz-focus-inner {
 	border:0;
 }
 
-// Select2
+// More...
 // ------------------------------------------------------------ //
 
 @import 'forms_select2.less';
+//@import 'forms_tinymce.less';

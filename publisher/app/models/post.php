@@ -42,8 +42,39 @@ class Post extends \Lemmon\Model\AbstractRow
 	*/
 
 
+	static function getOptionsForState()
+	{
+		return States::getOptions();
+	}
+
+
 	function getLanguage()
 	{
 		return Language::find($this->language_id);
+	}
+
+
+	function getState()
+	{
+		return States::getOptions()[$this->state_id];
+	}
+
+
+	protected function onValidate(&$f)
+	{
+		// published
+		if ($f['state_id'] and !$this->dataPrev['state_id'])
+		{
+			$f['published_at'] = new \Lemmon\Sql\Expression('NOW()');
+		}
+		elseif (!$f['state_id'])
+		{
+			$f['published_at'] = null;
+		}
+		else
+		{
+			#dump($f);
+			#die('--v');
+		}
 	}
 }

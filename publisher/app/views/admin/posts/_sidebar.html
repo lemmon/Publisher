@@ -1,0 +1,10 @@
+<h3>{{ "Languages"|t }}</h3>
+<ul>
+	<li {% if (not link.param(3))%}class="active"{% endif %}><a href="{{ link.to(':section') }}">{{ "Browse all"|t }}</a></li>
+	{#
+	{% for _language in languages %}
+	<li><a href="#">{{ _language.name }}</a></li>
+	{% endfor %}
+	#}
+</ul>
+

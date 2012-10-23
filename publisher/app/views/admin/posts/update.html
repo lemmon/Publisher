@@ -26,6 +26,13 @@
 {% block form_secondary %}
 <fieldset>
 
+	{{ forms.p('state_id', flash) }}
+		{{ forms.label('state_id', null, 'required') }}
+		<span class="fieldset">
+		{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, item.optionsForState) }}
+		</span>
+	</p>
+
 	{{ forms.p('language_id', flash) }}
 		{{ forms.label('language_id', null, 'required') }}
 		{{ forms.select('language_id', f.language_id, item.customOptionsForLanguage) }}
@@ -35,8 +42,10 @@
 {% endblock %}
 
 {% block form_buttons %}
-<button class="primary" type="submit">{{ "Update post"|t }}</button>
-<a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
+
+	<button class="primary" type="submit">{{ "Update post"|t }}</button>
+	<a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
+	
 {% endblock %}
 
 {% block rail %}
