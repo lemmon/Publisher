@@ -1,16 +1,17 @@
-{% extends 'wrap.html' %}
+{% extends 'admin/layout.html' %}
 
 {% block title %}{{ "Pages"|t }}{% endblock %}
 
-{% block content %}
+{% block container %}
 <section class="modal">
 
 	<form method="get" action="{{ link.to(':create') }}">
 		
+		<h2>{{ "Pages"|t }}</h2>
 		<p>You don't have any pages created yet. Create your first one right now.</p>
-		<p class="buttons">
-			<button class="primary" type="submit">{{ "Create Page"|t }}</button>
-		</p>
+		<div class="buttons" style="margin-top:15px;">
+			<button class="primary" type="submit">{{ "Create your first page"|t }}&hellip;</button>
+		</div>
 		
 	</form>
 

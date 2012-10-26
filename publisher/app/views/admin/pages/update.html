@@ -42,7 +42,7 @@
 		<span class="fieldset" id="f_parent_id">
 			
 			<label><input type="radio" name="parent_id" value="" {% if (not f.parent_id) %}checked{% endif %}> <em>{{ 'root page'|t }}</em></label>
-			<strong id="parent_id_thispage"><img src="{{ link.public('admin/img/subpath.png') }}"> {{ "This Page"|t }}<br></strong>
+			<strong id="parent_id_thispage"><img src="{{ link.publisher('admin/img/subpath.png') }}"> {{ "This Page"|t }}<br></strong>
 			
 			{% for _language in languages %}
 			<span class="lang-{{ _language.id }}">
@@ -131,7 +131,7 @@ $(function(){
 })
 </script>
 <script src="{{ link.vendor('tiny_mce/tiny_mce.js') }}" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" href="{{ link.public('admin/css/forms_tinymce.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ link.publisher('admin/css/forms_tinymce.css') }}">
 <script type="text/javascript" charset="utf-8">
 $(function(){
 	// tinymce

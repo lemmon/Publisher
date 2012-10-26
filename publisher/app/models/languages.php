@@ -19,4 +19,10 @@ class Languages extends \Lemmon\Model\AbstractModel
 	{
 		return self::find()->join('pages', ['language_id' => 'id', 'parent_id' => null])->group('countries.id');
 	}
+
+
+	function orderByImportance()
+	{
+		return $this->order((($language_id = Values::get('language_id')) ? 'CASE id WHEN ' . $language_id . ' THEN 1 ELSE 2 END, ' : '') . 'language_local');
+	}
 }

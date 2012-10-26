@@ -63,7 +63,7 @@ class Post extends \Lemmon\Model\AbstractRow
 	protected function onValidate(&$f)
 	{
 		// published
-		if ($f['state_id'] and !$this->dataPrev['state_id'])
+		if ($f['state_id'] and !$this->dataDefault['state_id'])
 		{
 			$f['published_at'] = new \Lemmon\Sql\Expression('NOW()');
 		}
@@ -76,5 +76,29 @@ class Post extends \Lemmon\Model\AbstractRow
 			#dump($f);
 			#die('--v');
 		}
+	}
+
+
+	protected function onBeforeCreate()
+	{
+		dump('onBeforeCreate');
+	}
+
+
+	protected function onBeforeUpdate()
+	{
+		dump('onBeforeUpdate');
+	}
+
+
+	protected function onAfterCreate()
+	{
+		dump('onAfterCreate');
+	}
+
+
+	protected function onAfterUpdate()
+	{
+		dump('onAfterUpdate');
 	}
 }

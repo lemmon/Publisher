@@ -7,3 +7,5 @@ user/
 config.php
 test_*.php
 *.tmproj
+
+*.tmproj

@@ -9,8 +9,8 @@ class Templates_Controller extends Application
 	function css()
 	{
 		// locate source
-		$file = BASE_DIR . dirname($this->route->getSelf()) . '/src/' . substr(basename($this->route->getSelf()), 0, -4) . '.less';
-		
+		$file = BASE_DIR . dirname($this->route->getSelf()) . '/' . substr(basename($this->route->getSelf()), 0, -4) . '.less';
+
 		//
 		if (file_exists($file))
 		{

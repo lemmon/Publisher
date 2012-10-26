@@ -5,6 +5,14 @@
 class Language extends \Lemmon\Model\AbstractRow
 {
 	static protected $model = 'Languages';
+	
+	static private $_default;
+
+
+	function findDefault()
+	{
+		return (self::$_default) ?: self::$_default = Language::find(Values::get('language_id'));
+	}
 
 
 	function getCode()

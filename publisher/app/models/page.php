@@ -2,9 +2,14 @@
 /**
 * 
 */
-class Page extends \Lemmon\Model\AbstractRow
+class Page extends AbstractPage
 {
-	static protected $model = 'Pages';
+
+
+	static function locked()
+	{
+		return Pages::locked();
+	}
 
 
 	static function getOptionsFor($model)
@@ -19,40 +24,51 @@ class Page extends \Lemmon\Model\AbstractRow
 	}
 
 
+	function getChildren()
+	{
+		return self::locked() ? new QueryPages(['parent_id' => $this->id]) : parent::getChildren();
+	}
+
+
+	function getLanguage()
+	{
+		return Language::find($this->language_id);
+	}
+
+
+	function getRoot()
+	{
+		return Page::find($this->root_id);
+	}
+
+
 	function getState()
 	{
 		return States::getOptions()[$this->state_id];
 	}
 
 
-	/*
-	function hasChildren()
+	function getUrl()
 	{
-		return (bool)Pages::find(['parent_id' => $this->id])->count();
+		if (!$this->parent_id and $this->top == 1)
+		{
+			return Route::getInstance()->to(':home');
+		}
+		else
+		{
+			return Route::getInstance()->to(':page', $this);
+		}
 	}
 
 
-	function getChildren()
+	function isActive()
 	{
-		return Pages::find(['parent_id' => $this->id]);
-	}
-	*/
-
-
-	protected function onValidate(&$f)
-	{
-		
+		return $this->id == Nav::getCurrentPage()->id;
 	}
 
 
-	protected function onAfterCreate()
+	function isSelected()
 	{
-		
-	}
-
-
-	protected function onAfterUpdate()
-	{
-		
+		return in_array($this->id, explode(',', Nav::getCurrentPage()->path_query));
 	}
 }

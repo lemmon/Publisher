@@ -13,7 +13,7 @@ class Route extends \Lemmon\Route
 			//
 			// backend
 			//
-			if ($this->match('$controller(/$page)(/$action(/$id))', ['controller'=>'admin\/[\w\-]+', 'action'=>'[\w\-]+', 'id'=>'\d+', 'page'=>'\d+']))
+			if ($this->match('$controller(/$page)(/$action(/$id))', ['controller' => 'admin\/[\w\-]+', 'action' => '[\w\-]+', 'id' => '\d+', 'page' => '\d+']))
 			{
 				// general CRUD
 			}
@@ -47,14 +47,11 @@ class Route extends \Lemmon\Route
 			//
 			// frontend
 			//
-			if ($this->match('$controller/$action', ['controller'=>'emails', 'action'=>'\w+']))
-			{
-				// crud
-			}
-			elseif ($this->match('$id(/$slug).html', ['id'=>'\d+', 'slug'=>'.+']))
+			if ($this->match('p/$id', ['id' => '\d+']))
 			{
 				// subpages
 				Application::setController('pages');
+				Application::setAction('subpage');
 			}
 			else
 			{
@@ -62,12 +59,19 @@ class Route extends \Lemmon\Route
 				Application::setController('pages');
 			}
 
-			$this->register('page', '$id/{$name}.html');
+			$this->register('home', '/');
+			$this->register('page', 'p/$id');
 		}
 	}
 
 
-	function getPublic($link)
+	function getHome()
+	{
+		return '/';
+	}
+
+
+	function getPublisher($link)
 	{
 		return '/publisher/public/' . $link;
 	}
@@ -76,6 +80,12 @@ class Route extends \Lemmon\Route
 	function getVendor($link, $params=null)
 	{
 		return $this->to('vendor/' . $link, $params);
+	}
+
+
+	function getTemplate($link)
+	{
+		return $this->to('user/template/' . $link);
 	}
 
 
