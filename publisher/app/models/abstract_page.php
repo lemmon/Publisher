@@ -1,6 +1,7 @@
 <?php
 
-use \Lemmon\Sql\Query as SqlQuery;
+use \Lemmon\Sql\Query as SqlQuery,
+    \Lemmon\Sql\Expression as SqlExpression;
 
 /**
 * 
@@ -8,6 +9,8 @@ use \Lemmon\Sql\Query as SqlQuery;
 class AbstractPage extends \Lemmon\Model\AbstractRow
 {
 	static protected $model = 'Pages';
+
+	private $_temp = [];
 
 
 	function getChildren()
@@ -18,12 +21,15 @@ class AbstractPage extends \Lemmon\Model\AbstractRow
 
 	protected function onValidate(&$f)
 	{
-		
+		// content
+		$this->_temp['content'] = $f['content'];
+		unset($f['content']);
 	}
 
 
 	protected function onAfterCreate()
 	{
+		$this->_insertContent();
 		Pages::rebuildTree();
 		#$this->_updateTop();
 	}
@@ -31,8 +37,22 @@ class AbstractPage extends \Lemmon\Model\AbstractRow
 
 	protected function onAfterUpdate()
 	{
+		$this->_insertContent();
 		Pages::rebuildTree();
 		#$this->_updateTop();
+	}
+
+
+	private function _insertContent()
+	{
+		#dump($this->_temp);die('--c');
+		(new SqlQuery)->replace('pages_blocks')->set([
+			'page_id'    => $this->id,
+			'name'       => 'main-content',
+			'content'    => \Lemmon\String::sanitizeHtml($this->_temp['content']),
+			'created_at' => new SqlExpression('NOW()'),
+			'updated_at' => new SqlExpression('NOW()'),
+		])->exec();
 	}
 
 

@@ -8,6 +8,8 @@ class Env extends \Lemmon\Environment
 
 	protected function __init()
 	{
+		self::setDev();
+		
 		// DEVELOPMENT
 		if (self::isDev())
 		{

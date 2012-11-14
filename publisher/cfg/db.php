@@ -6,7 +6,7 @@ class Db extends \Lemmon\Db\Adapter
 {
 
 
-	function __construct($driver=[])
+	function __construct($driver = [])
 	{
 		// connect
 		parent::__construct([

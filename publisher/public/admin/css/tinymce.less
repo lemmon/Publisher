@@ -1,0 +1,36 @@
+// Includes
+// ------------------------------------------------------------ //
+
+// CSS Reset
+@import 'reset.less';
+
+// Core variables and mixins
+@import 'fonts.less';
+@import 'variables.less';
+@import 'mixins.less';
+
+// General
+// ------------------------------------------------------------ //
+
+body {
+	font-family:@baseFontFamily;
+	font-size:@baseFontSize;
+	font-weight:400;
+	color:@textColor;
+	line-height:@baseLineHeight;
+	margin:5px-@baseFontSize 5px;
+}
+h1, h2, h3, h4, h5, ol, ul, dl, p {
+	margin:@baseFontSize 0;
+}
+b, strong {
+	font-weight:600;
+	color:#000;
+}
+i, em {
+	font-style:italic;
+}
+ul {
+	margin-left:@baseLineHeight;
+	list-style:square outside;
+}

@@ -5,7 +5,7 @@
 class TreeItem
 {
 	private $_id;
-	private $_languageId;
+	private $_locale;
 	private $_name;
 	private $_parent;
 	private $_children = [];
@@ -14,22 +14,22 @@ class TreeItem
 	private static $_rootItems = [];
 
 
-	private function __construct($id, $language_id, $name)
+	private function __construct($id, $locale, $name)
 	{
 		// defaults
-		$this->_id         = $id;
-		$this->_languageId = $language_id;
-		$this->_name       = $name;
+		$this->_id     = $id;
+		$this->_locale = $locale;
+		$this->_name   = $name;
 		// root
-		self::$_rootItems[$language_id][$id] = $this;
+		self::$_rootItems[$locale][$id] = $this;
 		// instance
 		self::$_instances[$id] = $this;
 	}
 
 
-	static function newInstance($id, $language_id, $name)
+	static function newInstance($id, $locale, $name)
 	{
-		return new self($id, $language_id, $name);
+		return new self($id, $locale, $name);
 	}
 
 
@@ -52,9 +52,9 @@ class TreeItem
 	}
 
 
-	static function getRootItems($language_id)
+	static function getRootItems($locale)
 	{
-		return self::$_rootItems[$language_id];
+		return self::$_rootItems[$locale];
 	}
 
 
@@ -66,7 +66,7 @@ class TreeItem
 
 	function getLanguageId()
 	{
-		return $this->_languageId;
+		return $this->_locale;
 	}
 
 
@@ -113,7 +113,7 @@ class TreeItem
 
 	function getTop()
 	{
-		return array_search($this->_id, array_keys($this->_parent ? $this->_parent->_children : self::$_rootItems[$this->_languageId])) + 1;
+		return array_search($this->_id, array_keys($this->_parent ? $this->_parent->_children : self::$_rootItems[$this->_locale])) + 1;
 	}
 
 

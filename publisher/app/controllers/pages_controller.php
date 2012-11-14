@@ -19,7 +19,9 @@ class Pages_Controller extends Application
 
 	function index()
 	{
-		Nav::setCurrentPage($page = Pages::find(['language_id' => Language::findDefault()->id])->first());
+		$locale = reset(Locales::fetchActive());
+		//
+		Nav::setCurrentPage($page = Pages::find(['locale' => $locale['id']])->first());
 		//
 		$this->data['page'] = $page;
 		//
@@ -29,7 +31,6 @@ class Pages_Controller extends Application
 
 	function subpage()
 	{
-		Pages::lock();
 		// nav
 		if ($id = $this->route->id and $page = Page::find($id))
 		{
@@ -43,6 +44,5 @@ class Pages_Controller extends Application
 		{
 			die('404');
 		}
-		die('--3');
 	}
 }

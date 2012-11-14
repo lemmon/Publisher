@@ -10,7 +10,7 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
     vertical-align: top;
 }
 
-.select2-container,
+.__select2-container,
 .select2-drop,
 .select2-search,
 /*.select2-search input*/{
@@ -27,6 +27,12 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
   box-sizing: border-box;         /* css3 */
 }
 
+
+
+.select2-container {
+	height:34px;
+}
+
 .select2-container .select2-choice {
     -moz-background-clip: padding;
     -webkit-background-clip: padding-box;
@@ -37,6 +43,10 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
     position: relative;
     padding: 0 0 0 8px;
     text-decoration: none;
+	position:absolute;
+	left:0;
+	top:0;
+	right:0px;
 }
 
 .select2-container.select2-drop-above .select2-choice
@@ -157,8 +167,8 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
   color: #fff;
 }
 .select2-results li em {
-  background: #feffde;
-  font-style: normal;
+  //background: #feffde;
+  //font-style: normal;
 }
 .select2-results .select2-highlighted em {
   background: transparent;
@@ -182,6 +192,13 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
   display: list-item;
 }
 
+.select2-result-label {
+	height:24px;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
 
 .select2-result-selectable .select2-match,
 .select2-result-unselectable .select2-result-selectable .select2-match { text-decoration: underline; }
@@ -200,7 +217,7 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 	.borderRadius(2px);
 	border:1px solid fade(@black, 5%);
 	height:32px;
-    line-height: 32px;
+	line-height: 32px;
 	-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
 	   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
 	    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
@@ -245,4 +262,23 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 .select2-search input {
 	width:100%;
 	margin-top:5px;
+}
+
+.error {
+	.select2-choice {
+		border:2px solid @red !important;
+		padding-left:7px;
+		.borderRadius(3px);
+	}
+	.select2-drop {
+		border-color:@red !important;
+		border-width:0 2px 2px;
+		.select2-search {
+			padding:0 3px;
+		}
+		.select2-results {
+			margin:3px 3px 3px 0;
+			padding-left:3px;
+		}
+	}
 }

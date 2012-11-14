@@ -14,7 +14,7 @@
 	font-family:inherit;
 	background:mix(@black, @backgroundColor, 2%);
 	border:1px solid fade(@black, 5%);
-	padding:1px;
+	padding:2px;
 	.borderRadius(2px);
 
 	-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
@@ -31,8 +31,12 @@
 	&.focus {
 		border-color:@linkColor !important;
 		border-width:2px;
-		padding:0px;
+		padding:1px;
 		.borderRadius(3px);
+		td.mceToolbar {
+			background:fade(#000, 5%) !important;
+			opacity:1 !important;
+		}
 	}
 	&:hover, &.focus {
 		.boxShadow(inset 0 2px 5px fade(@black, 15%));
@@ -43,61 +47,50 @@
 	
 	// buttons
 	.mceToolbar {
-		margin:6px;
-		margin-bottom:0;
+		margin:0;
+		padding:2px;
+	}
+	td.mceToolbar {
+		.borderRadius(2px);
+		opacity:.2;
 	}
 	td {
 		padding:0;
 	}
 	.mceButton {
 		display:block;
-		width:20px;
-		height:20px;
-		border:2px solid mix(@black, @backgroundColor, 2%);
-		margin-right:1px;
-		background-image:url(/vendor/tiny_mce/themes/advanced/img/icons.gif) !important;
+		width:24px;
+		height:24px;
+		margin-right:2px;
+		background-image:url(/vendor/tiny_mce/themes/advanced/img/icons.gif);
+		background-position:4px 4px;
+		background-repeat:no-repeat;
 		.borderRadius(2px);
+		opacity:.35;
 		&:hover {
-			@_c: mix(@linkColor, @backgroundColor, 50%);
-			background-color:@_c !important;
-			border-color:@_c;
-			//.boxShadow(0 1px 2px fade(@black, 20%));
+			opacity:.85;
 		}
-		&.mce_bold {background-position:0 0}
-		&.mce_italic {background-position:-60px 0}
-		&.mce_underline {background-position:-140px 0}
-		&.mce_strikethrough {background-position:-120px 0}
-		&.mce_undo {background-position:-160px 0}
-		&.mce_redo {background-position:-100px 0}
-		&.mce_cleanup {background-position:-40px 0}
-		&.mce_bullist {background-position:-20px 0}
-		&.mce_numlist {background-position:-80px 0}
-		&.mce_justifyleft {background-position:-460px 0}
-		&.mce_justifyright {background-position:-480px 0}
-		&.mce_justifycenter {background-position:-420px 0}
-		&.mce_justifyfull {background-position:-440px 0}
-		&.mce_anchor {background-position:-200px 0}
-		&.mce_indent {background-position:-400px 0}
-		&.mce_outdent {background-position:-540px 0}
-		&.mce_link {background-position:-500px 0}
-		&.mce_unlink {background-position:-640px 0}
-		&.mce_sub {background-position:-600px 0}
-		&.mce_sup {background-position:-620px 0}
-		&.mce_removeformat {background-position:-580px 0}
-		&.mce_newdocument {background-position:-520px 0}
-		&.mce_image {background-position:-380px 0}
-		&.mce_help {background-position:-340px 0}
-		&.mce_code {background-position:-260px 0}
-		&.mce_hr {background-position:-360px 0}
-		&.mce_visualaid {background-position:-660px 0}
-		&.mce_charmap {background-position:-240px 0}
-		&.mce_paste {background-position:-560px 0}
-		&.mce_copy {background-position:-700px 0}
-		&.mce_cut {background-position:-680px 0}
-		&.mce_blockquote {background-position:-220px 0}
-		
-		&.mce_pastetext {background-position:-360px -20px}
-		&.mce_pasteword {background-position:-380px -20px}
+		&.mceButtonActive {
+			opacity:1;
+		}
+		&.mce_bold { background-image:url(/vendor/cc/black/png/font_bold_icon&16.png); }
+		&.mce_italic { background-image:url(/vendor/cc/black/png/font_italic_icon&16.png); }
+		&.mce_underline { background-image:url(/vendor/cc/black/png/font_underline_icon&16.png); }
+		&.mce_bullist { background-image:url(/vendor/cc/black/png/list_bullets_icon&16.png); }
+		&.mce_numlist { background-image:url(/vendor/cc/black/png/list_num_icon&16.png); }
+		&.mce_undo { background-image:url(/vendor/cc/black/png/undo_icon&16.png); }
+		&.mce_redo { background-image:url(/vendor/cc/black/png/redo_icon&16.png); }
+		&.mce_justifyleft { background-image:url(/vendor/cc/black/png/align_left_icon&16.png); }
+		&.mce_justifyright { background-image:url(/vendor/cc/black/png/align_right_icon&16.png); }
+		&.mce_justifycenter { background-image:url(/vendor/cc/black/png/align_center_icon&16.png); }
+		&.mce_justifyfull { background-image:url(/vendor/cc/black/png/align_just_icon&16.png); }
+		&.mce_link { background-image:url(/vendor/cc/black/png/link_icon&16.png); }
+		&.mce_unlink { background-image:url(/vendor/cc/black/png/disconnected_icon&16.png); }
+		&.mce_cleanup { background-image:url(/vendor/cc/black/png/brush_icon&16.png); }
+		&.mce_removeformat { background-image:url(/vendor/cc/black/png/doc_new_icon&16.png); }
+		&.mce_pastetext { background-image:url(/vendor/cc/black/png/clipboard_past_icon&16.png); }
+		&.mce_pasteword { background-image:url(/vendor/cc/black/png/clipboard_past_icon&16.png); }
+		&.mce_code { background-image:url(/vendor/cc/black/png/brackets_icon&16.png); }
 	}
 	
 	

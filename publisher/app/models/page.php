@@ -1,9 +1,13 @@
 <?php
+
+use \Lemmon\Sql\Query as SqlQuery;
+
 /**
 * 
 */
 class Page extends AbstractPage
 {
+	private $_cache = [];
 
 
 	static function locked()
@@ -30,9 +34,25 @@ class Page extends AbstractPage
 	}
 
 
+	function getContent()
+	{
+		if (!array_key_exists('content', $this->_cache))
+		{
+			return $this->_cache['content'] = (new SqlQuery)->select('pages_blocks')->where([
+				'page_id' => $this->id,
+				'name'    => 'main-content',
+			])->first()->content;
+		}
+		else
+		{
+			return $this->_cache['content'];
+		}
+	}
+
+
 	function getLanguage()
 	{
-		return Language::find($this->language_id);
+		return Locales::fetch($this->locale);
 	}
 
 

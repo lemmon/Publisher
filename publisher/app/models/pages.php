@@ -9,9 +9,9 @@ class Pages extends \Lemmon\Model\AbstractModel
 {
 	static private $_locked;
 
-	static $fields    = ['name', 'content', 'state_id', 'language_id', 'parent_id', 'top'];
+	static $fields    = ['name', 'content', 'state_id', 'locale', 'parent_id', 'top'];
 	static $sanitize  = [':all' => 'empty_to_null', 'price' => 'decimal', 'content' => 'html'];
-	static $required  = ['name', 'state_id' => 'allow_null', 'language_id'];
+	static $required  = ['name', 'state_id' => 'allow_null', 'locale'];
 	static $timestmp  = ['created_at', 'updated_at'];
 	static $belongsTo = ['Language'];
 
@@ -41,19 +41,20 @@ class Pages extends \Lemmon\Model\AbstractModel
 	}
 
 
-	static function fetchActiveWithLanguages()
+	static function fetchActiveByLanguage()
 	{
 		$pages = [];
 		// load pages
 		foreach (Pages::find() as $page)
 		{
-			if (!$page->parent_id) $pages['langs'][$page->language_id][$page->id] = $page;
+			if (!$page->parent_id) $pages['langs'][$page->locale][$page->id] = $page;
 			else                   $pages['pages'][$page->parent_id][$page->id] = $page;
 		}
 		//
+		return $pages;
 		return [
 			'pages'     => $pages,
-			'languages' => $pages ? Languages::find(['id' => array_keys($pages['langs'])])->orderByImportance() : null,
+			'languages' => $pages ? array_intersect_key(Locales::fetchAll(), $pages['langs']) : null,
 		];
 	}
 
@@ -64,7 +65,7 @@ class Pages extends \Lemmon\Model\AbstractModel
 		foreach (self::find()->order('top') as $item)
 		{
 			// item
-			$tree_item = TreeItem::newInstance($item->id, $item->language_id, $item->name);
+			$tree_item = TreeItem::newInstance($item->id, $item->locale, $item->name);
 			// parent
 			if ($item->parent_id)
 			{
@@ -76,7 +77,7 @@ class Pages extends \Lemmon\Model\AbstractModel
 			}
 		}
 		// assign children
-		foreach ($data as $item)
+		if ($data) foreach ($data as $item)
 		{
 			TreeItem::getInstance($item['parent_id'])->addChild(TreeItem::getInstance($item['id']));
 		}

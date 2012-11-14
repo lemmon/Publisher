@@ -26,11 +26,13 @@
 		<nav>
 			<ul>
 				<li {% if (not link.param(2)) %}class="active"{% endif %}><a href="{{ link.to("admin") }}">{{ "Dashboard"|t }}</a></li>
+				{#
 				<li {% if (link.param(2)=='posts') %}class="active"{% endif %}><a href="{{ link.to("admin/posts") }}">{{ "Posts"|t }}</a></li>
+				#}
 				<li {% if (link.param(2)=='pages') %}class="active"{% endif %}><a href="{{ link.to("admin/pages") }}">{{ "Pages"|t }}</a></li>
-				{% if (_admin.is_admin) %}
+				{#
 				<li {% if (link.param(2)=='users') %}class="active"{% endif %}><a href="{{ link.to("admin/users") }}">{{ "Users"|t }}</a></li>
-				{% endif %}
+				#}
 			</ul>
 		</nav>
 		{% endif %}

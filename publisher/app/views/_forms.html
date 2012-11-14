@@ -29,7 +29,7 @@
 	<option class="null" value="">{{ has_empty }}</option>
 	{% endif %}
 	{% for item in collection %}
-	<option value="{{ item.id }}" {% if (item.id==value) %}selected{% endif %}>{{ item.caption|t }}</option>
+	<option value="{{ item.id }}" {% if (item.id == value) %}selected{% endif %}>{{ item.caption|t }}</option>
 	{% endfor %}
 </select>
 {% endmacro %}
@@ -42,7 +42,7 @@
 	{% for group in collection %}
 	<optgroup label="{{ group.caption }}">
 		{% for item in group.data %}
-		<option value="{{ item.id }}" {% if (item.id==value) %}selected{% endif %}>{{ item.caption|t }}</option>
+		<option value="{{ item.id }}" {% if (item.id == value) %}selected{% endif %}>{{ item.caption|t }}</option>
 		{% endfor %}
 	</optgroup>
 	{% endfor %}

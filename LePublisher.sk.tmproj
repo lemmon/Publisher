@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>currentDocument</key>
-	<string>publisher/public/admin/css/src/forms_tinymce.less</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -14,47 +12,47 @@
 			<key>filename</key>
 			<string>config.php</string>
 			<key>lastUsed</key>
-			<date>2012-10-03T21:32:54Z</date>
+			<date>2012-11-12T20:31:25Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>index.php</string>
 			<key>lastUsed</key>
-			<date>2012-10-03T21:32:42Z</date>
+			<date>2012-11-12T20:45:16Z</date>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>publisher</string>
+			<key>regexFolderFilter</key>
+			<string>!.*/(\.[^/]*|CVS|_darcs|_MTN|\{arch\}|blib|.*~\.nib|.*\.(framework|app|pbproj|pbxproj|xcode(proj)?|bundle))$</string>
+			<key>sourceDirectory</key>
+			<string>publisher</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>scripts</string>
+			<key>regexFolderFilter</key>
+			<string>!.*/(\.[^/]*|CVS|_darcs|_MTN|\{arch\}|blib|.*~\.nib|.*\.(framework|app|pbproj|pbxproj|xcode(proj)?|bundle))$</string>
+			<key>sourceDirectory</key>
+			<string>scripts</string>
 		</dict>
 		<dict>
 			<key>expanded</key>
 			<true/>
 			<key>name</key>
-			<string>publisher</string>
+			<string>setup</string>
 			<key>regexFolderFilter</key>
 			<string>!.*/(\.[^/]*|CVS|_darcs|_MTN|\{arch\}|blib|.*~\.nib|.*\.(framework|app|pbproj|pbxproj|xcode(proj)?|bundle))$</string>
 			<key>sourceDirectory</key>
-			<string>publisher</string>
+			<string>setup</string>
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>setup</string>
+			<string>tests</string>
 			<key>regexFolderFilter</key>
 			<string>!.*/(\.[^/]*|CVS|_darcs|_MTN|\{arch\}|blib|.*~\.nib|.*\.(framework|app|pbproj|pbxproj|xcode(proj)?|bundle))$</string>
 			<key>sourceDirectory</key>
-			<string>setup</string>
-		</dict>
-		<dict>
-			<key>filename</key>
-			<string>test_01.php</string>
-		</dict>
-		<dict>
-			<key>filename</key>
-			<string>test_02.php</string>
-		</dict>
-		<dict>
-			<key>filename</key>
-			<string>test_03.php</string>
-		</dict>
-		<dict>
-			<key>filename</key>
-			<string>test_04.php</string>
+			<string>tests</string>
 		</dict>
 		<dict>
 			<key>name</key>
@@ -68,74 +66,10 @@
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>200</integer>
 	<key>metaData</key>
-	<dict>
-		<key>publisher/app/views/admin/pages/update.html</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>84</integer>
-				<key>line</key>
-				<integer>133</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>115</integer>
-		</dict>
-		<key>publisher/public/admin/css/src/forms.less</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>publisher/public/admin/css/src/forms_tinymce.less</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>43</integer>
-				<key>line</key>
-				<integer>60</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>42</integer>
-		</dict>
-		<key>publisher/public/admin/css/src/master.less</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>9</integer>
-				<key>line</key>
-				<integer>131</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>66</integer>
-		</dict>
-	</dict>
-	<key>openDocuments</key>
-	<array>
-		<string>publisher/app/views/admin/pages/update.html</string>
-		<string>publisher/public/admin/css/src/forms_tinymce.less</string>
-		<string>publisher/public/admin/css/src/forms.less</string>
-		<string>publisher/public/admin/css/src/master.less</string>
-	</array>
+	<dict/>
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{104, 71}, {2025, 1347}}</string>
+	<string>{{176, 71}, {1765, 1347}}</string>
 </dict>
 </plist>

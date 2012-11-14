@@ -10,7 +10,8 @@ class Admin_Pages_Controller extends \Lemmon\Model\Scaffold
 	{
 		if (Pages::find()->count())
 		{
-			$this->data += Pages::fetchActiveWithLanguages();
+			$this->data['pages']   = Pages::fetchActiveByLanguage();
+			$this->data['locales'] = Locales::fetchActive();
 		}
 		else
 		{
@@ -21,14 +22,16 @@ class Admin_Pages_Controller extends \Lemmon\Model\Scaffold
 
 	function create()
 	{
-		$this->data += Pages::fetchActiveWithLanguages();
+		$this->data['pages']   = Pages::fetchActiveByLanguage();
+		$this->data['locales'] = Locales::findAllWithPreferred();
 		return parent::create();
 	}
 
 
 	function update()
 	{
-		$this->data += Pages::fetchActiveWithLanguages();
+		$this->data['pages']   = Pages::fetchActiveByLanguage();
+		$this->data['locales'] = Locales::findAllWithPreferred();
 		return parent::update();
 	}
 
@@ -36,6 +39,6 @@ class Admin_Pages_Controller extends \Lemmon\Model\Scaffold
 	function rebuild()
 	{
 		Pages::rebuildTree();
-		return '--ok';
+		die('--ok');
 	}
 }
