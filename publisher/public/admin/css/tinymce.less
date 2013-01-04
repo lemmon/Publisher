@@ -19,8 +19,10 @@ body {
 	color:@textColor;
 	line-height:@baseLineHeight;
 	margin:5px-@baseFontSize 5px;
+	overflow-y:scroll;
+	padding:1px;
 }
-h1, h2, h3, h4, h5, ol, ul, dl, p {
+h1, h2, h3, h4, h5, ol, ul, dl, p, div {
 	margin:@baseFontSize 0;
 }
 b, strong {
@@ -33,4 +35,35 @@ i, em {
 ul {
 	margin-left:@baseLineHeight;
 	list-style:square outside;
+}
+h1, h2, h3, h4, h5, h6 {
+	color:@headingsColor;
+	//line-height:@baseLineHeight * 2;
+}
+h3 {
+	font-size:19px;
+	font-weight:600;
+}
+h4 {
+	font-size:17px;
+	font-weight:600;
+}
+img {
+	max-width:100%;
+}
+div.image {
+	max-width:none !important;
+}
+div.left {
+	float:left;
+	margin-right:@baseLineHeight;
+	margin-bottom:@baseFontSize;
+}
+div.right {
+	float:right;
+	margin-left:@baseLineHeight;
+	margin-bottom:@baseFontSize;
+}
+div.center {
+	text-align:center;
 }

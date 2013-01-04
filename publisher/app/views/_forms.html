@@ -3,7 +3,7 @@
 {% endmacro %}
 
 {% macro label(name, caption, gravity) %}
-<label class="label" for="f_{{ name|asciize("_") }}">{{ caption|default(name|human) }} {% if (gravity) %}<span class="{{ gravity|asciize }}">({{ gravity }})</span>{% endif %}<br></label>
+<label class="label" for="f_{{ name|asciize("_") }}">{{ caption|default(name|human)|t }} {% if (gravity) %}<span class="{{ gravity|asciize }}">({{ gravity|t }})</span>{% endif %}<br></label>
 {% endmacro %}
 
 {% macro input(name, value, size, maxlength) %}
@@ -12,6 +12,14 @@
 
 {% macro text(name, value, cols, rows) %}
 <textarea id="f_{{ name|asciize("_") }}" name="{{ name }}" cols="{{ cols|default(64) }}" rows="{{ rows|default(12) }}">{{ value }}</textarea>
+{% endmacro %}
+
+{% macro file(name, value) %}
+<input type="file" id="f_{{ name|asciize("_") }}" name="{{ name }}">
+{% endmacro %}
+
+{% macro image(name, value) %}
+<input type="file" id="f_{{ name|asciize("_") }}" name="{{ name }}">
 {% endmacro %}
 
 {% macro radio_collection(name, value, collection, break, undefined) %}
@@ -40,7 +48,7 @@
 	<option class="null" value="">{{ has_empty }}</option>
 	{% endif %}
 	{% for group in collection %}
-	<optgroup label="{{ group.caption }}">
+	<optgroup label="{{ group.caption|t }}">
 		{% for item in group.data %}
 		<option value="{{ item.id }}" {% if (item.id == value) %}selected{% endif %}>{{ item.caption|t }}</option>
 		{% endfor %}

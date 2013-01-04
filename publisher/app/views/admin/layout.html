@@ -17,6 +17,7 @@
 </head>
 <body>
 	
+	{% include '_notices.html' %}
 	
 	<header>
 		
@@ -25,34 +26,32 @@
 		{% if (user) %}
 		<nav>
 			<ul>
-				<li {% if (not link.param(2)) %}class="active"{% endif %}><a href="{{ link.to("admin") }}">{{ "Dashboard"|t }}</a></li>
-				{#
-				<li {% if (link.param(2)=='posts') %}class="active"{% endif %}><a href="{{ link.to("admin/posts") }}">{{ "Posts"|t }}</a></li>
-				#}
-				<li {% if (link.param(2)=='pages') %}class="active"{% endif %}><a href="{{ link.to("admin/pages") }}">{{ "Pages"|t }}</a></li>
-				{#
-				<li {% if (link.param(2)=='users') %}class="active"{% endif %}><a href="{{ link.to("admin/users") }}">{{ "Users"|t }}</a></li>
-				#}
+				<li {% if (not link.param(2)) %}class="active"{% endif %}><a href="{{ link.to('admin') }}">{{ "Dashboard"|t }}</a></li>
+				<li {% if (link.param(2) == 'posts' or link.param(2) == 'categories') %}class="active"{% endif %}><a href="{{ link.to('admin/posts') }}">{{ "Posts"|t }}</a></li>
+				<li {% if (link.param(2) == 'pages') %}class="active"{% endif %}><a href="{{ link.to('admin/pages') }}">{{ "Pages"|t }}</a></li>
+				<li {% if (link.param(2) == 'media') %}class="active"{% endif %}><a href="{{ link.to('admin/media') }}">{{ "Media"|t }}</a></li>
+				<li {% if (link.param(2) == 'users') %}class="active"{% endif %}><a href="{{ link.to('admin/users') }}">{{ "Users"|t }}</a></li>
 			</ul>
 		</nav>
 		{% endif %}
 		
 	</header>
 	
-	{% include '_notices.html' %}
-	
 	<div id="container">
 	{% block container %}
 
-		<div id="main-wrap"><div id="main">
+		<div id="main">
 			{% block main %}
 			<h2>{{ block('title') }}</h2>
 			{% endblock %}
-		</div></div>
-		<div id="rail">
+		</div>
+		{#
+		<div id="rail"><div class="inner">
 			{% block rail %}
 			{% endblock %}
-		</div>
+		</div></div>
+		#}
+		<div class="clear"></div>
 	
 	{% endblock %}
 	</div>
@@ -64,6 +63,11 @@
 		</p>
 
 	</footer>
+	
+	<div class="popup">
+		<div class="overlay"></div>
+		<div class="window"><iframe src="{{ link.to('admin/media/frame/images') }}"></iframe></div>
+	</div>
 	
 	<script src="{{ link.jQuery }}"></script>
 	{#

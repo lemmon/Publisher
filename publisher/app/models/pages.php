@@ -7,31 +7,19 @@ use \Lemmon\Sql\Query as SqlQuery;
 */
 class Pages extends \Lemmon\Model\AbstractModel
 {
-	static private $_locked;
-
 	static $fields    = ['name', 'content', 'state_id', 'locale', 'parent_id', 'top'];
 	static $sanitize  = [':all' => 'empty_to_null', 'price' => 'decimal', 'content' => 'html'];
 	static $required  = ['name', 'state_id' => 'allow_null', 'locale'];
 	static $timestmp  = ['created_at', 'updated_at'];
-	static $belongsTo = ['Language'];
-
-
-	static function lock()
-	{
-		self::$_locked = true;
-	}
-
-
-	static function locked()
-	{
-		return self::$_locked ? true : false;
-	}
 
 
 	protected function __init()
 	{
 		// default sort
 		$this->order('top');
+		// frontend
+		if (Application::$isFrontend)
+			$this->where(['state_id' => 1]);
 	}
 
 

@@ -1,9 +1,42 @@
 // Grid
 // ------------------------------------------------------------ //
 
+@railWidth: 17%;
+@sideWidth: 27%;
+@mainWidth: 100% - @railWidth;
+
 #container {
-	margin:@gutterWidth 0;
+	padding:@gutterWidth;
+	position:relative;
 }
+#main {
+	width:@mainWidth;
+	//float:right;
+	margin:0 auto;
+}
+/*
+#rail {
+	width:@railWidth;
+	float:left;
+	& > .inner {
+		margin-right:@gutterWidth;
+		padding-right:@gutterWidth;
+		border-right:1px solid fade(#000, 5%);
+	}
+}
+*/
+#main-second {
+	width:100% - @sideWidth;
+	float:left;
+	& > .inner {
+		margin-right:@gutterWidth;
+	}
+}
+#rail-second {
+	width:@sideWidth;
+	float:right;
+}
+/*
 #main-wrap {
 	float:left;
 	width:100%;
@@ -37,6 +70,7 @@
 		padding-right:@gutterWidth;
 	}
 }
+*/
 
 .modal {
 	width:500px;

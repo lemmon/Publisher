@@ -1,4 +1,7 @@
 <?php
+
+use \Lemmon\I18n\I18n;
+
 /**
 * 
 */
@@ -19,15 +22,12 @@ class Locales
 	{
 		if (!array_key_exists('locales', self::$_cache))
 		{
-			$locales = Lemmon\I18n\I18n::getLocales();
+			$locales = I18n::getLocales();
 			foreach ($locales as $_code => $_caption)
 			{
 				$locales[$_code] = [
 					'id'       => $_code,
 					'caption'  => $_caption,
-					'language' => [
-						'name' => 'Foo',
-					],
 					'country'  => [
 						'code' => explode('_', $_code)[1],
 					],
@@ -42,11 +42,21 @@ class Locales
 	}
 
 
+	private static function _getActive()
+	{
+		return array_flip(array_merge(
+			Db::getDefault()->query()->select('pages')->distinct('locale'),
+			Db::getDefault()->query()->select('posts')->distinct('locale'),
+			Db::getDefault()->query()->select('categories')->distinct('locale')
+		));
+	}
+
+
 	static function fetchActive()
 	{
 		if (!array_key_exists('active', self::$_cache))
 		{
-			$active = array_flip(Db::getDefault()->query()->select('pages')->distinct('locale'));
+			$active = self::_getActive();
 			$locales = self::fetchAll();
 			$res = [];
 			foreach ($locales as $_code => $_locale)
@@ -63,11 +73,11 @@ class Locales
 	}
 
 
-	static function findAllWithPreferred()
+	static function fetchAllWithPreferred()
 	{
 		if (!array_key_exists('preferred', self::$_cache))
 		{
-			$active = array_flip(Db::getDefault()->query()->select('pages')->distinct('locale'));
+			$active = self::_getActive();
 			$common = array_flip(self::$common);
 			$locales = self::fetchAll();
 			$res = [];
@@ -80,20 +90,25 @@ class Locales
 				else
 					$res['others'][$_code] = $_locale;
 			}
-			return self::$_cache['preferred'] = [
-				'active' => [
-				'caption' => 'Active',
-				'data'    => $res['active'],
-				],
-				'common' => [
-					'caption' => 'Common',
-					'data'    => $res['common'],
-				],
-				'others' => [
-					'caption' => 'Others',
-					'data'    => $res['others'],
-				],
+			$preferred = [];
+			if ($res['active'])
+			{
+				$preferred['active'] = [
+					'caption' => 'Active',
+					'data'    => $res['active'],
+				];
+			}
+			$preferred['common'] = [
+				'caption' => 'Common',
+				'data'    => $res['common'],
 			];
+			/*
+			$preferred['others'] = [
+				'caption' => 'Others',
+				'data'    => $res['others'],
+			];
+			*/
+			return self::$_cache['preferred'] = $preferred;
 		}
 		else
 		{

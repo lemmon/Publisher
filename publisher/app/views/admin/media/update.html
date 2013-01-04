@@ -1,0 +1,42 @@
+{% extends 'admin/_templates/form.html' %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block form_primary %}
+<fieldset>
+	
+	{{ forms.p('name', flash, {'class': 'fit'}) }}
+		{{ forms.label('name', null, 'optional') }}
+		{{ forms.input('name', f.name) }}
+	</p>
+
+	<p class="fit">
+		{{ forms.label('description', null, 'recommended') }}
+		{{ forms.text('description', f.description) }}
+	</p>
+	
+</fieldset>
+{% endblock %}
+
+{% block form_secondary %}
+<fieldset>
+	
+	<p>
+		{{ forms.label('file', f.file_mime_type|human) }}
+		<span class="fieldset">
+			{% if (f.file_mime_type == 'image') %}
+			<span class="image"><img src="{{ link.upload(f.file) }}" style="width:100%"></span>
+			{% endif %}
+			<a target="_blank" href="{{ link.upload(f.file) }}">{{ f.file }}</a>
+		</span>
+	</p>
+	
+</fieldset>
+{% endblock %}
+
+{% block form_buttons %}
+
+	<button class="primary" type="submit">{{ "Update file"|t }}</button>
+	<a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
+	
+{% endblock %}

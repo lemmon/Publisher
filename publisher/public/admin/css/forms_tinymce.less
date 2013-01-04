@@ -17,15 +17,48 @@
 	padding:2px;
 	.borderRadius(2px);
 
-	-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
 	
 	*, *:hover, *:hover * {
 		background:transparent;
 		border:0;
+	}
+	
+	td.mceToolbar {
+		.borderRadius(2px);
+		background:fade(#000, 2.5%);
+		.mceToolbar {
+			opacity:.2;
+		}
+	}
+	td.mceStatusbar {
+		background:fade(#000, 2.5%);
+		font-size:13px;
+		line-height:20px;
+		& > * {
+			opacity:.2;
+		}
+		#f_content_path_row {
+			padding:3px 5px 2px;
+			float:left;
+			a {
+				text-transform:uppercase
+			}
+		}
+		.mceResize {
+			width:25px;
+			height:25px;
+			display:block;
+			float:right;
+			cursor:row-resize;
+		}
+	}
+	.mceIframeContainer {
+		line-height:0px;
 	}
 	
 	&.focus {
@@ -33,26 +66,25 @@
 		border-width:2px;
 		padding:1px;
 		.borderRadius(3px);
-		td.mceToolbar {
-			background:fade(#000, 5%) !important;
-			opacity:1 !important;
+		.boxShadow(inset 0 2px 5px fade(@black, 15%));
+		td.mceToolbar .mceToolbar, td.mceStatusbar > * {
+			opacity:1;
 		}
 	}
 	&:hover, &.focus {
-		.boxShadow(inset 0 2px 5px fade(@black, 15%));
 	}
 	&:hover {
 		border-color:fade(@black, 35%);
+	}
+	
+	.mceLayout {
+		width:100% !important;
 	}
 	
 	// buttons
 	.mceToolbar {
 		margin:0;
 		padding:2px;
-	}
-	td.mceToolbar {
-		.borderRadius(2px);
-		opacity:.2;
 	}
 	td {
 		padding:0;
@@ -91,6 +123,15 @@
 		&.mce_pastetext { background-image:url(/vendor/cc/black/png/clipboard_past_icon&16.png); }
 		&.mce_pasteword { background-image:url(/vendor/cc/black/png/clipboard_past_icon&16.png); }
 		&.mce_code { background-image:url(/vendor/cc/black/png/brackets_icon&16.png); }
+		&.mce_myinsertimage { background-image:url(/vendor/cc/black/png/picture_icon&16.png); }
+	}
+	.mceSeparator {
+		display:block;
+		width:1px;
+		height:20px;
+		margin:1px 4px;
+		border-right:1px solid fade(#fff, 80%);
+		border-left:1px solid fade(#000, 20%);
 	}
 	
 	

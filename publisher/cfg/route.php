@@ -25,22 +25,31 @@ class Route extends \Lemmon\Route
 			$this->register('home', 'admin');
 			$this->register('site', '/');
 
-			$this->register('crud', 'admin/@$section/$action/$id');
-			$this->register('section', 'admin/@$section/$page');
+			$this->register('section', 'admin/@%1/%2');
+
 			$this->register('create', 'admin/@$section/create');
 			$this->register('update', 'admin/@$section/update/$id');
 			$this->register('delete', 'admin/@$section/delete/$id');
+			$this->register('crud', 'admin/@$section/$action/$id');
 
 			$this->register('login', 'admin/login');
 			$this->register('logout', 'admin/logout');
 		}
-		elseif (substr($this->getSelf(), -4)=='.css')
+		elseif (substr($this->getSelf(), -4) == '.css')
 		{
 			//
 			// services
 			//
 			Application::setController('templates');
 			Application::setAction('css');
+		}
+		elseif ($this->match('*/uploads(/0$dim)$image$', ['dim' => '\d*x\d*\w*', 'image' => '.*\.(jpe?g|gif|png)']))
+		{
+			//
+			// uploads
+			//
+			Application::setController('uploads');
+			Application::setAction('image');
 		}
 		else
 		{
@@ -53,6 +62,12 @@ class Route extends \Lemmon\Route
 				Application::setController('pages');
 				Application::setAction('subpage');
 			}
+			elseif ($this->match('b/$id', ['id' => '\d+']))
+			{
+				// posts
+				Application::setController('posts');
+				Application::setAction('detail');
+			}
 			else
 			{
 				// frontpage
@@ -61,6 +76,8 @@ class Route extends \Lemmon\Route
 
 			$this->register('home', '/');
 			$this->register('page', 'p/$id');
+			$this->register('post', 'b/$id');
+			$this->register('category', 'c/$id');
 		}
 	}
 
@@ -86,6 +103,12 @@ class Route extends \Lemmon\Route
 	function getTemplate($link)
 	{
 		return $this->to('user/template/' . $link);
+	}
+
+
+	function getUpload($file, $dim = null)
+	{
+		return '/user/uploads/' . ($dim ? "0{$dim}/" : '') . $file;
 	}
 
 

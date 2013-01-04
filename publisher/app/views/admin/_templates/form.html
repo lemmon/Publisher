@@ -3,11 +3,11 @@
 {% import '_forms.html' as forms %}
 
 {% block main %}
-<form method="post" action="{{ link.self.includeQuery }}">
+<form method="post" action="{{ link.self.includeQuery }}" {% block form_type %}{% if (block('form_type_upload')) %}enctype="multipart/form-data"{% endif %}{% endblock %}>
 
 	{% block form_header %}<h2>{{ block('title') }}</h2>{% endblock %}
 	
-	<div id="main-second-wrap"><div id="main-second">
+	<div id="main-second"><div class="inner">
 		{% block form_primary %}
 		{% endblock %}
 	</div></div>

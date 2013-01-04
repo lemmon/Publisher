@@ -10,12 +10,6 @@ class Page extends AbstractPage
 	private $_cache = [];
 
 
-	static function locked()
-	{
-		return Pages::locked();
-	}
-
-
 	static function getOptionsFor($model)
 	{
 		return Languages::find(['!locale' => null]);
@@ -30,7 +24,12 @@ class Page extends AbstractPage
 
 	function getChildren()
 	{
-		return self::locked() ? new QueryPages(['parent_id' => $this->id]) : parent::getChildren();
+		return Application::$isFrontend
+			// accessible for frontend templating
+			? new QueryPages(['parent_id' => $this->id])
+			// get generic children
+			: parent::getChildren()
+			;
 	}
 
 

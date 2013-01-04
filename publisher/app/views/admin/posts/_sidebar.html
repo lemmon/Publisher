@@ -1,3 +1,9 @@
+<h3>{{ "Edit"|t }}</h3>
+<ul>
+	<li class="active"><a href="{{ link.to(':section', {section: 'posts'}) }}">{{ "Posts"|t }}</a></li>
+	<li class="active_"><a href="{{ link.to(':section', {section: 'categorie'}) }}">{{ "Categories"|t }}</a></li>
+</ul>
+
 <h3>{{ "Languages"|t }}</h3>
 <ul>
 	<li {% if (not link.param(3))%}class="active"{% endif %}><a href="{{ link.to(':section') }}">{{ "Browse all"|t }}</a></li>

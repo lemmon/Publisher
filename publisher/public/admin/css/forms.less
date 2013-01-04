@@ -34,10 +34,12 @@ form {
 }
 
 label.label {
-	display:inline;
+	display:inline-block;
 	line-height:19px;
+	line-height:1em;
+	padding:2px 0;
 	position:relative;
-	top:-1px;
+	//top:-1px;
 	font-size:@baseFontSize - 2px;
 	color:fade(@black, 65%);
 	span {
@@ -59,11 +61,11 @@ label.label {
 	}
 	.flash_error {
 		background:fade(@red, 35%);
-		border-bottom:1px solid fade(@red, 65%);
+		//border-bottom:1px solid fade(@red, 65%);
 	}
 	.flash_notice {
 		background:fade(@yellow, 35%);
-		border-bottom:1px solid fade(@yellow, 65%);
+		//border-bottom:1px solid fade(@yellow, 65%);
 	}
 }
 
@@ -85,11 +87,11 @@ input[type=text], input[type=password], select, textarea {
 	font-family:inherit;
 	background:mix(@black, @backgroundColor, 2%);
 	border:1px solid fade(@black, 5%);
-	-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
 	-webkit-box-sizing:border-box;
 	 -khtml-box-sizing:border-box;
 	   -moz-box-sizing:border-box;
@@ -102,9 +104,9 @@ input[type=text], input[type=password], select, textarea {
 		border-width:2px;
 		padding:6px;
 		.borderRadius(3px);
+		.boxShadow(inset 0 2px 5px fade(@black, 15%));
 	}
 	&:hover, &:focus {
-		.boxShadow(inset 0 2px 5px fade(@black, 15%));
 	}
 	&:hover {
 		border-color:fade(@black, 35%);
@@ -168,7 +170,7 @@ button {
 	
 	font-family:inherit;
 	font-weight:400;
-	.animate();
+	//.animate();
 	
 	&.primary {
 		background:@linkColor;

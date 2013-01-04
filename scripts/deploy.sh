@@ -3,8 +3,8 @@
 rsync -rlptDzv --delete --delete-excluded --delete-after \
 	--include ".htaccess" \
 	--filter "P cache" \
-	--filter "H config.php" \
 	--filter "P config.php" \
+	--filter "H config.php" \
 	--exclude ".git*" \
 	--exclude ".git/*" \
 	--exclude "*.tmproj" \

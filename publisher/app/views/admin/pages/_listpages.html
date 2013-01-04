@@ -6,6 +6,13 @@
 		<td class="strong {% if (level) %}child-node{% endif %}" {% if (level) %}style="padding-left:{{ level*21 + 7 }}px;background-position:{{ level*21 - 16 }}px 5px"{% endif %}>
 			<a href="{{ link.to(':update', _page) }}">{{ _page.name }}</a>
 		</td>
+		<td class="tiny">
+			{% if (_page.template) %}
+			{{ _page.template }}
+			{% else %}
+			&nbsp;
+			{% endif %}
+		</td>
 		<td class="ar">
 			<span class="tag state-{{ _page.state.name|asciize }}">{{ _page.state.name|t }}</span>
 		</td>

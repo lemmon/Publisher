@@ -1,9 +1,21 @@
 <?php
+
+use \Lemmon\Form\Scaffold;
+
 /**
 * 
 */
-class Admin_Pages_Controller extends \Lemmon\Model\Scaffold
+class Admin_Pages_Controller extends Admin_Backend_Controller
 {
+
+
+	function __init()
+	{
+		if ($f = $_POST)
+		{
+			$_SESSION['defaults']['locale'] = $f['locale'];
+		}
+	}
 
 
 	function index()
@@ -15,30 +27,45 @@ class Admin_Pages_Controller extends \Lemmon\Model\Scaffold
 		}
 		else
 		{
-			return \Lemmon\Template::display('empty', self::getData(true));
+			return $this->template->display('empty');
 		}
+	}
+
+
+	private function _getOptions()
+	{
+		$this->data += [
+			'pages'   => Pages::fetchActiveByLanguage(),
+			'locales' => Locales::fetchAllWithPreferred(),
+		];
 	}
 
 
 	function create()
 	{
-		$this->data['pages']   = Pages::fetchActiveByLanguage();
-		$this->data['locales'] = Locales::findAllWithPreferred();
-		return parent::create();
+		// options
+		$this->_getOptions();
+		// scaffolding
+ 		return Scaffold::create($this, [
+			'default' => $_SESSION['defaults'],
+		]);
 	}
 
 
 	function update()
 	{
-		$this->data['pages']   = Pages::fetchActiveByLanguage();
-		$this->data['locales'] = Locales::findAllWithPreferred();
-		return parent::update();
+		// options
+		$this->_getOptions();
+		// scaffolding
+		return Scaffold::update($this);
 	}
 
 
+	/** /
 	function rebuild()
 	{
 		Pages::rebuildTree();
 		die('--ok');
 	}
+	/**/
 }

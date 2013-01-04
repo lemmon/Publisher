@@ -1,0 +1,19 @@
+{% extends 'admin/layout.html' %}
+
+{% block title %}{{ "Media"|t }}{% endblock %}
+
+{% block container %}
+<section class="modal">
+
+	<form method="get" action="{{ link.to(':create') }}">
+		
+		<h2>{{ block('title') }}</h2>
+		<p>{{ "You don't have any media uploaded yet. Upload your first one right now."|t }}</p>
+		<div class="buttons" style="margin-top:15px;">
+			<button class="primary" type="submit">{{ "Upload your first file"|t }}&hellip;</button>
+		</div>
+		
+	</form>
+
+</section>
+{% endblock %}

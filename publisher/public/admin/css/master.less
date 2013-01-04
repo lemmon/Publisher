@@ -49,81 +49,61 @@
 		background:@orange;
 	}
 }
+.note {
+	color:@gray;
+}
 
 // Header
 // ------------------------------------------------------------ //
 
 header {
-	height:90px;
-	background:@darkGray;
-	color:@white;
+	@_h: @gutterWidth * 1.5;
+	height:@_h;
+	background:mix(@black, @backgroundColor, 5%);
+	font-size:@baseFontSize - 1px;
+	font-weight:400;
+	line-height:@_h;
+	text-transform:uppercase;
 	a {
-		color:@white;
+		color:@black;
 		text-decoration:none;
 		display:block;
-		background:transparent !important;
+		background:transparent;
 	}
 	h1 {
+		line-height:inherit;
 		float:left;
-		line-height:25px;
-		margin:@gutterWidth;
-		width:@railWidth;
-		a {
-			color:fade(@white, 85%);
-			font-size:36px;
-			letter-spacing:-2px;
-			font-weight:800;
-			font-weight:100;
+		margin:0 @gutterWidth;
+	}
+	nav {
+		float:left;
+		//letter-spacing:1px;
+		margin-left:@gutterWidth / 2;
+		li {
+			float:left;
+			//margin-right:1px;
+			a {
+				padding:0 (@gutterWidth / 1.5);
+				color:fade(@textColor, 50%);
+				&:hover {
+					color:fade(@textColor, 85%);
+				}
+			}
+			&.active a {
+				background:@backgroundColor;
+				color:@textColor;
+			}
 		}
-		/*
-		margin-left:3px;
-		a {
-			.imageReplace('../img/logo.png', 185px, 60px);
-		}
-		*/
 	}
 }
 
-// Nav
-// ------------------------------------------------------------ //
-
-nav {
-	float:left;
-	text-transform:uppercase;
-	font-size:@baseFontSize - 1px;
-	font-weight:200;
-	letter-spacing:1px;
-	margin-left:@gutterWidth / 2;
-	li {
-		float:left;
-		line-height:85px;
-		margin-right:1px;
-		a {
-			background:transparent;
-			border-top:5px solid transparent;
-			display:block;
-			padding:0 (@gutterWidth / 2);
-			color:fade(@white, 65%);
-			.animate();
-			font-weight:400;
-		}
-		&.active a {
-			border-color:@yellow;
-			color:@white;
-			font-weight:600;
-		}
-		a:hover {
-			color:@white;
-			border-color:@yellow;
-		}
-	}
-}
 
 // Container
 // ------------------------------------------------------------ //
 
+@_linkBackgroundColor: fade(@yellow, 50%);
+
 #container {
-	@_linkBackgroundColor: fade(@yellow, 50%);
 	a:hover {
 		color:@black;
 		background-color:@_linkBackgroundColor;
@@ -137,19 +117,38 @@ nav {
 
 #page-title {
 	overflow:hidden;
-	line-height:@baseLineHeight * 2;
 	h2 {
 		float:left;
 		margin-right:15px;
+		line-height:@baseLineHeight * 2;
+	}
+	a {
+		display:inline-block;
+		text-decoration:none;
+		background:fade(@gray, 10%);
+		color:fade(@black, 50%);
+		padding:0 5px;
+		.borderRadius();
+		&:hover {
+			color:@black;
+			background:@_linkBackgroundColor;
+		}
+		&.active {
+			background:@gray;
+			color:@white;
+		}
 	}
 	.form-action {
 		float:left;
-		margin-top:2px;
+		margin-top:@baseLineHeight / 2 + 0px;
+	}
+	.form-section {
+		float:right;
+		margin-top:@baseLineHeight / 2 + 0px;
 	}
 }
 
 #rail {
-	text-align:right;
 	font-size:@baseFontSize - 2px;
 	h3 {
 		font-size:20px;
@@ -160,6 +159,7 @@ nav {
 	ul {
 		//margin-bottom:@gutterWidth;
 		margin-bottom:@baseFontSize;
+		//padding-left:@baseFontSize;
 		li.active {
 			a {
 				font-weight:600;
@@ -230,4 +230,35 @@ td.child-node {
 
 footer {
 	font-size:.8em;
+}
+
+// Popup
+// ------------------------------------------------------------ //
+
+.popup {
+	z-index:10001;
+	.overlay {
+		position:fixed;
+		left:0;
+		right:0;
+		top:0;
+		bottom:0;
+		height:auto;
+		background:fade(@darkGray, 85%);
+	}
+	.window {
+		position:fixed;
+		left:7%;
+		right:7%;
+		top:7%;
+		bottom:7%;
+		height:auto;
+		border:1px solid #000;
+		iframe {
+			width:100%;
+			height:100%;
+			background:#fff;
+		}
+	}
+	display:none;
 }

@@ -2,6 +2,8 @@
 
 {% block title %}{{ item.name }}{% endblock %}
 
+{% block form_type_upload %}YES{% endblock %}
+
 {% block form_primary %}
 <fieldset>
 	
@@ -15,27 +17,54 @@
 		{{ forms.text('content', f.content) }}
 	</p>
 	
-	{# #
-	{{ f|dump }}
-	{{ item|dump }}
-	{# #}
-
 </fieldset>
 {% endblock %}
 
 {% block form_secondary %}
 <fieldset>
+	
+	{{ forms.p('image', flash) }}
+		{{ forms.label('image', null, 'optional') }}
+		<span class="fieldset">
+			{% if (f.image) %}
+			<span class="image"><img src="{{ link.upload(f.image) }}" style="width:100%"></span>
+			{% endif %}
+			{{ forms.image('image') }}
+		</span>
+	</p>
 
 	{{ forms.p('state_id', flash) }}
 		{{ forms.label('state_id', null, 'required') }}
 		<span class="fieldset">
-		{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, item.optionsForState) }}
+		{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}
 		</span>
 	</p>
 
-	{{ forms.p('language_id', flash) }}
-		{{ forms.label('language_id', null, 'required') }}
-		{{ forms.select('language_id', f.language_id, item.customOptionsForLanguage) }}
+	{{ forms.p('locale', flash) }}
+		{{ forms.label('locale', null, 'required') }}
+		{{ forms.select('locale', f.locale, locales) }}
+	</p>
+
+	<p>
+		{{ forms.label('categories', null, 'optional') }}
+		<span class="fieldset" id="f_categories">
+			
+			{% for _locale, _categories in categories %}
+			<span class="locale-{{ _locale }}">
+				{% for _category in _categories %}
+				<label>
+					<input type="checkbox" name="categories[]" value="{{ _category.id }}" {%- if (item.categories[_category.id]) %} checked{% endif %}>
+					{{ _category.name }}
+					{#
+					<span class="tag">{{ "Foo"|t }}</span>
+					#}
+					<br>
+				</label>
+				{% endfor %}
+			</span>
+			{% endfor %}
+			
+		<span>
 	</p>
 
 </fieldset>
@@ -46,12 +75,6 @@
 	<button class="primary" type="submit">{{ "Update post"|t }}</button>
 	<a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
 	
-{% endblock %}
-
-{% block rail %}
-
-	{% include '_sidebar.html' %}
-
 {% endblock %}
 
 {% block script %}
@@ -81,30 +104,38 @@
 <script>
 $(function(){
 	
+	//
+	// locales
 	var $thispage = $('#parent_id_thispage');
 	var languages = {
-		{% for _l in item.customOptionsForLanguage %}
+		{% for _l in locales %}
 		{% if (loop.index0) %},{% endif -%}
 		{{ _l.id }}: {code: '{{ _l.country.code|lower }}'}
 		{% endfor %}
 	};
 	
 	function format(state){
-		if (!state.id) return 'n/a';
-		return '<img src="' + '{{ link.vendor('flags/flags-iso/16/@code.png') }}'.replace('@code', languages[state.id].code) + '">' + state.text;
+		if (state.id){
+			return '<img src="' + '{{ link.vendor('flags/flags-iso/16/@code.png') }}'.replace('@code', languages[state.id].code) + '">' + state.text;
+		} else{
+			if (state.text)
+				return '<strong>' + state.text + '</strong>';
+		}
 	}
 	
-	$('#f_parent_id').find('span').filter(':not(.lang-' + $('#f_language_id').val() + ')').hide();
-	$('#f_language_id').select2({
+	$('#f_parent_id').find('span').filter(':not(.locale-' + $('#f_locale').val() + ')').hide();
+	$('#f_locale').select2({
 		width: '100%',
 		formatResult: format,
 		formatSelection: format
 	}).on('change', function(e){
-		$('#f_parent_id').find('span').filter('.lang-' + e.val).show();
-		$('#f_parent_id').find('span').filter(':not(.lang-' + e.val + ')').hide();
+		$('#f_parent_id').find('span').filter('.locale-' + e.val).show();
+		$('#f_parent_id').find('span').filter(':not(.locale-' + e.val + ')').hide();
 		$('#f_parent_id').find('input:first').click();
 	});
 	
+	//
+	// parent
 	$('#f_parent_id').find('input').click(function(){
 		var $label = $(this).parent();
 		$thispage.insertAfter($label).css('padding-left', $label.css('padding-left'));
@@ -112,5 +143,5 @@ $(function(){
 	
 })
 </script>
+{% include '_tinymce.html' %}
 {% endblock %}
-

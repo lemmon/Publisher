@@ -2,7 +2,7 @@
 /**
 * 
 */
-class Admin_Index_Controller extends Application
+class Admin_Index_Controller extends Admin_Backend_Controller
 {
 
 

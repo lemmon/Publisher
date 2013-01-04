@@ -14,7 +14,7 @@ class Env extends \Lemmon\Environment
 		if (self::isDev())
 		{
 			// template dev environment
-			Lemmon\Template::setEnvironment([
+			\Lemmon\Template\Template::setDefaultEnvironment([
 				'auto_reload' => true,
 				'debug'       => true,
 			]);
@@ -25,5 +25,8 @@ class Env extends \Lemmon\Environment
 			// TODO
 			die('EnvBase/ PRODUCTION');
 		}
+
+		// uploads
+		\Lemmon\Model\Schema::setDefaultUploadDir(BASE_DIR . '/user/uploads');
 	}
 }

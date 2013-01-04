@@ -21,6 +21,9 @@ class QueryPage
 
 	function getPages()
 	{
-		return (new QueryPages(['locale' => $this->_page->locale]))->findByParent($this->_page->parent_id);
+		return new QueryPages([
+			'locale'    => $this->_page->locale,
+			'parent_id' => $this->_page->parent_id,
+		]);
 	}
 }

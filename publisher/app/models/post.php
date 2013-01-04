@@ -1,4 +1,7 @@
 <?php
+
+use \Lemmon\Sql\Query as SqlQuery;
+
 /**
 * 
 */
@@ -6,51 +9,19 @@ class Post extends \Lemmon\Model\AbstractRow
 {
 	static protected $model = 'Posts';
 
+	private $_cache = [];
+	private $_data = [];
 
-	static function getCustomOptionsForLanguage()
+
+	function getUrl()
 	{
-		return Languages::find([
-			'id' => (new \Lemmon\Sql\Query())->select('pages')->distinct('language_id'),
-		]);
-		// TODO
-		#return Languages::find()->has('Pages');
-		// TODO
-		#return Languages::find()->has('Pages', ['parent_id' => null, '!state_id' => null]);
-		// TODO
-		#return Languages::find(['Pages.parent_id' => null, '!Pages.state_id' => null]);
-	}
-
-
-	/*
-	static function getOptionsForLanguageInGroups()
-	{
-		$groups = [];
-		if ($active = (new \Lemmon\Sql\Query())->select('pages')->distinct('language_id'))
-		{
-			$groups[] = [
-				'caption' => '-',
-				'data'    => Languages::find(['id' => $active]),
-			];
-		}
-		$groups[] = [
-			'caption' => '-',
-			'data'    => Languages::find(['!locale' => null, '!id' => $active]),
-		];
-		
-		return $groups;
-	}
-	*/
-
-
-	static function getOptionsForState()
-	{
-		return States::getOptions();
+		return Route::getInstance()->to(':post', $this);
 	}
 
 
 	function getLanguage()
 	{
-		return Language::find($this->language_id);
+		return Locales::fetch($this->locale);
 	}
 
 
@@ -60,45 +31,62 @@ class Post extends \Lemmon\Model\AbstractRow
 	}
 
 
+	function getCategories()
+	{
+		if (array_key_exists('categories', $this->_cache))
+			return $this->_cache['categories'];
+		else
+			return $this->_cache['categories'] = Categories::find([
+				'id' => (new SqlQuery)->select('posts_to_categories')->where('post_id', $this->id)->distinct('category_id'),
+			])->allByPrimary();
+	}
+
+
 	protected function onValidate(&$f)
 	{
+		// content
+		$f['content'] = \Lemmon\String::sanitizeHtml($f['content']);
 		// published
 		if ($f['state_id'] and !$this->dataDefault['state_id'])
 		{
-			$f['published_at'] = new \Lemmon\Sql\Expression('NOW()');
+			$f['published_at'] = ($this->dataDefault['published_at']) ?: new \Lemmon\Sql\Expression('NOW()');
 		}
 		elseif (!$f['state_id'])
 		{
 			$f['published_at'] = null;
 		}
-		else
+		// categories
+		$this->_data = $f;
+		unset($f['categories']);
+	}
+
+
+	private function _saveChildren()
+	{
+		// remove old categories
+		(new SqlQuery)->delete('posts_to_categories')->where([
+			'post_id'      => $this->id,
+			'!category_id' => $this->_data['categories'],
+		])->exec();
+		// insert categories
+		if ($this->_data['categories']) foreach ($this->_data['categories'] as $_id)
 		{
-			#dump($f);
-			#die('--v');
+			(new SqlQuery)->replace('posts_to_categories')->set([
+				'post_id'     => $this->id,
+				'category_id' => $_id,
+			])->exec();
 		}
-	}
-
-
-	protected function onBeforeCreate()
-	{
-		dump('onBeforeCreate');
-	}
-
-
-	protected function onBeforeUpdate()
-	{
-		dump('onBeforeUpdate');
 	}
 
 
 	protected function onAfterCreate()
 	{
-		dump('onAfterCreate');
+		$this->_saveChildren();
 	}
 
 
 	protected function onAfterUpdate()
 	{
-		dump('onAfterUpdate');
+		$this->_saveChildren();
 	}
 }

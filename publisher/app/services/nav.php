@@ -43,6 +43,6 @@ class Nav
 
 	function getRoot()
 	{
-		return (new QueryPage(self::$_page->getRoot()));
+		return (new QueryPage(self::$_page ? self::$_page->getRoot() : null));
 	}
 }

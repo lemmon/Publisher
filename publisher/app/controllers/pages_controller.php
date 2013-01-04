@@ -2,30 +2,20 @@
 /**
 * 
 */
-class Pages_Controller extends Application
+class Pages_Controller extends Frontend_Controller
 {
-
-
-	function __init()
-	{
-		$res = parent::__init();
-
-		Pages::lock();
-		$this->data['nav']  = new Nav();
-		
-		return $res;
-	}
 
 
 	function index()
 	{
 		$locale = reset(Locales::fetchActive());
+		$page   = Pages::find(['locale' => $locale['id']])->first();
 		//
-		Nav::setCurrentPage($page = Pages::find(['locale' => $locale['id']])->first());
-		//
+		Nav::setCurrentPage($page);
 		$this->data['page'] = $page;
 		//
- 		return Template::display('index', self::getData(true));
+		if ($_template = $page->template)
+ 			return $this->template->display($_template);
 	}
 
 
@@ -35,10 +25,10 @@ class Pages_Controller extends Application
 		if ($id = $this->route->id and $page = Page::find($id))
 		{
 			Nav::setCurrentPage($page);
-			//
 			$this->data['page'] = $page;
 			//
-	 		return Template::display('index', self::getData(true));
+			if ($_template = $page->template)
+	 			return $this->template->display($_template);
 		}
 		else
 		{

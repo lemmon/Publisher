@@ -2,7 +2,7 @@
 /**
 * 
 */
-class Templates_Controller extends Application
+class Templates_Controller extends Frontend_Controller
 {
 
 

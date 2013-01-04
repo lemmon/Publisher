@@ -11,7 +11,8 @@
 		<thead>
 			<tr>
 				<th width="1">&nbsp;</th>
-				<th width="100%">{{ "Name"|t }}</th>
+				<th width="60%">{{ "Name"|t }}</th>
+				<th width="40%">{{ "Template"|t }}</th>
 				<th width="1" class="ar">{{ "State"|t }}</th>
 				<th width="1" class="ac sel">&uarr;</th>
 				<th width="1" class="ar">{{ "Last Update"|t }}</th>
@@ -21,10 +22,12 @@
 		<tbody>
 			
 			{% for _locale in locales %}
+			{% if (pages.langs[_locale.id]) %}
 			
 				<tr>
 					<th class="image"><img src="{{ link.vendor('flags/flags-iso/16/{$(country.code)}.png', _locale) }}" alt="{{ _locale.caption }}"></th>
 					<th>{{ _locale.caption }}</th>
+					<th>&nbsp;</th>
 					<th>&nbsp;</th>
 					<th class="sel">&nbsp;</th>
 					<th colspan="2">&nbsp;</th>
@@ -32,12 +35,13 @@
 
 				{% include '_listpages.html' with {'_pages': pages.langs[_locale.id]} %}
 
+			{% endif %}
 			{% endfor %}
 
 		</tbody>
 		<tfoot class="line">
 			<tr>
-				<td colspan="6">&nbsp;</td>
+				<td colspan="7">&nbsp;</td>
 			</tr>
 		</tfoot>
 

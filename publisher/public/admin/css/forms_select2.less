@@ -218,11 +218,16 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 	border:1px solid fade(@black, 5%);
 	height:32px;
 	line-height: 32px;
-	-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	//        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+	-webkit-transition:none;
+	   -moz-transition:none;
+	    -ms-transition:none;
+	     -o-transition:none;
+	        transition:none;
 	color:@black;
 	cursor:text;
 
@@ -243,9 +248,12 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 }
 .select2-container-active .select2-choice,
 .select2-container .select2-choice:hover {
-	.boxShadow(inset 0 2px 5px fade(@black, 15%));
 	border-color:fade(@black, 35%);
 	background:mix(@black, @backgroundColor, 2%) !important;
+    -webkit-box-shadow: none;
+    -moz-box-shadow   : none;
+    -o-box-shadow     : none;
+    box-shadow        : none;
 }
 .select2-dropdown-open .select2-choice {
 	.boxShadow(0 2px 5px fade(@black, 15%) !important);

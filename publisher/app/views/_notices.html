@@ -1,17 +1,17 @@
-{% if (flash.messages.notice or flash.messages.error) %}
+{% if (flash.notices or flash.errors) %}
 <div id="notices">
 
-	{% if flash.messages.notice %}
+	{% if flash.notices %}
 	<div class="flash_notice">
-		{% for line in flash.messages.notice %}
+		{% for line in flash.notices %}
 		{{ line }}<br>
 		{% endfor %}
 	</div>
 	{% endif %}
 
-	{% if flash.messages.error %}
+	{% if flash.errors %}
 	<div class="flash_error">
-		{% for line in flash.messages.error %}
+		{% for line in flash.errors %}
 		{{ line }}<br>
 		{% endfor %}
 	</div>

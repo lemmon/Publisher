@@ -24,6 +24,9 @@ class AbstractPage extends \Lemmon\Model\AbstractRow
 		// content
 		$this->_temp['content'] = $f['content'];
 		unset($f['content']);
+		// template
+		if ($f['template'])
+			$f['template'] = \Lemmon\String::asciize($f['template']);
 	}
 
 
@@ -45,13 +48,12 @@ class AbstractPage extends \Lemmon\Model\AbstractRow
 
 	private function _insertContent()
 	{
-		#dump($this->_temp);die('--c');
 		(new SqlQuery)->replace('pages_blocks')->set([
 			'page_id'    => $this->id,
 			'name'       => 'main-content',
 			'content'    => \Lemmon\String::sanitizeHtml($this->_temp['content']),
-			'created_at' => new SqlExpression('NOW()'),
-			'updated_at' => new SqlExpression('NOW()'),
+			//'created_at' => new SqlExpression('NOW()'),
+			//'updated_at' => new SqlExpression('NOW()'),
 		])->exec();
 	}
 

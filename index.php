@@ -10,7 +10,8 @@ require 'publisher/Bootstrap.php';
 
 // run application
 Application::run([
-	'env'    => new Env,
-	'db'     => new Db,
-	'route'  => new Route,
+	'env'     => new Env,
+	'db'      => new Db,
+	'route'   => new Route,
+	'config'  => $publisher_config,
 ]);

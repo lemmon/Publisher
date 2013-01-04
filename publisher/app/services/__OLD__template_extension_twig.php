@@ -25,6 +25,7 @@ class TemplateExtensionTwig extends Twig_Extension
 			// Strings
 			'asciize'      => new Twig_Filter_Function('Lemmon\String::asciize'),
 			'html'         => new Twig_Filter_Function('Lemmon\String::html', ['is_safe' => ['html']]),
+			'human'        => new Twig_Filter_Function('Lemmon\String::human'),
 			'line'         => new Twig_Filter_Function('Lemmon\String::line'),
 			'p'            => new Twig_Filter_Function('Lemmon\String::paragraph'),
 			'text_to_html' => new Twig_Filter_Function('Lemmon\String::text', ['pre_escape' => 'html', 'is_safe' => ['html']]),
