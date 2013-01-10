@@ -8,6 +8,17 @@ class Posts_Controller extends Frontend_Controller
 
 	function detail()
 	{
-		return $this->template->display('post');
+		// nav
+		if ($id = $this->route->id and $post = Post::find($id))
+		{
+			Nav::setCurrentLocale($post->locale);
+			$this->data['post'] = $post;
+			//
+			return $this->template->display('post');
+		}
+		else
+		{
+			die('404');
+		}
 	}
 }

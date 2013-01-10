@@ -24,12 +24,13 @@ class Page extends AbstractPage
 
 	function getChildren()
 	{
-		return Application::$isFrontend
-			// accessible for frontend templating
-			? new QueryPages(['parent_id' => $this->id])
-			// get generic children
-			: parent::getChildren()
-			;
+		if ($this->id)
+			return Application::$isFrontend
+				// accessible for frontend templating
+				? new QueryPages(['parent_id' => $this->id])
+				// get generic children
+				: parent::getChildren()
+				;
 	}
 
 

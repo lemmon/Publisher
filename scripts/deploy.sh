@@ -5,6 +5,8 @@ rsync -rlptDzv --delete --delete-excluded --delete-after \
 	--filter "P cache" \
 	--filter "P config.php" \
 	--filter "H config.php" \
+	--filter "P user/uploads" \
+	--filter "H user/uploads" \
 	--exclude ".git*" \
 	--exclude ".git/*" \
 	--exclude "*.tmproj" \
@@ -13,5 +15,6 @@ rsync -rlptDzv --delete --delete-excluded --delete-after \
 	--exclude "cache/*" \
 	--exclude "tests" \
 	--exclude "scripts" \
+	--exclude "user/uploads" \
 	. \
 	lemmon@37.9.171.73:Customers/alternativnamedicina.eu/www

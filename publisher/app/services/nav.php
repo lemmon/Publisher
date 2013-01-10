@@ -7,6 +7,7 @@ class Nav
 	private static $_instance;
 	private static $_cache = array();
 	
+	private static $_locale;
 	private static $_page;
 
 
@@ -23,9 +24,22 @@ class Nav
 	}
 
 
+	public static function setCurrentLocale($locale)
+	{
+		self::$_locale = $locale;
+	}
+
+
+	public static function getCurrentLocale()
+	{
+		return self::$_locale;
+	}
+
+
 	public static function setCurrentPage($page)
 	{
 		self::$_page = $page;
+		self::setCurrentLocale($page->locale);
 	}
 
 
@@ -43,6 +57,13 @@ class Nav
 
 	function getRoot()
 	{
-		return (new QueryPage(self::$_page ? self::$_page->getRoot() : null));
+		if ($page = self::$_page)
+			return (new QueryPage(self::$_page));
+		else
+		{
+			$page = new Page;
+			$page->locale = self::$_locale;
+			return (new QueryPage($page));
+		}
 	}
 }
