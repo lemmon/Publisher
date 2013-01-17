@@ -27,22 +27,25 @@ class AbstractPage extends \Lemmon\Model\AbstractRow
 		// template
 		if ($f['template'])
 			$f['template'] = \Lemmon\String::asciize($f['template']);
+		// top
+		if (!$f['top'])
+			$f['top'] = 99999;
 	}
 
 
 	protected function onAfterCreate()
 	{
 		$this->_insertContent();
+		$this->_updateTop();
 		Pages::rebuildTree();
-		#$this->_updateTop();
 	}
 
 
 	protected function onAfterUpdate()
 	{
 		$this->_insertContent();
+		$this->_updateTop();
 		Pages::rebuildTree();
-		#$this->_updateTop();
 	}
 
 
@@ -51,9 +54,8 @@ class AbstractPage extends \Lemmon\Model\AbstractRow
 		(new SqlQuery)->replace('pages_blocks')->set([
 			'page_id'    => $this->id,
 			'name'       => 'main-content',
-			'content'    => \Lemmon\String::sanitizeHtml($this->_temp['content']),
-			//'created_at' => new SqlExpression('NOW()'),
-			//'updated_at' => new SqlExpression('NOW()'),
+			#'content'    => \Lemmon\String::sanitizeHtml($this->_temp['content']),
+			'content'    => $this->_temp['content'],
 		])->exec();
 	}
 
@@ -61,27 +63,18 @@ class AbstractPage extends \Lemmon\Model\AbstractRow
 	private function _updateTop()
 	{
 		$top = $this->top;
-		$pairs = (new SqlQuery)->select('pages')->where('parent_id', $this->parent_id)->pairs('id', 'name');
-		unset($pairs[$this->id]);
-		// insert current item
-		if (!$top or $top > count($pairs))
-		{
-			$pairs[$this->id] = '** THIS **';
-		}
-		elseif ($top <= 1)
-		{
-			$pairs = [$this->id => '** THIS **'] + $pairs;
-		}
-		else
-		{
-			$pairs = array_slice($pairs, 0, $top-1, true) + [$this->id => '** THIS **'] + array_slice($pairs, $top-1, null, true);
-		}
-		// update db
-		dump($pairs);
-		die('--3');
-		foreach (array_keys($pairs) as $_top => $_id)
-		{
-			$this->query('UPDATE $_table SET `top`=%i WHERE `id`=%i LIMIT 1', $_top+1, $_id);
-		}
+		$pairs = (new SqlQuery)->select('pages')->where([
+			'locale'    => $this->locale,
+			'parent_id' => $this->parent_id,
+			'!id'       => $this->id,
+		])->order('top')->distinct('id');
+		if ($top < 1)
+			$top = 1;
+		elseif ($top > count($pairs))
+			$top = count($pairs) + 1;
+		foreach (array_slice($pairs, 0, $top - 1) as $i => $id)
+			(new SqlQuery)->update('pages')->set('top', $i + 1)->where('id', $id)->exec();
+		foreach (array_slice($pairs, $top - 1, null) as $i => $id)
+			(new SqlQuery)->update('pages')->set('top', $i + $top + 1)->where('id', $id)->exec();
 	}
 }

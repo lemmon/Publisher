@@ -4,6 +4,19 @@
 @import 'variables.less';
 @import 'mixins.less';
 
+// Font Awesome
+// ------------------------------------------------------------ //
+
+@font-face {
+	font-family:'FontAwesome';
+	src:url('/vendor/fontawesome/fontawesome-webfont.eot?v=3.0.1');
+	src:url('/vendor/fontawesome/fontawesome-webfont.eot?#iefix&v=3.0.1') format('embedded-opentype'),
+	    url('/vendor/fontawesome/fontawesome-webfont.woff?v=3.0.1') format('woff'),
+	    url('/vendor/fontawesome/fontawesome-webfont.ttf?v=3.0.1') format('truetype');
+	font-weight:normal;
+	font-style:normal;
+}
+
 // Styles
 // ------------------------------------------------------------ //
 
@@ -93,10 +106,13 @@
 		display:block;
 		width:24px;
 		height:24px;
+		line-height:24px;
+		font-size:14px;
+		font-family:'FontAwesome';
+		text-align:center;
+		color:#000;
 		margin-right:2px;
-		background-image:url(/vendor/tiny_mce/themes/advanced/img/icons.gif);
-		background-position:4px 4px;
-		background-repeat:no-repeat;
+		background:none !important;
 		.borderRadius(2px);
 		opacity:.35;
 		&:hover {
@@ -105,25 +121,24 @@
 		&.mceButtonActive {
 			opacity:1;
 		}
-		&.mce_bold { background-image:url(/vendor/cc/black/png/font_bold_icon&16.png); }
-		&.mce_italic { background-image:url(/vendor/cc/black/png/font_italic_icon&16.png); }
-		&.mce_underline { background-image:url(/vendor/cc/black/png/font_underline_icon&16.png); }
-		&.mce_bullist { background-image:url(/vendor/cc/black/png/list_bullets_icon&16.png); }
-		&.mce_numlist { background-image:url(/vendor/cc/black/png/list_num_icon&16.png); }
-		&.mce_undo { background-image:url(/vendor/cc/black/png/undo_icon&16.png); }
-		&.mce_redo { background-image:url(/vendor/cc/black/png/redo_icon&16.png); }
-		&.mce_justifyleft { background-image:url(/vendor/cc/black/png/align_left_icon&16.png); }
-		&.mce_justifyright { background-image:url(/vendor/cc/black/png/align_right_icon&16.png); }
-		&.mce_justifycenter { background-image:url(/vendor/cc/black/png/align_center_icon&16.png); }
-		&.mce_justifyfull { background-image:url(/vendor/cc/black/png/align_just_icon&16.png); }
-		&.mce_link { background-image:url(/vendor/cc/black/png/link_icon&16.png); }
-		&.mce_unlink { background-image:url(/vendor/cc/black/png/disconnected_icon&16.png); }
-		&.mce_cleanup { background-image:url(/vendor/cc/black/png/brush_icon&16.png); }
-		&.mce_removeformat { background-image:url(/vendor/cc/black/png/doc_new_icon&16.png); }
-		&.mce_pastetext { background-image:url(/vendor/cc/black/png/clipboard_past_icon&16.png); }
-		&.mce_pasteword { background-image:url(/vendor/cc/black/png/clipboard_past_icon&16.png); }
-		&.mce_code { background-image:url(/vendor/cc/black/png/brackets_icon&16.png); }
-		&.mce_myinsertimage { background-image:url(/vendor/cc/black/png/picture_icon&16.png); }
+		&.mce_bold:before          { content:"\f032"; }
+		&.mce_italic:before        { content:"\f033"; }
+		&.mce_underline:before     { content:"\f0cd"; }
+		&.mce_bullist:before       { content:"\f0ca"; }
+		&.mce_numlist:before       { content:"\f0cb"; }
+		&.mce_undo:before          { content:"\f0e2"; }
+		&.mce_redo:before          { content:"\__"; }
+		&.mce_justifyleft:before   { content:"\f036"; }
+		&.mce_justifyright:before  { content:"\f038"; }
+		&.mce_justifycenter:before { content:"\f037"; }
+		&.mce_link:before          { content:"\f0c1"; }
+		&.mce_unlink:before        { content:"\__"; }
+		&.mce_cleanup:before       { content:"\__"; }
+		&.mce_removeformat:before  { content:"\__"; }
+		&.mce_pastetext:before     { content:"\f0ea"; }
+		&.mce_pasteword:before     { content:"\__"; }
+		&.mce_code:before          { content:"\__"; }
+		&.mce_myinsertimage:before { content:"\f03e"; }
 	}
 	.mceSeparator {
 		display:block;

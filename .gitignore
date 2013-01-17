@@ -7,3 +7,4 @@ config.php
 test_*.php
 scripts/
 *.sh
+*.tmproj

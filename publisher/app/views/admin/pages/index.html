@@ -25,7 +25,7 @@
 			{% if (pages.langs[_locale.id]) %}
 			
 				<tr>
-					<th class="image"><img src="{{ link.vendor('flags/flags-iso/16/{$(country.code)}.png', _locale) }}" alt="{{ _locale.caption }}"></th>
+					<th class="image"><span class="flag" style="background:url({{ link.vendor('flags/{$(country.code)}.png', _locale) }})"></span></th>
 					<th>{{ _locale.caption }}</th>
 					<th>&nbsp;</th>
 					<th>&nbsp;</th>

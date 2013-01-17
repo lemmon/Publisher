@@ -79,12 +79,6 @@
 
 {% block script %}
 <style>
-.select2-choice img,
-.select2-result img {
-	margin-right:5px;
-	position:relative;
-	top:3px;
-}
 #f_parent_id label {
 	display:block;
 }
@@ -116,7 +110,7 @@ $(function(){
 	
 	function format(state){
 		if (state.id){
-			return '<img src="' + '{{ link.vendor('flags/flags-iso/16/@code.png') }}'.replace('@code', languages[state.id].code) + '">' + state.text;
+			return '<i class="flag" style="background:url(' + '{{ link.vendor('flags/@code.png') }}'.replace('@code', languages[state.id].code) + ')"></i>' + state.text;
 		} else{
 			if (state.text)
 				return '<strong>' + state.text + '</strong>';

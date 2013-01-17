@@ -12,7 +12,7 @@
 
 	<p class="fit">
 		{{ forms.label('content', null, 'recommended') }}
-		{{ forms.text('content', f.content|resizeTo('800xm')) }}
+		{{ forms.text('content', f.content) }}
 	</p>
 	
 </fieldset>
@@ -75,14 +75,9 @@
 
 {% block script %}
 <style>
-.select2-choice img,
-.select2-result img {
-	margin-right:5px;
-	position:relative;
-	top:3px;
-}
 #f_parent_id label {
 	display:block;
+	position:relative;
 }
 #parent_id_thispage {
 	color:#000000;
@@ -93,8 +88,15 @@
 }
 #parent_id_thispage img {
 	display:inline-block;
-	margin:0 2px 0 7px;
+	margin:0 2px 0 0;
 	vertical-align:middle;
+}
+#f_parent_id > span label input[type=radio] {
+	position:absolute;
+	left:-19px;
+	top:8px;
+	margin:0;
+	border:0;
 }
 </style>
 <script>
@@ -115,7 +117,7 @@ $(function(){
 	
 	function format(state){
 		if (state.id){
-			return '<img src="' + '{{ link.vendor('flags/flags-iso/16/@code.png') }}'.replace('@code', languages[state.id].code) + '">' + state.text;
+			return '<i class="flag" style="background:url(' + '{{ link.vendor('flags/@code.png') }}'.replace('@code', languages[state.id].code) + ')"></i>' + state.text;
 		} else{
 			if (state.text)
 				return '<strong>' + state.text + '</strong>';
@@ -137,7 +139,7 @@ $(function(){
 	// parent
 	$('#f_parent_id').find('input').click(function(){
 		var $label = $(this).parent();
-		$thispage.insertAfter($label).css('padding-left', $label.css('padding-left'));
+		$thispage.insertAfter($label).css('margin-left', $label.css('margin-left'));
 	}).filter(':checked').click();
 	
 })

@@ -25,7 +25,7 @@
 		
 		{% for item in data %}
 		<tr class="state-{{ item.state.name|asciize }}">
-			<td class="image"><img src="{{ link.vendor('flags/flags-iso/16/{$(language.country.code)}.png', item) }}" alt="{{ item.language.caption }}"></td>
+			<td class="image"><span class="flag" style="background:url({{ link.vendor('flags/{$(language.country.code)}.png', item) }})"></span></td>
 			<td class="strong">
 				<a href="{{ link.to(':update', item) }}">{{ item.name }}</a>
 			</td>
