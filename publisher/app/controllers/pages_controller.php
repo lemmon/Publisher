@@ -14,8 +14,7 @@ class Pages_Controller extends Frontend_Controller
 		Nav::setCurrentPage($page);
 		$this->data['page'] = $page;
 		//
-		if ($_template = $page->template)
- 			return $this->template->display($_template);
+		return $this->template->display(($page->template) ?: 'default');
 	}
 
 
@@ -27,11 +26,11 @@ class Pages_Controller extends Frontend_Controller
 			Nav::setCurrentPage($page);
 			$this->data['page'] = $page;
 			//
-			if ($_template = $page->template)
-	 			return $this->template->display($_template);
+ 			return $this->template->display(($page->template) ?: 'default');
 		}
 		else
 		{
+			header('HTTP/1.0 404 Not Found');
 			die('404');
 		}
 	}

@@ -51,19 +51,9 @@ class Nav
 
 	function getPages()
 	{
-		return (new QueryPages);
-	}
-
-
-	function getRoot()
-	{
-		if ($page = self::$_page)
-			return (new QueryPage(self::$_page));
-		else
-		{
-			$page = new Page;
-			$page->locale = self::$_locale;
-			return (new QueryPage($page));
-		}
+		return new QueryPages([
+			'locale'    => self::$_locale,
+			'parent_id' => null,
+		]);
 	}
 }
