@@ -37,6 +37,7 @@ abstract class Admin_Backend_Controller extends Application
 		// templating
 		$this->template = (new \Lemmon\Template\Template(ROOT_DIR . '/app/views', self::getAction()))
 			->appendFilesystem(self::getController())
+			->appendFilesystem(self::getController(), USER_DIR . '/app/views')
 			->setExtension($ext = new TemplateExtensionAdmin);
 			;
 	}

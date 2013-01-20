@@ -55,7 +55,7 @@
 		& > * {
 			opacity:.2;
 		}
-		#f_content_path_row {
+		& > div {
 			padding:3px 5px 2px;
 			float:left;
 			a {
@@ -124,20 +124,22 @@
 		&.mce_bold:before          { content:"\f032"; }
 		&.mce_italic:before        { content:"\f033"; }
 		&.mce_underline:before     { content:"\f0cd"; }
+		&.mce_strikethrough:before { content:"\f0cc"; }
 		&.mce_bullist:before       { content:"\f0ca"; }
 		&.mce_numlist:before       { content:"\f0cb"; }
+		&.mce_outdent:before       { content:"\f03b"; }
+		&.mce_indent:before        { content:"\f03c"; }
+		&.mce_blockquote:before    { content:"\f10d"; }
 		&.mce_undo:before          { content:"\f0e2"; }
-		&.mce_redo:before          { content:"\__"; }
+		&.mce_redo:before          { content:"\f01e"; }
 		&.mce_justifyleft:before   { content:"\f036"; }
 		&.mce_justifyright:before  { content:"\f038"; }
 		&.mce_justifycenter:before { content:"\f037"; }
 		&.mce_link:before          { content:"\f0c1"; }
-		&.mce_unlink:before        { content:"\__"; }
-		&.mce_cleanup:before       { content:"\__"; }
-		&.mce_removeformat:before  { content:"\__"; }
-		&.mce_pastetext:before     { content:"\f0ea"; }
-		&.mce_pasteword:before     { content:"\__"; }
-		&.mce_code:before          { content:"\__"; }
+		&.mce_unlink:before        { content:"\f014"; }
+		&.mce_cleanup:before       { content:"\f0d0"; }
+		&.mce_removeformat:before  { content:"\f044"; }
+		&.mce_code:before          { content:"\f108"; }
 		&.mce_myinsertimage:before { content:"\f03e"; }
 	}
 	.mceSeparator {

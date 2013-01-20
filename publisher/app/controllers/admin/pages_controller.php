@@ -47,7 +47,7 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
 		$this->_getOptions();
 		// scaffolding
  		return Scaffold::create($this, [
-			'default' => $_SESSION['defaults'],
+			'default' => (array)$_SESSION['defaults'] + ['state_id' => 1],
 		]);
 	}
 
