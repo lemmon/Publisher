@@ -10,7 +10,7 @@ class Pages extends \Lemmon\Model\AbstractModel
 	static $fields    = ['name', 'content', 'state_id', 'locale', 'parent_id', 'top'];
 	static $sanitize  = [':all' => 'empty_to_null', 'price' => 'decimal', 'content' => 'html'];
 	static $required  = ['name', 'state_id' => 'allow_null', 'locale'];
-	static $timestmp  = ['created_at', 'updated_at'];
+	static $timestamp  = ['created_at', 'updated_at'];
 
 
 	protected function __init()

@@ -65,6 +65,10 @@ AddCharset utf-8 .html .css .js .xml .json .rss
 # ----------------------------------------------------------------------
 
 <IfModule mod_rewrite.c>
+# cache
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(user/uploads/.*) /cache/$1
+# framework
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . / [L]

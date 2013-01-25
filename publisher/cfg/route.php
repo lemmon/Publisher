@@ -27,10 +27,10 @@ class Route extends \Lemmon\Route
 
 			$this->register('section', 'admin/@%1/%2');
 
-			$this->register('create', 'admin/@$section/create');
-			$this->register('update', 'admin/@$section/update/$id');
-			$this->register('delete', 'admin/@$section/delete/$id');
-			$this->register('crud', 'admin/@$section/$action/$id');
+			$this->register('create', 'admin/@$_section/create');
+			$this->register('update', 'admin/@$_section/update/$id');
+			$this->register('delete', 'admin/@$_section/delete/$id');
+			$this->register('crud', 'admin/@$_section/$action/$id');
 
 			$this->register('login', 'admin/login');
 			$this->register('logout', 'admin/logout');
@@ -43,7 +43,7 @@ class Route extends \Lemmon\Route
 			Application::setController('templates');
 			Application::setAction('css');
 		}
-		elseif ($this->match('*/uploads(/0$dim)$image$', ['dim' => '\d*x\d*\w*', 'image' => '.*\.(jpe?g|gif|png)']))
+		elseif ($this->match('*/uploads(/0$dim)(/$image)$', ['dim' => '\d*x\d*\w*', 'image' => '.*\.(jpe?g|gif|png)']))
 		{
 			//
 			// uploads

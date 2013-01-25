@@ -15,3 +15,5 @@ Application::run([
 	'route'   => new Route,
 	'config'  => $publisher_config,
 ]);
+
+echo '<!-- ' . ($t + microtime(true)) . ' -->';

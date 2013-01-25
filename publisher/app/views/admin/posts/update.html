@@ -1,4 +1,4 @@
-{% extends 'admin/_templates/form.html' %}
+{% extends '_templates/form.html' %}
 
 {% block title %}{{ item.name }}{% endblock %}
 
@@ -23,6 +23,13 @@
 {% block form_secondary %}
 <fieldset>
 	
+	{{ forms.p('state_id', flash) }}
+		{{ forms.label('state_id', null, 'required') }}
+		<span class="fieldset">
+		{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}
+		</span>
+	</p>
+
 	{{ forms.p('image', flash) }}
 		{{ forms.label('image', null, 'optional') }}
 		<span class="fieldset">
@@ -30,13 +37,6 @@
 			<span class="image"><img src="{{ link.upload(f.image) }}" style="width:100%"></span>
 			{% endif %}
 			{{ forms.image('image') }}
-		</span>
-	</p>
-
-	{{ forms.p('state_id', flash) }}
-		{{ forms.label('state_id', null, 'required') }}
-		<span class="fieldset">
-		{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}
 		</span>
 	</p>
 
