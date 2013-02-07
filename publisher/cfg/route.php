@@ -4,11 +4,16 @@
 */
 class Route extends \Lemmon\Route
 {
+	private $_extend;
 
 
 	protected function __init()
 	{
-		if ($this->getParam(1)=='admin')
+		$this->_extended = new RouteExtended;
+		//
+		// system
+		//
+		if ($this->getParam(1) == 'admin')
 		{
 			//
 			// backend
@@ -68,10 +73,18 @@ class Route extends \Lemmon\Route
 				Application::setController('posts');
 				Application::setAction('detail');
 			}
-			else
+			elseif ($this->_extended->match($this))
+			{
+				// user extended
+			}
+			elseif (!$this->getParam(1))
 			{
 				// frontpage
 				Application::setController('pages');
+			}
+			else
+			{
+				die('404');
 			}
 
 			$this->register('home', '/');
@@ -79,6 +92,10 @@ class Route extends \Lemmon\Route
 			$this->register('post', 'b/$id');
 			$this->register('category', 'c/$id');
 		}
+		//
+		// user defined routes
+		//
+		$this->_extended->register($this);
 	}
 
 
