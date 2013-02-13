@@ -9,7 +9,7 @@ class Pages_Controller extends Frontend_Controller
 	function index()
 	{
 		$locale = reset(Locales::fetchActive());
-		$page   = Pages::find(['locale' => $locale['id']])->first();
+		$page   = Pages::find(['locale' => $locale['id'], 'parent_id' => null])->first();
 		//
 		Nav::setCurrentPage($page);
 		$this->data['page'] = $page;

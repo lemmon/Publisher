@@ -34,8 +34,8 @@
 			</td>
 			<td class="ar tiny sel">{{ item.published_at|default(item.updated_at)|tDateTime }}</td>
 			<td class="controls">
-				<a href="{{ link.to(':update', item) }}">{{ "Update"|t }}</a> |
-				<a href="{{ link.to(':delete', item) }}">{{ "Delete"|t }}</a>
+				<a href="{{ link.to(':update', item) }}">{{ "Update"|t }}</a>{# |
+				<a href="{{ link.to(':delete', item) }}">{{ "Delete"|t }}</a>#}
 			</td>
 		</tr>
 		{% endfor %}

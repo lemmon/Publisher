@@ -56,4 +56,13 @@ class Nav
 			'parent_id' => null,
 		]);
 	}
+
+
+	function getRootPage()
+	{
+		return Page::find([
+			'locale'    => self::$_locale,
+			'parent_id' => null,
+		]);
+	}
 }

@@ -8,6 +8,7 @@ use \Lemmon\Sql\Query as SqlQuery;
 class Page extends AbstractPage
 {
 	private $_cache = [];
+	private $_active;
 
 
 	static function getOptionsFor($model)
@@ -62,6 +63,13 @@ class Page extends AbstractPage
 	}
 
 
+	function getParent()
+	{
+		if ($this->parent_id)
+			return Page::find($this->parent_id);
+	}
+
+
 	function getState()
 	{
 		return States::getOptions()[$this->state_id];
@@ -81,9 +89,17 @@ class Page extends AbstractPage
 	}
 
 
-	function isActive()
+	function isActive($active = null)
 	{
-		return $this->id == Nav::getCurrentPage()->id;
+		if ($active !== null)
+		{
+			$this->_active = $active;
+			return $this;
+		}
+		else
+		{
+			return is_null($_ = $this->_active) ? $this->id == Nav::getCurrentPage()->id : $_;
+		}
 	}
 
 

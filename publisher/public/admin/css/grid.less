@@ -10,21 +10,12 @@
 	position:relative;
 }
 #main {
-	width:@mainWidth;
-	//float:right;
-	margin:0 auto;
-}
-/*
-#rail {
-	width:@railWidth;
-	float:left;
-	& > .inner {
-		margin-right:@gutterWidth;
-		padding-right:@gutterWidth;
-		border-right:1px solid fade(#000, 5%);
+	width:auto;
+	form {
+		max-width:1080px;
+		margin:0 auto;
 	}
 }
-*/
 #main-second {
 	width:100% - @sideWidth;
 	float:left;
@@ -36,41 +27,6 @@
 	width:@sideWidth;
 	float:right;
 }
-/*
-#main-wrap {
-	float:left;
-	width:100%;
-}
-#main {
-	position:relative;
-	margin-left:@railWidth + 2*@gutterWidth + 1;
-	margin-right:@gutterWidth;
-	margin-bottom:@gutterWidth;
-}
-#main-second-wrap {
-	float:left;
-	width:100%;
-}
-#main-second {
-	margin-right:@railWidth + @gutterWidth;
-}
-#rail-second {
-	float:left;
-	margin-left:-@railWidth;
-	width:@railWidth;
-}
-#rail {
-	float:left;
-	margin-left:-100%;
-	width:@railWidth;
-	border-right:1px solid fade(#000, 5%);
-	padding-left:@gutterWidth;
-	padding-bottom:@gutterWidth / 2;
-	& > * {
-		padding-right:@gutterWidth;
-	}
-}
-*/
 
 .modal {
 	width:500px;
@@ -88,4 +44,7 @@ footer {
 	clear:both;
 	border-top:1px solid fade(#000, 5%);
 	padding:@gutterWidth/2 @gutterWidth;
+}
+
+@media all and (max-width: 1280px) {
 }

@@ -22,8 +22,11 @@ $(function(){
 				tinymce.dom.Event.add(doc, 'mouseup', function(e){
 					var mySelection = tinyMCE.activeEditor.selection.getNode();
 					if (mySelection.tagName == 'IMG'){
-						mySelection.src = mySelection.src.replace(/(\/0\d*x\d*\w*)?\/media\//, '/0' + $(mySelection).width() + 'xm/media/');
-						$(mySelection).removeAttr('_mce_src').removeAttr('height');
+						var $img = $(mySelection),
+						    imgSrc = $img.attr('src');
+						if (imgSrc.charAt(0) == '/')
+							$img.attr('src', imgSrc.replace(/(\/0\d*x\d*\w*)?\/media\//, '/0' + $(mySelection).width() + 'xm/media/'));
+						fixImage($img);
 					}
 				});
 				//
@@ -80,16 +83,18 @@ $(function(){
 	$('form:has(textarea)').submit(function(){
 		$('.mceEditor').each(function(){
 			var $body = $(this).find('iframe').contents().find('body');
+			$body.find('img').each(function(){
+				fixImage($(this));
+			});
 			while ($body.find(':not(img):empty').size()){
 				$body.find(':not(img):empty').remove();
 			}
-			$body.find('img').removeAttr('_mce_src').removeAttr('height');
 		});
 	});
 });
 function getRootNode(node){
-	while (node) {
-		if (node.parentNode && node.parentNode.nodeName == 'BODY') { return node; }
+	while (node){
+		if (node.parentNode && node.parentNode.nodeName == 'BODY'){ return node; }
 		else { node = node.parentNode; }
 	}
 	return null;
@@ -99,9 +104,19 @@ function insertImage(id, src){
 	    toInsert = '<div class="image center" rel="' + id + '"><img src="' + src.replace(/uploads(\/0[^\/]+)?/, 'uploads/0800xm') + '"></div>';
 	if (!myNode){
 		$(tinyMCE.activeEditor.getDoc().documentElement).find('body').prepend(toInsert);
-	} else{
+	}else{
 		$(myNode).before(toInsert);
 	}
 	$('.popup').hide();
+}
+function fixImage($img){
+	var $parent = $img.parent();
+	if ($parent[0].nodeName != 'DIV' || !$parent.hasClass('image')){
+		$('<div class="image center"><img src="' + $img.attr('src') + '"></div>').insertBefore(getRootNode($parent[0]));
+		$img.remove();
+		$parent.filter(':empty').remove();
+	}else{
+		$img.removeAttr('_mce_src').removeAttr('height');
+	}
 }
 </script>

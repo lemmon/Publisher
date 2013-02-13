@@ -20,7 +20,6 @@ abstract class Admin_Backend_Controller extends Application
 		elseif (self::getController() != 'admin/login')
 		{
 			// must login
-			$this->flash->setError('You have to be logged in to access admin area');
 			return $this->request->redir(':login');
 		}
 		//

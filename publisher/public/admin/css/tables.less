@@ -87,8 +87,42 @@ table {
 	.image {
 		padding-right:0;
 		line-height:0px;
+		vertical-align:middle;
 	}
 	.controls {
 		color:@lightGray;
+	}
+}
+
+// Paginate
+// ------------------------------------------------------------ //
+
+.paginate {
+	margin-top:30px;
+	text-align:center;
+	a, strong, span {
+		display:inline-block;
+		text-decoration:none;
+		border:1px solid #eee;
+		text-align:center;
+		min-width:24px;
+	}
+	a:hover {
+		border-color:@yellow;
+	}
+	span {
+		color:#eee;
+	}
+	strong {
+		border-color:#b0b0b0;
+		border-color:#06c;
+	}
+	.prev, .next {
+		padding:0 7px;
+		margin:0 15px;
+	}
+	.paginate-note {
+		font-size:13px;
+		color:#b0b0b0;
 	}
 }

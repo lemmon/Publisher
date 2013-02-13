@@ -47,7 +47,7 @@
 				<td class="ar tiny">{{ item.created_at|tDateTime }}</td>
 				<td class="controls">
 					<a href="{{ link.to(':update', item) }}">{{ "Update"|t }}</a> |
-					<a href="{{ link.to(':delete', item) }}">{{ "Delete"|t }}</a>
+					<a onclick="return confirm('Are you sure?')" href="{{ link.to(':delete', item) }}">{{ "Delete"|t }}</a>
 				</td>
 			</tr>
 			{% else %}

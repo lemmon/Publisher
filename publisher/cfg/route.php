@@ -31,6 +31,7 @@ class Route extends \Lemmon\Route
 			$this->register('site', '/');
 
 			$this->register('section', 'admin/@%1/%2');
+			$this->register('page', 'admin/@/%1');
 
 			$this->register('create', 'admin/@$_section/create');
 			$this->register('update', 'admin/@$_section/update/$id');
@@ -72,6 +73,12 @@ class Route extends \Lemmon\Route
 				// posts
 				Application::setController('posts');
 				Application::setAction('detail');
+			}
+			elseif ($this->match('c/$id', ['id' => '\d+']))
+			{
+				// categories
+				Application::setController('posts');
+				Application::setAction('category');
 			}
 			elseif ($this->_extended->match($this))
 			{

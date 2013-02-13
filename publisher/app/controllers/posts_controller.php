@@ -21,4 +21,21 @@ class Posts_Controller extends Frontend_Controller
 			die('404');
 		}
 	}
+
+
+	function category()
+	{
+		// nav
+		if ($id = $this->route->id and $category = Category::find($id))
+		{
+			Nav::setCurrentLocale($category->locale);
+			$this->data['category'] = $category;
+			//
+			return $this->template->display('category');
+		}
+		else
+		{
+			die('404');
+		}
+	}
 }
