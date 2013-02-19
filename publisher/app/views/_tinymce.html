@@ -82,10 +82,19 @@ $(function(){
 	//
 	$('form:has(textarea)').submit(function(){
 		$('.mceEditor').each(function(){
+			// get body
 			var $body = $(this).find('iframe').contents().find('body');
+			// unmark DIV's with no IMG's
+			$body.find('div:not(:has(img))').wrapInner('<p>').each(function(){
+				$(this).children().unwrap();
+			});
+			// unwrap unwanted elements
+			$body.find('h1,h2,h3,h4,h5,h6,p').find('h1,h2,h3,h4,h5,h6,p,ul,ol,li,dl,dt,dd,blockquote').unwrap();
+			// fix images
 			$body.find('img').each(function(){
 				fixImage($(this));
 			});
+			// remove empty (non-IMG) elements
 			while ($body.find(':not(img):empty').size()){
 				$body.find(':not(img):empty').remove();
 			}
