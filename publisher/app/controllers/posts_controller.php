@@ -11,9 +11,16 @@ class Posts_Controller extends Frontend_Controller
 		// nav
 		if ($id = $this->route->id and $post = Post::find($id))
 		{
-			Nav::setCurrentLocale($post->locale);
-			$this->data['post'] = $post;
-			//
+			// current page
+			Nav::setCurrentPage(
+				$page = Page::find(['template' => 'posts'])->isActive(false)
+			);
+			
+			// template
+			$this->data += [
+				'page' => $page,
+				'post' => $post,
+			];
 			return $this->template->display('post');
 		}
 		else
@@ -28,9 +35,16 @@ class Posts_Controller extends Frontend_Controller
 		// nav
 		if ($id = $this->route->id and $category = Category::find($id))
 		{
-			Nav::setCurrentLocale($category->locale);
-			$this->data['category'] = $category;
-			//
+			// current page
+			Nav::setCurrentPage(
+				$page = Page::find(['template' => 'posts'])->isActive(false)
+			);
+			
+			// template
+			$this->data += [
+				'page'     => $page,
+				'category' => $category,
+			];
 			return $this->template->display('category');
 		}
 		else

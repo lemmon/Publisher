@@ -10,4 +10,10 @@ class QueryPages extends AbstractQueryModel
 	{
 		return new Pages;
 	}
+
+
+	function findById($id)
+	{
+		return $this->model->where('id', $id)->first();
+	}
 }
