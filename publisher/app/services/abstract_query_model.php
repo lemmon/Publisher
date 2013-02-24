@@ -2,7 +2,7 @@
 /**
 * 
 */
-abstract class AbstractQueryModel implements AbstractQueryModelInterface
+abstract class AbstractQueryModel implements AbstractQueryModelInterface, \IteratorAggregate, \ArrayAccess
 {
 	protected $model;
 
@@ -22,5 +22,26 @@ abstract class AbstractQueryModel implements AbstractQueryModelInterface
 	function count()
 	{
 		return $this->model->count();
+	}
+
+
+	function offsetExists($offset)
+	{
+		return $this->model->offsetExists($offset);
+	}
+	
+	function offsetGet($offset)
+	{
+		return $this->model->offsetGet($offset);
+	}
+	
+	function offsetSet($offset, $value)
+	{
+		return false;
+	}
+	
+	function offsetUnset($offset)
+	{
+		return false;
 	}
 }

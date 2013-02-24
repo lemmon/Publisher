@@ -2,7 +2,7 @@
 /**
 * 
 */
-interface AbstractQueryModelInterface extends \IteratorAggregate
+interface AbstractQueryModelInterface
 {
 	function __model();
 }

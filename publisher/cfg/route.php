@@ -30,7 +30,8 @@ class Route extends \Lemmon\Route
 			$this->register('home', 'admin');
 			$this->register('site', '/');
 
-			$this->register('section', 'admin/@%1/%2');
+			$this->register('section', 'admin/@%1/%2/%3');
+			$this->register('action', 'admin/@/%1/%2');
 			$this->register('page', 'admin/@/%1');
 
 			$this->register('create', 'admin/@$_section/create');

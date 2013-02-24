@@ -26,7 +26,7 @@ class AbstractPage extends \Lemmon\Model\AbstractRow
 		unset($f['content']);
 		// template
 		if ($f['template'])
-			$f['template'] = \Lemmon\String::asciize($f['template']);
+			$f['template'] = \Lemmon\String::asciize($f['template'], '_');
 		// top
 		if (!$f['top'])
 			$f['top'] = 99999;

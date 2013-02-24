@@ -13,7 +13,8 @@ abstract class Frontend_Controller extends Application
 		Application::$isFrontend = true;
 		//
 		// templating
-		$this->template = (new \Lemmon\Template\Template(USER_DIR . '/template', 'index'));
+		$this->template = (new \Lemmon\Template\Template(USER_DIR . '/template', 'index'))
+			->setExtension(new TemplateExtensionUser);
 		//
 		// default services
 		$this->data += [
