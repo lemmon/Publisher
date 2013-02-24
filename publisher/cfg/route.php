@@ -11,13 +11,10 @@ class Route extends \Lemmon\Route
 	{
 		$this->_extended = new RouteExtended;
 		//
-		// system
+		// backend
 		//
 		if ($this->getParam(1) == 'admin')
 		{
-			//
-			// backend
-			//
 			if ($this->match('$controller(/$page)(/$action(/$id))', ['controller' => 'admin\/[\w\-]+', 'action' => '[\w\-]+', 'id' => '\d+', 'page' => '\d+']))
 			{
 				// general CRUD
@@ -42,28 +39,28 @@ class Route extends \Lemmon\Route
 			$this->register('login', 'admin/login');
 			$this->register('logout', 'admin/logout');
 		}
+		//
+		// services
+		//
 		elseif (substr($this->getSelf(), -4) == '.css')
 		{
-			//
-			// services
-			//
 			Application::setController('templates');
 			Application::setAction('css');
 		}
+		//
+		// uploads
+		//
 		elseif ($this->match('*/uploads(/0$dim)(/$image)$', ['dim' => '\d*x\d*\w*', 'image' => '.*\.(jpe?g|gif|png)']))
 		{
-			//
-			// uploads
-			//
 			Application::setController('uploads');
 			Application::setAction('image');
 		}
+		//
+		// frontend
+		//
 		else
 		{
-			//
-			// frontend
-			//
-			if ($this->match('p/$id', ['id' => '\d+']))
+			if ($this->match('p/$id(/$paginate)', ['id' => '\d+', 'paginate' => '\d+']))
 			{
 				// subpages
 				Application::setController('pages');
@@ -75,7 +72,7 @@ class Route extends \Lemmon\Route
 				Application::setController('posts');
 				Application::setAction('detail');
 			}
-			elseif ($this->match('c/$id', ['id' => '\d+']))
+			elseif ($this->match('c/$id(/$paginate)', ['id' => '\d+', 'paginate' => '\d+']))
 			{
 				// categories
 				Application::setController('posts');
@@ -99,6 +96,7 @@ class Route extends \Lemmon\Route
 			$this->register('page', 'p/$id');
 			$this->register('post', 'b/$id');
 			$this->register('category', 'c/$id');
+			$this->register('paginate', '@/@/%1');
 		}
 		//
 		// user defined routes
