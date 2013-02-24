@@ -24,7 +24,7 @@ abstract class Admin_Backend_Controller extends Application
 		}
 		//
 		// i18n
-		if ($i18n = $this->config['i18n'])
+		if ($i18n = $this->config['i18n'] and (is_string($i18n) or ($i18n = $i18n['admin'])))
 		{
 			if (file_exists($_file = USER_DIR . "/i18n/{$i18n}.php"))
 			{
