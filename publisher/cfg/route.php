@@ -60,7 +60,11 @@ class Route extends \Lemmon\Route
 		//
 		else
 		{
-			if ($this->match('p/$id(/$paginate)', ['id' => '\d+', 'paginate' => '\d+']))
+			if ($this->_extended->match($this))
+			{
+				// user extended
+			}
+			elseif ($this->match('p/$id(/$paginate)', ['id' => '\d+', 'paginate' => '\d+']))
 			{
 				// subpages
 				Application::setController('pages');
@@ -77,10 +81,6 @@ class Route extends \Lemmon\Route
 				// categories
 				Application::setController('posts');
 				Application::setAction('category');
-			}
-			elseif ($this->_extended->match($this))
-			{
-				// user extended
 			}
 			elseif (!$this->getParam(1))
 			{
