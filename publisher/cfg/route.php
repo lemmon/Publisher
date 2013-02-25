@@ -50,7 +50,7 @@ class Route extends \Lemmon\Route
 		//
 		// uploads
 		//
-		elseif ($this->match('*/uploads(/0$dim)(/$image)$', ['dim' => '\d*x\d*\w*', 'image' => '.*\.(jpe?g|gif|png)']))
+		elseif ($this->match('*/uploads(/0$dim)(/$image)$', ['dim' => '\d*x\d*[\w]*', 'image' => '.*\.(jpe?g|gif|png)']))
 		{
 			Application::setController('uploads');
 			Application::setAction('image');

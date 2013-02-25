@@ -10,11 +10,12 @@ class Uploads_Controller extends Application
 	{
 		//
 		// parse dim
-		preg_match('/(?<width>\d*)x(?<height>\d*)(?<flags>[a-z]*)/', $this->route->dim, $dim);
+		preg_match('/(?<width>\d*)x(?<height>\d*)(?<flags>\w*)/', $this->route->dim, $dim);
 		$width  = $dim['width'];
 		$height = $dim['height'];
-		if ($flags = $dim['flags'] and $flags = str_split($flags) or $flags = []);
-			$flags = array_combine($flags, $flags);
+		$flags  = $dim['flags'];
+		#if ($flags = $dim['flags'] and $flags = str_split($flags) or $flags = []);
+		#	$flags = array_combine($flags, $flags);
 		//
 		// paths
 		$image_source = Lemmon\Model\Schema::getDefaultUploadDir() . '/' . $this->route->image;
@@ -35,16 +36,32 @@ class Uploads_Controller extends Application
 			$crop_style = ZEBRA_IMAGE_CROP_CENTER;
 			//
 			// flags
-			if ($flags['m'])
+			if ($flags{0} == 'm')
 			{
 				// provided dimension is maximal
 				$image->enlarge_smaller_images = false;
 				$crop_style = ZEBRA_IMAGE_NOT_BOXED;
 			}
-			if ($flags['b'])
+			elseif ($flags{0} == 'b')
 			{
 				// create box and fit image in
 				$crop_style = ZEBRA_IMAGE_BOXED;
+			}
+			elseif ($flags{0} == 'c')
+			{
+				// crop
+				switch ($flags{1})
+				{
+					case '1': $crop_style = ZEBRA_IMAGE_CROP_TOPLEFT; break;
+					case '2': $crop_style = ZEBRA_IMAGE_CROP_TOPCENTER; break;
+					case '3': $crop_style = ZEBRA_IMAGE_CROP_TOPRIGHT; break;
+					case '4': $crop_style = ZEBRA_IMAGE_CROP_MIDDLELEFT; break;
+					case '5': $crop_style = ZEBRA_IMAGE_CROP_CENTER; break;
+					case '6': $crop_style = ZEBRA_IMAGE_CROP_MIDDLERIGHT; break;
+					case '7': $crop_style = ZEBRA_IMAGE_CROP_BOTTOMLEFT; break;
+					case '8': $crop_style = ZEBRA_IMAGE_CROP_BOTTOMCENTER; break;
+					case '9': $crop_style = ZEBRA_IMAGE_CROP_BOTTOMRIGHT; break;
+				}
 			}
 			//
 			// resize & save
