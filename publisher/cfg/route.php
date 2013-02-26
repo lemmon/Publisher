@@ -94,6 +94,7 @@ class Route extends \Lemmon\Route
 
 			$this->register('home', '/');
 			$this->register('page', 'p/$id');
+			$this->register('page_id', 'p/%1');
 			$this->register('post', 'b/$id');
 			$this->register('category', 'c/$id');
 			$this->register('paginate', '@/@/%1');

@@ -8,12 +8,12 @@ class QueryPages extends AbstractQueryModel
 
 	function __model()
 	{
-		return new Pages;
+		return (new Pages)->where('state_id', 1);
 	}
 
 
-	function findById($id)
+	static function findById($id)
 	{
-		return $this->model->where('id', $id)->first();
+		return Page::find($id);
 	}
 }

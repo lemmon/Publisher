@@ -17,9 +17,6 @@ class Pages extends \Lemmon\Model\AbstractModel
 	{
 		// default sort
 		$this->order('top');
-		// frontend
-		if (Application::$isFrontend)
-			$this->where(['state_id' => 1]);
 	}
 
 
