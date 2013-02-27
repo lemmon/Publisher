@@ -8,194 +8,194 @@
 // ------------------------------------------------------------ //
 
 @font-face {
-	font-family:'FontAwesome';
-	src:url('/vendor/fontawesome/fontawesome-webfont.eot?v=3.0.1');
-	src:url('/vendor/fontawesome/fontawesome-webfont.eot?#iefix&v=3.0.1') format('embedded-opentype'),
-	    url('/vendor/fontawesome/fontawesome-webfont.woff?v=3.0.1') format('woff'),
-	    url('/vendor/fontawesome/fontawesome-webfont.ttf?v=3.0.1') format('truetype');
-	font-weight:normal;
-	font-style:normal;
+    font-family:'FontAwesome';
+    src:url('/vendor/fontawesome/fontawesome-webfont.eot?v=3.0.1');
+    src:url('/vendor/fontawesome/fontawesome-webfont.eot?#iefix&v=3.0.1') format('embedded-opentype'),
+        url('/vendor/fontawesome/fontawesome-webfont.woff?v=3.0.1') format('woff'),
+        url('/vendor/fontawesome/fontawesome-webfont.ttf?v=3.0.1') format('truetype');
+    font-weight:normal;
+    font-style:normal;
 }
 
 // Styles
 // ------------------------------------------------------------ //
 
 .lepublisherSkin {
-	
-	display:block;
-	color:@black;
-	font-family:inherit;
-	background:mix(@black, @backgroundColor, 2%);
-	border:1px solid fade(@black, 5%);
-	padding:2px;
-	.borderRadius(2px);
+    
+    display:block;
+    color:@black;
+    font-family:inherit;
+    background:mix(@black, @backgroundColor, 2%);
+    border:1px solid fade(@black, 5%);
+    padding:2px;
+    .borderRadius(2px);
 
-	//-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	//   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	//    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	//     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	//        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	
-	*, *:hover, *:hover * {
-		background:transparent;
-		border:0;
-	}
-	
-	td.mceToolbar {
-		.borderRadius(2px);
-		background:fade(#000, 2.5%);
-		.mceToolbar {
-			opacity:.2;
-		}
-	}
-	td.mceStatusbar {
-		background:fade(#000, 2.5%);
-		font-size:13px;
-		line-height:20px;
-		& > * {
-			opacity:.2;
-		}
-		& > div {
-			padding:3px 5px 2px;
-			float:left;
-			a {
-				text-transform:uppercase
-			}
-		}
-		.mceResize {
-			width:25px;
-			height:25px;
-			display:block;
-			float:right;
-			cursor:row-resize;
-		}
-	}
-	.mceIframeContainer {
-		line-height:0px;
-	}
-	
-	&.focus {
-		border-color:@linkColor !important;
-		border-width:2px;
-		padding:1px;
-		.borderRadius(3px);
-		.boxShadow(inset 0 2px 5px fade(@black, 15%));
-		td.mceToolbar .mceToolbar, td.mceStatusbar > * {
-			opacity:1;
-		}
-	}
-	&:hover, &.focus {
-	}
-	&:hover {
-		border-color:fade(@black, 35%);
-	}
-	
-	.mceLayout {
-		width:100% !important;
-	}
-	
-	// buttons
-	.mceToolbar {
-		margin:0;
-		padding:2px;
-	}
-	td {
-		padding:0;
-	}
-	.mceButton {
-		display:block;
-		width:24px;
-		height:24px;
-		line-height:24px;
-		font-size:14px;
-		font-family:'FontAwesome';
-		text-align:center;
-		color:#000;
-		margin-right:2px;
-		background:none !important;
-		.borderRadius(2px);
-		opacity:.35;
-		&:hover {
-			opacity:.85;
-		}
-		&.mceButtonActive {
-			opacity:1;
-		}
-		&.mce_bold:before          { content:"\f032"; }
-		&.mce_italic:before        { content:"\f033"; }
-		&.mce_underline:before     { content:"\f0cd"; }
-		&.mce_strikethrough:before { content:"\f0cc"; }
-		&.mce_bullist:before       { content:"\f0ca"; }
-		&.mce_numlist:before       { content:"\f0cb"; }
-		&.mce_outdent:before       { content:"\f03b"; }
-		&.mce_indent:before        { content:"\f03c"; }
-		&.mce_blockquote:before    { content:"\f10d"; }
-		&.mce_undo:before          { content:"\f0e2"; }
-		&.mce_redo:before          { content:"\f01e"; }
-		&.mce_justifyleft:before   { content:"\f036"; }
-		&.mce_justifyright:before  { content:"\f038"; }
-		&.mce_justifycenter:before { content:"\f037"; }
-		&.mce_link:before          { content:"\f0c1"; }
-		&.mce_unlink:before        { content:"\f014"; }
-		&.mce_cleanup:before       { content:"\f0d0"; }
-		&.mce_removeformat:before  { content:"\f044"; }
-		&.mce_code:before          { content:"\f108"; }
-		&.mce_myinsertimage:before { content:"\f03e"; }
-	}
-	.mceSeparator {
-		display:block;
-		width:1px;
-		height:20px;
-		margin:1px 4px;
-		border-right:1px solid fade(#fff, 80%);
-		border-left:1px solid fade(#000, 20%);
-	}
-	
-	
-	/*
-	table {
-		background:mix(@black, @backgroundColor, 2%);
-	}
-	iframe {
-		display:block;
-	}
-	.mceToolbar {
-		height:26px
-	}
+    //-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    //   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    //    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    //     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    //        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    
+    *, *:hover, *:hover * {
+        background:transparent;
+        border:0;
+    }
+    
+    td.mceToolbar {
+        .borderRadius(2px);
+        background:fade(#000, 2.5%);
+        .mceToolbar {
+            opacity:.2;
+        }
+    }
+    td.mceStatusbar {
+        background:fade(#000, 2.5%);
+        font-size:13px;
+        line-height:20px;
+        & > * {
+            opacity:.2;
+        }
+        & > div {
+            padding:3px 5px 2px;
+            float:left;
+            a {
+                text-transform:uppercase
+            }
+        }
+        .mceResize {
+            width:25px;
+            height:25px;
+            display:block;
+            float:right;
+            cursor:row-resize;
+        }
+    }
+    .mceIframeContainer {
+        line-height:0px;
+    }
+    
+    &.focus {
+        border-color:@linkColor !important;
+        border-width:2px;
+        padding:1px;
+        .borderRadius(3px);
+        .boxShadow(inset 0 2px 5px fade(@black, 15%));
+        td.mceToolbar .mceToolbar, td.mceStatusbar > * {
+            opacity:1;
+        }
+    }
+    &:hover, &.focus {
+    }
+    &:hover {
+        border-color:fade(@black, 35%);
+    }
+    
+    .mceLayout {
+        width:100% !important;
+    }
+    
+    // buttons
+    .mceToolbar {
+        margin:0;
+        padding:2px;
+    }
+    td {
+        padding:0;
+    }
+    .mceButton {
+        display:block;
+        width:24px;
+        height:24px;
+        line-height:24px;
+        font-size:14px;
+        font-family:'FontAwesome';
+        text-align:center;
+        color:#000;
+        margin-right:2px;
+        background:none !important;
+        .borderRadius(2px);
+        opacity:.35;
+        &:hover {
+            opacity:.85;
+        }
+        &.mceButtonActive {
+            opacity:1;
+        }
+        &.mce_bold:before          { content:"\f032"; }
+        &.mce_italic:before        { content:"\f033"; }
+        &.mce_underline:before     { content:"\f0cd"; }
+        &.mce_strikethrough:before { content:"\f0cc"; }
+        &.mce_bullist:before       { content:"\f0ca"; }
+        &.mce_numlist:before       { content:"\f0cb"; }
+        &.mce_outdent:before       { content:"\f03b"; }
+        &.mce_indent:before        { content:"\f03c"; }
+        &.mce_blockquote:before    { content:"\f10d"; }
+        &.mce_undo:before          { content:"\f0e2"; }
+        &.mce_redo:before          { content:"\f01e"; }
+        &.mce_justifyleft:before   { content:"\f036"; }
+        &.mce_justifyright:before  { content:"\f038"; }
+        &.mce_justifycenter:before { content:"\f037"; }
+        &.mce_link:before          { content:"\f0c1"; }
+        &.mce_unlink:before        { content:"\f014"; }
+        &.mce_cleanup:before       { content:"\f0d0"; }
+        &.mce_removeformat:before  { content:"\f044"; }
+        &.mce_code:before          { content:"\f108"; }
+        &.mce_myinsertimage:before { content:"\f03e"; }
+    }
+    .mceSeparator {
+        display:block;
+        width:1px;
+        height:20px;
+        margin:1px 4px;
+        border-right:1px solid fade(#fff, 80%);
+        border-left:1px solid fade(#000, 20%);
+    }
+    
+    
+    /*
+    table {
+        background:mix(@black, @backgroundColor, 2%);
+    }
+    iframe {
+        display:block;
+    }
+    .mceToolbar {
+        height:26px
+    }
 
-	.mceExternalToolbar {
-		position:absolute;
-		border:1px solid fade(@black, 5%);
-		border-bottom:0;
-		display:none;
-	}
-	.mceExternalToolbar td.mceToolbar {padding-right:13px;}
-	.mceExternalClose {position:absolute; top:3px; right:3px; width:7px; height:7px; background:url(../../img/icons.gif) -820px 0}
+    .mceExternalToolbar {
+        position:absolute;
+        border:1px solid fade(@black, 5%);
+        border-bottom:0;
+        display:none;
+    }
+    .mceExternalToolbar td.mceToolbar {padding-right:13px;}
+    .mceExternalClose {position:absolute; top:3px; right:3px; width:7px; height:7px; background:url(../../img/icons.gif) -820px 0}
 
-	table.mceLayout {border:0; border-left:1px solid #CCC; border-right:1px solid #CCC}
-	table.mceLayout tr.mceFirst td {border-top:1px solid #CCC}
-	table.mceLayout tr.mceLast td {border-bottom:1px solid #CCC}
-	table.mceToolbar, tr.mceFirst .mceToolbar tr td, tr.mceLast .mceToolbar tr td {border:0; margin:0; padding:0;}
-	td.mceToolbar {padding-top:1px; vertical-align:top}
-	.mceIframeContainer {border-top:1px solid #CCC; border-bottom:1px solid #CCC}
-	.mceStatusbar {font-family:'MS Sans Serif',sans-serif,Verdana,Arial; font-size:9pt; line-height:16px; overflow:visible; color:#000; display:block; height:20px}
-	.mceStatusbar div {float:left; margin:2px}
-	.mceStatusbar a.mceResize {display:block; float:right; background:url(../../img/icons.gif) -800px 0; width:20px; height:20px; cursor:se-resize; outline:0}
-	.mceStatusbar a:hover {text-decoration:underline}
-	table.mceToolbar {margin-left:3px}
-	span.mceIcon, img.mceIcon {display:block; width:20px; height:20px}
-	.mceIcon {background:url(../../img/icons.gif) no-repeat 20px 20px}
-	td.mceCenter {text-align:center;}
-	td.mceCenter table {margin:0 auto; text-align:left;}
-	td.mceRight table {margin:0 0 0 auto;}
+    table.mceLayout {border:0; border-left:1px solid #CCC; border-right:1px solid #CCC}
+    table.mceLayout tr.mceFirst td {border-top:1px solid #CCC}
+    table.mceLayout tr.mceLast td {border-bottom:1px solid #CCC}
+    table.mceToolbar, tr.mceFirst .mceToolbar tr td, tr.mceLast .mceToolbar tr td {border:0; margin:0; padding:0;}
+    td.mceToolbar {padding-top:1px; vertical-align:top}
+    .mceIframeContainer {border-top:1px solid #CCC; border-bottom:1px solid #CCC}
+    .mceStatusbar {font-family:'MS Sans Serif',sans-serif,Verdana,Arial; font-size:9pt; line-height:16px; overflow:visible; color:#000; display:block; height:20px}
+    .mceStatusbar div {float:left; margin:2px}
+    .mceStatusbar a.mceResize {display:block; float:right; background:url(../../img/icons.gif) -800px 0; width:20px; height:20px; cursor:se-resize; outline:0}
+    .mceStatusbar a:hover {text-decoration:underline}
+    table.mceToolbar {margin-left:3px}
+    span.mceIcon, img.mceIcon {display:block; width:20px; height:20px}
+    .mceIcon {background:url(../../img/icons.gif) no-repeat 20px 20px}
+    td.mceCenter {text-align:center;}
+    td.mceCenter table {margin:0 auto; text-align:left;}
+    td.mceRight table {margin:0 0 0 auto;}
 
-	.mceButton {display:block; border:1px solid #F0F0EE; width:20px; height:20px; margin-right:1px}
-	a.mceButtonEnabled:hover {border:1px solid #0A246A; background-color:#B2BBD0}
-	a.mceButtonActive, a.mceButtonSelected {border:1px solid #0A246A; background-color:#C2CBE0}
-	.mceButtonDisabled .mceIcon {opacity:0.3; -ms-filter:'alpha(opacity=30)'; filter:alpha(opacity=30)}
-	.mceButtonLabeled {width:auto}
-	.mceButtonLabeled span.mceIcon {float:left}
-	span.mceButtonLabel {display:block; font-size:10px; padding:4px 6px 0 22px; font-family:Tahoma,Verdana,Arial,Helvetica}
-	.mceButtonDisabled .mceButtonLabel {color:#888}
-	*/
+    .mceButton {display:block; border:1px solid #F0F0EE; width:20px; height:20px; margin-right:1px}
+    a.mceButtonEnabled:hover {border:1px solid #0A246A; background-color:#B2BBD0}
+    a.mceButtonActive, a.mceButtonSelected {border:1px solid #0A246A; background-color:#C2CBE0}
+    .mceButtonDisabled .mceIcon {opacity:0.3; -ms-filter:'alpha(opacity=30)'; filter:alpha(opacity=30)}
+    .mceButtonLabeled {width:auto}
+    .mceButtonLabeled span.mceIcon {float:left}
+    span.mceButtonLabel {display:block; font-size:10px; padding:4px 6px 0 22px; font-family:Tahoma,Verdana,Arial,Helvetica}
+    .mceButtonDisabled .mceButtonLabel {color:#888}
+    */
 }
