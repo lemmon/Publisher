@@ -74,5 +74,5 @@ AddCharset utf-8 .html .css .js .xml .json .rss
 # framework
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . index.php [L]
+  RewriteRule . / [L]
 </IfModule>
