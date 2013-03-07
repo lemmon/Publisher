@@ -13,67 +13,99 @@
 // ------------------------------------------------------------ //
 
 body {
-	font-family:@baseFontFamily;
-	font-size:@baseFontSize;
-	font-weight:400;
-	color:@textColor;
-	line-height:@baseLineHeight;
-	margin:5px-@baseFontSize 5px;
-	overflow-y:scroll;
-	padding:1px;
+    font-family:@baseFontFamily;
+    font-size:@baseFontSize;
+    font-weight:400;
+    color:@textColor;
+    line-height:@baseLineHeight;
+    margin:5px-@baseFontSize 5px;
+    overflow-x:hidden;
+    overflow-y:scroll;
+    padding:1px;
 }
-h1, h2, h3, h4, h5, ol, ul, dl, p, div {
-	margin:@baseFontSize 0;
+h1, h2, h3, h4, h5, ol, ul, dl, p, body > div {
+    margin:@baseFontSize 0;
 }
 b, strong {
-	font-weight:600;
-	color:#000;
+    font-weight:600;
+    color:#000;
 }
 i, em {
-	font-style:italic;
+    font-style:italic;
 }
 ul {
-	margin-left:@baseLineHeight;
-	list-style:square outside;
+    margin-left:@baseLineHeight;
+    list-style:square outside;
 }
 h1, h2, h3, h4, h5, h6 {
-	color:@headingsColor;
-	//line-height:@baseLineHeight * 2;
+    color:@headingsColor;
+    //line-height:@baseLineHeight * 2;
 }
 h3 {
-	font-size:19px;
-	font-weight:600;
+    font-size:19px;
+    font-weight:600;
 }
 h4 {
-	font-size:17px;
-	font-weight:600;
+    font-size:17px;
+    font-weight:600;
 }
 img {
-	max-width:100%;
+    max-width:100%;
 }
 div.image {
-	width:auto !important;
-	max-width:none !important;
+    width:auto !important;
+    max-width:none !important;
 }
 div.left {
-	float:left;
-	margin-right:@baseLineHeight;
-	margin-bottom:@baseFontSize;
-	margin-top:0 !important;
+    float:left;
+    margin-right:@baseLineHeight;
+    margin-bottom:@baseFontSize;
+    margin-top:0 !important;
 }
 div.right {
-	float:right;
-	margin-left:@baseLineHeight;
-	margin-bottom:@baseFontSize;
-	margin-top:0 !important;
+    float:right;
+    margin-left:@baseLineHeight;
+    margin-bottom:@baseFontSize;
+    margin-top:0 !important;
 }
 div.center {
-	text-align:center;
+    text-align:center;
 }
 div.row {
     .clearfix();
     .col50 {
         width:48%;
         margin:0;
+    }
+}
+div.gallery {
+    .clearfix();
+    ul {
+        list-style:none;
+        margin:-2% -1%;
+        li {
+            float:left;
+            line-height:0px;
+            width:18%;
+            margin:2% 1% 0;
+            img {
+                width:100%;
+            }
+        }
+    }
+}
+div.widget {
+    &.youtube {
+        position:relative;
+        padding-bottom:56.25%; /* 16:9 */
+        padding-top:25px;
+        height:0;
+        iframe {
+            position:absolute;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+        }
     }
 }

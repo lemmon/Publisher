@@ -1,24 +1,49 @@
+<style>
+.media.images {
+    margin:2px;
+}
+.media.images .item {
+    float:left;
+    line-height:0;
+}
+.media.images .item a {
+    display:block;
+    border:2px solid transparent;
+}
+.media.images .item a:hover {
+    border-color:#06c;
+}
+</style>
+
+{% include '_notices.html' %}
+
+<form method="post" action="/admin/media/create/from/popup" enctype="multipart/form-data">
+    <input type="hidden" name="name">
+    <input type="file" id="f_file" name="file">
+    <button class="primary" type="submit">Upload new file</button>
+</form>
+
 <div class="media images">
-	
-	{% for item in data %}
-	<div class="item">
-		<a rel="{{ item.id }}" href="{{ link.upload(item.file) }}">
-			<img src="{{ link.upload(item.file, '128x128') }}">
-		</a>
-	</div>
-	{% endfor %}
-	
+    
+    {% for item in data %}
+    <div class="item">
+        <a rel="{{ item.id }}" href="{{ link.upload(item.file) }}">
+            <img src="{{ link.upload(item.file, '128x128') }}">
+        </a>
+    </div>
+    {% endfor %}
+    
 </div>
 
 <script src="{{ link.jQuery }}"></script>
 <script>
 $(function(){
 
-	$('.images').find('.item a').click(function(){
-		var $this = $(this);
-		parent.insertImage($this.attr('rel'), $this.attr('href'));
-		return false;
-	});
-	
+    $('.images').find('.item a').click(function(){
+        var $this = $(this);
+        parent.insertImage($this.attr('rel'), $this.attr('href'));
+        return false;
+    });
+    
 });
 </script>

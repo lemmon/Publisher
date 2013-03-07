@@ -7,19 +7,19 @@
 {% block form_secondary %}
 <fieldset>
 
-	{{ forms.p('file', flash) }}
-		{{ forms.label('file', null, 'required') }}
-		<span class="fieldset">
-			{{ forms.file('file') }}
-		</span>
-	</p>
+    {{ forms.p('file', flash) }}
+        {{ forms.label('file', null, 'required') }}
+        <span class="fieldset">
+            {{ forms.file('file') }}
+        </span>
+    </p>
 
 </fieldset>
 {% endblock %}
 
 {% block form_buttons %}
 
-	<button class="primary" type="submit">{{ "Upload new file"|t }}</button>
-	<a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
-	
+    <button class="primary" type="submit">{{ "Upload new file"|t }}</button>
+    <a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
+    
 {% endblock %}

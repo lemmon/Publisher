@@ -24,9 +24,20 @@ $(function(){
                     if (mySelection.tagName == 'IMG'){
                         var $img = $(mySelection),
                             imgSrc = $img.attr('src');
-                        if (imgSrc.charAt(0) == '/')
-                            $img.attr('src', imgSrc.replace(/(\/0\d*x\d*\w*)?\/media\//, '/0' + $(mySelection).width() + 'xm/media/'));
-                        fixImage($img);
+                        // do things
+                        if ($img.parents('div.gallery').size()){ // if images is part of a gallery
+                            // remove noise and FORBID resizing
+                            $img.removeAttr('_mce_src');
+                            // FORBID resizing
+                            $img.attr('_moz_resizing', false).removeAttr('width').removeAttr('height').blur();
+                            //
+                        }else{
+                            // fix image
+                            if (imgSrc.charAt(0) == '/')
+                                $img.attr('src', imgSrc.replace(/(\/0\d*x\d*\w*)?\/media\//, '/0' + $(mySelection).width() + 'xm/media/'));
+                            fixImage($img);
+                            //
+                        }
                     }
                 });
                 //
@@ -40,7 +51,7 @@ $(function(){
                 title : 'Insert Image',
                 onclick : function() {
                     ed.focus();
-                    $('.popup').show();
+                    $('.popup > *').show();
                     return;
                 }
             });
@@ -79,7 +90,11 @@ $(function(){
         entity_encoding : 'raw',
         convert_urls : false
     });
-    //
+    // media popup
+    $('.popup > .overlay').click(function(){
+        $('.popup > *').hide();
+    });
+    // on form submit
     $('form:has(textarea)').submit(function(){
         $('.mceEditor').each(function(){
             // get body
@@ -102,8 +117,8 @@ $(function(){
                 fixImage($(this));
             });
             // remove empty (non-IMG/BR) elements
-            while ($body.find(':not(img,br):empty').size()){
-                $body.find(':not(img,br):empty').remove();
+            while ($body.find(':not(img,iframe,br):empty').size()){
+                $body.find(':not(img,iframe,br):empty').remove();
             }
         });
     });
@@ -123,16 +138,22 @@ function insertImage(id, src){
     }else{
         $(myNode).before(toInsert);
     }
-    $('.popup').hide();
+    $('.popup > *').hide();
 }
 function fixImage($img){
     var $parent = $img.parent();
-    if ($parent[0].nodeName != 'DIV' || !$parent.hasClass('image')){
-        $('<div class="image center"><img src="' + $img.attr('src') + '"></div>').insertBefore(getRootNode($parent[0]));
-        $img.remove();
-        $parent.filter(':empty').remove();
-    }else{
-        $img.removeAttr('_mce_src').removeAttr('height');
+    if ($img.parents('div.gallery').size() == 0){ // if images is NOT part of a gallery
+        if ($parent[0].nodeName != 'DIV' || !$parent.hasClass('image')){ // needs to fix?
+            // fix
+            $('<div class="image center"><img src="' + $img.attr('src') + '"></div>').insertBefore(getRootNode($parent[0]));
+            $img.remove();
+            $parent.filter(':empty').remove();
+            //
+        }else{
+            // ...or remove noise
+            $img.removeAttr('_mce_src').removeAttr('height');
+            //
+        }
     }
 }
 </script>

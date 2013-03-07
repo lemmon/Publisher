@@ -22,83 +22,83 @@
 // ------------------------------------------------------------ //
 
 .tag {
-	display:inline-block;
-	//display:none;
-	//font-size:@baseFontSize - 3px;
-	padding:0 4px;
-	font-size:12px;
-	line-height:18px;
-	height:18px;
-	text-transform:uppercase;
-	background:@gray;
-	color:@white;
-	position:relative;
-	top:-1px;
-	.borderRadius(2px);
+    display:inline-block;
+    //display:none;
+    //font-size:@baseFontSize - 3px;
+    padding:0 4px;
+    font-size:12px;
+    line-height:18px;
+    height:18px;
+    text-transform:uppercase;
+    background:@gray;
+    color:@white;
+    position:relative;
+    top:-1px;
+    .borderRadius(2px);
 }
 .tag {
-	// states
-	&.state-active {
-		background:@green;
-	}
-	&.state-hidden {
-		background:@lightGray;
-	}
-	&.state-draft {
-		background:@orange;
-	}
+    // states
+    &.state-active {
+        background:@green;
+    }
+    &.state-hidden {
+        background:@lightGray;
+    }
+    &.state-draft {
+        background:@orange;
+    }
 }
 .note {
-	color:@gray;
+    color:@gray;
 }
 .flag {
-	display:inline-block;
-	width:16px;
-	height:16px;
+    display:inline-block;
+    width:16px;
+    height:16px;
 }
 
 // Header
 // ------------------------------------------------------------ //
 
 header {
-	@_h: @gutterWidth * 1.5;
-	height:@_h;
-	background:mix(@black, @backgroundColor, 5%);
-	font-size:@baseFontSize - 1px;
-	font-weight:400;
-	line-height:@_h;
-	text-transform:uppercase;
-	a {
-		color:@black;
-		text-decoration:none;
-		display:block;
-		background:transparent;
-	}
-	h1 {
-		line-height:inherit;
-		float:left;
-		margin:0 @gutterWidth;
-	}
-	nav {
-		float:left;
-		//letter-spacing:1px;
-		margin-left:@gutterWidth / 2;
-		li {
-			float:left;
-			//margin-right:1px;
-			a {
-				padding:0 (@gutterWidth / 1.5);
-				color:fade(@textColor, 50%);
-				&:hover {
-					color:fade(@textColor, 85%);
-				}
-			}
-			&.active a {
-				background:@backgroundColor;
-				color:@textColor;
-			}
-		}
-	}
+    @_h: @gutterWidth * 1.5;
+    height:@_h;
+    background:mix(@black, @backgroundColor, 5%);
+    font-size:@baseFontSize - 1px;
+    font-weight:400;
+    line-height:@_h;
+    text-transform:uppercase;
+    a {
+        color:@black;
+        text-decoration:none;
+        display:block;
+        background:transparent;
+    }
+    h1 {
+        line-height:inherit;
+        float:left;
+        margin:0 @gutterWidth;
+    }
+    nav {
+        float:left;
+        //letter-spacing:1px;
+        margin-left:@gutterWidth / 2;
+        li {
+            float:left;
+            //margin-right:1px;
+            a {
+                padding:0 (@gutterWidth / 1.5);
+                color:fade(@textColor, 50%);
+                &:hover {
+                    color:fade(@textColor, 85%);
+                }
+            }
+            &.active a {
+                background:@backgroundColor;
+                color:@textColor;
+            }
+        }
+    }
 }
 
 // Container
@@ -107,122 +107,124 @@ header {
 @_linkBackgroundColor: fade(@yellow, 50%);
 
 #container {
-	a:hover {
-		color:@black;
-		background-color:@_linkBackgroundColor;
-	}
-	table {
-		a:hover {
-			background-color:transparent;
-		}
-	}
+    a:hover {
+        color:@black;
+        background-color:@_linkBackgroundColor;
+    }
+    table {
+        a:hover {
+            background-color:transparent;
+        }
+    }
 }
 
 #page-title {
-	overflow:hidden;
-	h2 {
-		float:left;
-		margin-right:15px;
-		line-height:@baseLineHeight * 2;
-	}
-	a {
-		display:inline-block;
-		text-decoration:none;
-		background:fade(@gray, 10%);
-		color:fade(@black, 50%);
-		padding:0 5px;
-		.borderRadius();
-		&:hover {
-			color:@black;
-			background:@_linkBackgroundColor;
-		}
-		&.active {
-			background:@gray;
-			color:@white;
-		}
-	}
-	.form-action {
-		float:left;
-		margin-top:@baseLineHeight / 2 + 0px;
-	}
-	.form-section {
-		float:right;
-		margin-top:@baseLineHeight / 2 + 0px;
-	}
+    overflow:hidden;
+    h2 {
+        float:left;
+        margin-right:15px;
+        line-height:@baseLineHeight * 2;
+    }
+    a {
+        display:inline-block;
+        text-decoration:none;
+        background:fade(@gray, 10%);
+        color:fade(@black, 50%);
+        padding:0 5px;
+        .borderRadius();
+        &:hover {
+            color:@black;
+            background:@_linkBackgroundColor;
+        }
+        &.active {
+            background:@gray;
+            color:@white;
+        }
+    }
+    .form-action {
+        float:left;
+        margin-top:@baseLineHeight / 2 + 0px;
+    }
+    .form-section {
+        float:right;
+        margin-top:@baseLineHeight / 2 + 0px;
+    }
 }
 
 #rail {
-	font-size:@baseFontSize - 2px;
-	h3 {
-		font-size:20px;
-		margin-bottom:0;
-		color:fade(@black, 35%);
-		//text-transform:uppercase;
-	}
-	ul {
-		//margin-bottom:@gutterWidth;
-		margin-bottom:@baseFontSize;
-		//padding-left:@baseFontSize;
-		li.active {
-			a {
-				font-weight:600;
-				color:inherit;
-				text-decoration:none;
-			}
-		}
-	}
+    font-size:@baseFontSize - 2px;
+    h3 {
+        font-size:20px;
+        margin-bottom:0;
+        color:fade(@black, 35%);
+        //text-transform:uppercase;
+    }
+    ul {
+        //margin-bottom:@gutterWidth;
+        margin-bottom:@baseFontSize;
+        //padding-left:@baseFontSize;
+        li.active {
+            a {
+                font-weight:600;
+                color:inherit;
+                text-decoration:none;
+            }
+        }
+    }
 }
 
 tr.state-draft,
 tr.state-hidden {
-	.strong a {
-		color:@gray;
-	}
+    .strong a {
+        color:@gray;
+    }
 }
 tr.state-draft {
-	.strong a {
-		font-weight:400;
-		font-style:italic;
-	}
+    .strong a {
+        font-weight:400;
+        font-style:italic;
+    }
 }
 td.child-node {
-	background:url(../img/subpath.png) 5px 5px no-repeat;
+    background:url(../img/subpath.png) 5px 5px no-repeat;
 }
 
 // Footer
 // ------------------------------------------------------------ //
 
 footer {
-	font-size:.8em;
+    font-size:.8em;
 }
 
 // Popup
 // ------------------------------------------------------------ //
 
 .popup {
-	z-index:10001;
-	.overlay {
-		position:fixed;
-		left:0;
-		right:0;
-		top:0;
-		bottom:0;
-		height:auto;
-		background:fade(@darkGray, 85%);
-	}
-	.window {
-		position:fixed;
-		left:7%;
-		right:7%;
-		top:7%;
-		bottom:7%;
-		height:auto;
-		border:1px solid #000;
-		iframe {
-			width:100%;
-			height:100%;
-			background:#fff;
-		}
-	}
-	display:none;
+    z-index:10001;
+    .overlay {
+        position:fixed;
+        left:0;
+        right:0;
+        top:0;
+        bottom:0;
+        height:auto;
+        background:fade(@darkGray, 85%);
+    }
+    .window {
+        position:fixed;
+        left:7%;
+        right:7%;
+        top:7%;
+        bottom:7%;
+        height:auto;
+        border:1px solid #000;
+        iframe {
+            width:100%;
+            height:100%;
+            background:#fff;
+        }
+    }
+    & > * {
+        display:none;
+    }
 }

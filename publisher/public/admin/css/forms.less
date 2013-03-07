@@ -2,223 +2,223 @@
 // ------------------------------------------------------------ //
 
 form {
-	p {
-		line-height:1;
-		margin-bottom:10px;
-	}
-	span.fieldset {
-		display:block;
-		background:mix(@black, @backgroundColor, 2%);
-		border:1px solid fade(@black, 5%);
-		.borderRadius(2px);
-		min-height:30px;
-		line-height:30px;
-		padding:1px;
-		label {
-			//margin-left:9px;
-		}
-		input[type=radio] {
-			margin-left:9px;
-		}
-	}
-	div.buttons {
-		clear:both;
-		margin-top:@gutterWidth / 2;
-		.back {
-			color:@gray;
-			margin-left:15px;
-		}
-	}
-	.cols2 {
-		& > * {
-			width:49%;
-			float:left;
-			margin-right:2%;
-			&:last-child {
-				margin-right:0;
-			}
-		}
-		&:after {
-			content:"";
-			display:table;
-			clear:both;
-		}
-	}
-	.cols3 {
-		& > * {
-			width:32%;
-			float:left;
-			margin-right:2%;
-			&:last-child {
-				margin-right:0;
-			}
-		}
-		&:after {
-			content:"";
-			display:table;
-			clear:both;
-		}
-	}
+    p {
+        line-height:1;
+        margin-bottom:10px;
+    }
+    span.fieldset {
+        display:block;
+        background:mix(@black, @backgroundColor, 2%);
+        border:1px solid fade(@black, 5%);
+        .borderRadius(2px);
+        min-height:30px;
+        line-height:30px;
+        padding:1px;
+        label {
+            //margin-left:9px;
+        }
+        input[type=radio] {
+            margin-left:9px;
+        }
+    }
+    div.buttons {
+        clear:both;
+        margin-top:@gutterWidth / 2;
+        .back {
+            color:@gray;
+            margin-left:15px;
+        }
+    }
+    .cols2 {
+        & > * {
+            width:49%;
+            float:left;
+            margin-right:2%;
+            &:last-child {
+                margin-right:0;
+            }
+        }
+        &:after {
+            content:"";
+            display:table;
+            clear:both;
+        }
+    }
+    .cols3 {
+        & > * {
+            width:32%;
+            float:left;
+            margin-right:2%;
+            &:last-child {
+                margin-right:0;
+            }
+        }
+        &:after {
+            content:"";
+            display:table;
+            clear:both;
+        }
+    }
 }
 
 label.label {
-	display:inline-block;
-	line-height:19px;
-	line-height:1em;
-	padding:2px 0;
-	position:relative;
-	//top:-1px;
-	font-size:@baseFontSize - 2px;
-	color:fade(@black, 65%);
-	span {
-		font-size:@baseFontSize - 4px;
-		&.required {
-			color:@red;
-		}
-	}
+    display:inline-block;
+    line-height:19px;
+    line-height:1em;
+    padding:2px 0;
+    position:relative;
+    //top:-1px;
+    font-size:@baseFontSize - 2px;
+    color:fade(@black, 65%);
+    span {
+        font-size:@baseFontSize - 4px;
+        &.required {
+            color:@red;
+        }
+    }
 }
 
 // Notices
 // ------------------------------------------------------------ //
 
 #notices {
-	.flash_error,
-	.flash_notice {
-		padding:8px 0 7px;
-		text-align:center;
-	}
-	.flash_error {
-		background:fade(@red, 35%);
-		//border-bottom:1px solid fade(@red, 65%);
-	}
-	.flash_notice {
-		background:fade(@yellow, 35%);
-		//border-bottom:1px solid fade(@yellow, 65%);
-	}
+    .flash_error,
+    .flash_notice {
+        padding:8px 0 7px;
+        text-align:center;
+    }
+    .flash_error {
+        background:fade(@red, 35%);
+        //border-bottom:1px solid fade(@red, 65%);
+    }
+    .flash_notice {
+        background:fade(@yellow, 35%);
+        //border-bottom:1px solid fade(@yellow, 65%);
+    }
 }
 
 // Input Fields
 // ------------------------------------------------------------ //
 
 input[type=text], input[type=password], select, textarea {
-	display:inline-block;
-	font-family:arial,sans-serif;
-	font-size:15px;
-	height:34px;
-	margin:0;
-	padding:7px;
-	outline:none;
-	text-shadow:none;
-	.borderRadius(2px);
-	
-	color:@black;
-	font-family:inherit;
-	background:mix(@black, @backgroundColor, 2%);
-	border:1px solid fade(@black, 5%);
-	//-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	//   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	//    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	//     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	//        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-	-webkit-box-sizing:border-box;
-	 -khtml-box-sizing:border-box;
-	   -moz-box-sizing:border-box;
-	    -ms-box-sizing:border-box;
-	        box-sizing:border-box;
-	width:100%;
-	
-	&:focus {
-		border-color:@linkColor !important;
-		border-width:2px;
-		padding:6px;
-		.borderRadius(3px);
-		.boxShadow(inset 0 2px 5px fade(@black, 15%));
-	}
-	&:hover, &:focus {
-	}
-	&:hover {
-		border-color:fade(@black, 35%);
-	}
-	
-	
+    display:inline-block;
+    font-family:arial,sans-serif;
+    font-size:15px;
+    height:34px;
+    margin:0;
+    padding:7px;
+    outline:none;
+    text-shadow:none;
+    .borderRadius(2px);
+    
+    color:@black;
+    font-family:inherit;
+    background:mix(@black, @backgroundColor, 2%);
+    border:1px solid fade(@black, 5%);
+    //-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    //   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    //    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    //     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    //        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    -webkit-box-sizing:border-box;
+     -khtml-box-sizing:border-box;
+       -moz-box-sizing:border-box;
+        -ms-box-sizing:border-box;
+            box-sizing:border-box;
+    width:100%;
+    
+    &:focus {
+        border-color:@linkColor !important;
+        border-width:2px;
+        padding:6px;
+        .borderRadius(3px);
+        .boxShadow(inset 0 2px 5px fade(@black, 15%));
+    }
+    &:hover, &:focus {
+    }
+    &:hover {
+        border-color:fade(@black, 35%);
+    }
+    
+    
 }
 select {
-	height:34px;
+    height:34px;
 }
 textarea {
-	width:500px;
-	height:150px;
-	min-height:50px;
-	resize:vertical;
+    width:500px;
+    height:150px;
+    min-height:50px;
+    resize:vertical;
 }
 
 p.fit {
-	input[type=text], input[type=password], textarea {
-		width:100%;
-	}
+    input[type=text], input[type=password], textarea {
+        width:100%;
+    }
 }
 .error {
-	input[type=text], input[type=password], textarea, span.fieldset {
-		border-color:fade(@red, 85%);
-		border-width:2px;
-		padding:6px;
-		.borderRadius(3px);
-	}
-	span.fieldset {
-		padding:0px;
-	}
+    input[type=text], input[type=password], textarea, span.fieldset {
+        border-color:fade(@red, 85%);
+        border-width:2px;
+        padding:6px;
+        .borderRadius(3px);
+    }
+    span.fieldset {
+        padding:0px;
+    }
 }
 
 .modal {
-	input[type=text], input[type=password] {
-		background:@white;
-		border-color:fade(@black, 10%);
-		&:hover {
-			border-color:fade(@black, 35%);
-		}
-	}
+    input[type=text], input[type=password] {
+        background:@white;
+        border-color:fade(@black, 10%);
+        &:hover {
+            border-color:fade(@black, 35%);
+        }
+    }
 }
 
 // Buttons
 // ------------------------------------------------------------ //
 
 button {
-	font-family:arial,sans-serif;
-	width:auto;
-	height:34px;
-	padding:7px 25px;
-	margin:0;
-	font-size:14px;
-	font-weight:bold;
-	color:#fff;
-	background:#999;
-	border:1px solid fade(@black, 35%);
-	outline:none;
-	.borderRadius(3px);
-	
-	font-family:inherit;
-	font-weight:400;
-	//.animate();
-	
-	&.primary {
-		background:@linkColor;
-	}
-	&:focus, &:hover {
-		background:@darkGray;
-	}
+    font-family:arial,sans-serif;
+    width:auto;
+    height:34px;
+    padding:7px 25px;
+    margin:0;
+    font-size:14px;
+    font-weight:bold;
+    color:#fff;
+    background:#999;
+    border:1px solid fade(@black, 35%);
+    outline:none;
+    .borderRadius(3px);
+    
+    font-family:inherit;
+    font-weight:400;
+    //.animate();
+    
+    &.primary {
+        background:@linkColor;
+    }
+    &:focus, &:hover {
+        background:@darkGray;
+    }
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) { /* webkit */
-	button {
-		height:34px;
-		padding-top:0;
-		padding-bottom:0;
-		position:relative;
-		top:-1px;
-	}
+    button {
+        height:34px;
+        padding-top:0;
+        padding-bottom:0;
+        position:relative;
+        top:-1px;
+    }
 }
 
 button::-moz-focus-inner {
-	border:0;
+    border:0;
 }
 
 // More...
