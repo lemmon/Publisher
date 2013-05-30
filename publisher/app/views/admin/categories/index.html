@@ -12,67 +12,67 @@
 {% block main_content %}
 <table>
 
-	<thead>
-		<tr>
-			<th width="1">&nbsp;</th>
-			<th width="100%">{{ "Name"|t }}</th>
-			<th width="1">&nbsp;</th>
-			<th width="1" class="ac sel">&uarr;</th>
-			<th width="1" class="ar">{{ "Created At"|t }}</th>
-			<th width="1">&nbsp;</th>
-		</tr>
-	</thead>
-	<tbody>
-		
-		{% for _locale in locales %}
-		
-			<tr>
-				<th class="image"><span class="flag" style="background:url({{ link.vendor('flags/{$(country.code)}.png', _locale) }})"></span></th>
-				<th>{{ _locale.caption }}</th>
-				<th>&nbsp;</th>
-				<th class="sel">&nbsp;</th>
-				<th colspan="2">&nbsp;</th>
-			</tr>
+    <thead>
+        <tr>
+            <th width="1">&nbsp;</th>
+            <th width="100%">{{ "Name"|t }}</th>
+            <th width="1">&nbsp;</th>
+            <th width="1" class="ac sel">&uarr;</th>
+            <th width="1" class="ar">{{ "Created At"|t }}</th>
+            <th width="1">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        {% for _locale in locales %}
+        
+            <tr>
+                <th class="image"><span class="flag" style="background:url({{ link.vendor('flags/{$(country.code)}.png', _locale) }})"></span></th>
+                <th>{{ _locale.caption }}</th>
+                <th>&nbsp;</th>
+                <th class="sel">&nbsp;</th>
+                <th colspan="2">&nbsp;</th>
+            </tr>
 
-			{% for item in categories[_locale.id] %}
-			<tr class="state-{{ item.state.name|asciize }}">
-				<td class="image"><img src="{{ link.publisher('admin/img/subpath.png') }}" alt=""></td>
-				<td class="strong">
-					<a href="{{ link.to(':update', item) }}">{{ item.name }}</a>
-				</td>
-				<td class="ar">
-					<span class="tag state-{{ item.state.name|asciize }}">{{ item.state.name|t }}</span>
-				</td>
-				<td class="ac sel">{{ item.top }}</td>
-				<td class="ar tiny">{{ item.created_at|tDateTime }}</td>
-				<td class="controls">
-					<a href="{{ link.to(':update', item) }}">{{ "Update"|t }}</a> |
-					<a onclick="return confirm('Are you sure?')" href="{{ link.to(':delete', item) }}">{{ "Delete"|t }}</a>
-				</td>
-			</tr>
-			{% else %}
-			<tr>
-				<td class="image"><img src="{{ link.publisher('admin/img/subpath.png') }}" alt=""></td>
-				<td colspan="2"><em class="note">{{ "No categories has been created for this locale"|t }}&hellip;</em></td>
-				<td class="sel">&nbsp;</td>
-				<td colspan="2">&nbsp;</td>
-			</tr>
-			{% endfor %}
+            {% for item in categories[_locale.id] %}
+            <tr class="state-{{ item.state.name|asciize }}">
+                <td class="image"><img src="{{ link.publisher('admin/img/subpath.png') }}" alt=""></td>
+                <td class="name">
+                    <a href="{{ link.to(':update', item) }}">{{ item.name }}</a>
+                </td>
+                <td class="ar">
+                    <span class="tag state-{{ item.state.name|asciize }}">{{ item.state.name|t }}</span>
+                </td>
+                <td class="ac sel">{{ item.top }}</td>
+                <td class="ar tiny">{{ item.created_at|tDateTime }}</td>
+                <td class="controls">
+                    <a href="{{ link.to(':update', item) }}">{{ "Update"|t }}</a> |
+                    <a onclick="return confirm('Are you sure?')" href="{{ link.to(':delete', item) }}">{{ "Delete"|t }}</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td class="image"><img src="{{ link.publisher('admin/img/subpath.png') }}" alt=""></td>
+                <td colspan="2"><em class="note">{{ "No categories has been created for this locale"|t }}&hellip;</em></td>
+                <td class="sel">&nbsp;</td>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            {% endfor %}
 
-		{% endfor %}
-	
-	</tbody>
-	<tfoot class="line">
-		<tr>
-			<td colspan="6">&nbsp;</td>
-		</tr>
-	</tfoot>
+        {% endfor %}
+    
+    </tbody>
+    <tfoot class="line">
+        <tr>
+            <td colspan="6">&nbsp;</td>
+        </tr>
+    </tfoot>
 
 </table>
 {% endblock %}
 
 {% block rail %}
 
-	{% include '_sidebar.html' %}
+    {% include '_sidebar.html' %}
 
 {% endblock %}

@@ -3,25 +3,27 @@
 {% import '_forms.html' as forms %}
 
 {% block main %}
-<form method="post" action="{{ link.self.includeQuery }}" {% block form_type %}{% if (block('form_type_upload')) %}enctype="multipart/form-data"{% endif %}{% endblock %}>
+<form method="post" target="form-frame" action="{% block form_action %}{{ link.self.includeQuery }}{% endblock %}" {% block form_type %}{% if (block('form_type_upload')) %}enctype="multipart/form-data"{% endif %}{% endblock %}>
 
-	{% block form_header %}<h2>{{ block('title') }}</h2>{% endblock %}
-	
-	<div id="main-second"><div class="inner">
-		{% block form_primary %}
-		{% endblock %}
-	</div></div>
-	<div id="rail-second">
-		{% block form_secondary %}
-		{% endblock %}
-	</div>
-	<div class="clear"></div>
-	
-	<div class="buttons">
-		{% block form_buttons %}
-		<button class="primary" type="submit">{{ "Submit"|t }}</button>
-		{% endblock %}
-	</div>
+    {% block form_main %}{% endblock %}
+    
+    <div class="buttons">
+        {% block form_buttons %}
+        {% if (states) %}
+        <p class="right">{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}</p>
+        <p class="left">
+        {% endif %}
+            <button class="loading" disabled>{{ "Please wait"|t }}&hellip;</button>
+            {% block form_buttons_buttons %}
+            <button class="primary" type="submit">{{ "Submit"|t }}</button>
+            {% endblock %}
+        {% if (states) %}
+        </p>
+        {% endif %}
+        {% endblock %}
+    </div>
+    
+    <iframe style="border:1px dashed red" name="form-frame" width="100%" height="200"></iframe>
 
 </form>
 {% endblock %}

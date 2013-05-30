@@ -2,18 +2,20 @@
 
 {% block title %}{{ "Categories"|t }}{% endblock %}
 
-{% block container %}
+{% block main %}
 <section class="modal">
 
-	<form method="get" action="{{ link.to(':create') }}">
-		
-		<h2>{{ block('title') }}</h2>
-		<p>{{ "You don't have any categories created yet. Create your first one right now."|t }}</p>
-		<div class="buttons" style="margin-top:15px;">
-			<button class="primary" type="submit">{{ "Create your first category"|t }}&hellip;</button>
-		</div>
-		
-	</form>
+    <form method="post" target="form-frame" action="{{ link.to(':create') }}">
+        
+        <h2>{{ block('title') }}</h2>
+        <p>{{ "You don't have any categories created yet. Create your first one right now."|t }}</p>
+        <div class="buttons" style="margin-top:15px;">
+            <button class="primary" type="submit">{{ "Create your first category"|t }}&hellip;</button>
+        </div>
+        
+        <iframe style="border:1px dashed red" name="form-frame" width="100%" height="200"></iframe>
+        
+    </form>
 
 </section>
 {% endblock %}

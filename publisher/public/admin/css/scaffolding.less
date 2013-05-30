@@ -1,29 +1,30 @@
-// Elements
-// ------------------------------------------------------------ //
+//  Elements
+//  ------------------------------------------------------------  //
+
 
 body {
-	overflow-x:hidden;
-	overflow-y:scroll;
-	font-family:@baseFontFamily;
-	font-size:@baseFontSize;
-	line-height:@baseLineHeight;
-	color:@textColor;
-	background-color:@backgroundColor;
+    font-family:@baseFontFamily;
+    font-size:@baseFontSize;
+    line-height:@baseLineHeight;
+    color:@textColor;
+    background-color:@backgroundColor;
 }
 a {
-	color:@linkColor;
-	text-decoration:underline;
-	.animate();
+    color:@linkColor;
+    text-decoration:underline;
+    .animate();
 }
 a:hover {
-	text-decoration:none;
+    text-decoration:none;
 }
 
 ::-moz-selection { background:#ff5e99; color:#fff; text-shadow:none; }
 ::selection      { background:#ff5e99; color:#fff; text-shadow:none; }
 
-// Classes
-// ------------------------------------------------------------ //
+
+//  Classes
+//  ------------------------------------------------------------  //
+
 
 .clear { clear:both; height:0px; line-height:0px; font-size:0px; }
 
@@ -33,3 +34,40 @@ a:hover {
 .al { text-align:left; }
 .ac { text-align:center; }
 .ar { text-align:right; }
+
+.strike {
+    text-decoration:line-through;
+}
+
+//  Tags
+//  ------------------------------------------------------------  //
+
+
+.tag {
+    display:inline-block;
+    padding:0 4px;
+    font-size:12px;
+    line-height:18px;
+    height:18px;
+    text-transform:uppercase;
+    font-style:normal;
+    background:@gray;
+    color:@white;
+    position:relative;
+    top:-1px;
+    .borderRadius(2px);
+}
+.tag {
+    // states
+    &.state-active {
+        background:@green;
+    }
+    &.state-hidden {
+        background:@yellow;
+        //background:@textColor;
+    }
+    &.state-draft {
+        background:@orange;
+    }
+}
+

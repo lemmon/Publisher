@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <meta name="generator" content="TextMate http://macromates.com/">
+    <meta name="author" content="Jakub Pelák">
+    <meta name="robots" content="noindex, nofollow">
+
+    {% block head_append %}{% endblock %}
+</head>
+<body>
+    
+    <style>
+    iframe[name=form-frame] {
+        _display:none;
+    }
+    </style>
+    
+    {% block body %}{% endblock %}
+
+</body>
+</html>

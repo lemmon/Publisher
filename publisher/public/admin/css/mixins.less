@@ -1,13 +1,14 @@
-// ?
-// ------------------------------------------------------------ //
+//  ?
+//  ------------------------------------------------------------  //
+
 
 .imageReplace(@image, @w, @h) {
-	white-space:nowrap;
-	text-indent:100%;
-	overflow:hidden;
-	background-image:url(@image);
-	width:@w;
-	height:@h;
+    white-space:nowrap;
+    text-indent:100%;
+    overflow:hidden;
+    background-image:url(@image);
+    width:@w;
+    height:@h;
 }
 
 // Clearfix
@@ -23,39 +24,48 @@
     }
 }
 
-// CSS3 Properties
-// ------------------------------------------------------------ //
-
-// Border Radius
-.borderRadius(@radius: @defaultBorderRadius) {
-	-webkit-border-radius:@radius;
-	   -moz-border-radius:@radius;
-	        border-radius:@radius;
+// ellipsis
+.ellipsis() {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-// Drop shadows
+
+//  CSS3 Properties
+//  ------------------------------------------------------------  //
+
+
+// border radius
+.borderRadius(@radius: @defaultBorderRadius) {
+    -webkit-border-radius:@radius;
+       -moz-border-radius:@radius;
+            border-radius:@radius;
+}
+
+// drop shadows
 .boxShadow(@shadow) when (isstring(@shadow)) {
-	-webkit-box-shadow:e(@shadow);
-	   -moz-box-shadow:e(@shadow);
-	        box-shadow:e(@shadow);
+    -webkit-box-shadow:e(@shadow);
+       -moz-box-shadow:e(@shadow);
+            box-shadow:e(@shadow);
 }
 .boxShadow(@shadow) when not (isstring(@shadow)) {
-	-webkit-box-shadow:@shadow;
-	   -moz-box-shadow:@shadow;
-	        box-shadow:@shadow;
+    -webkit-box-shadow:@shadow;
+       -moz-box-shadow:@shadow;
+            box-shadow:@shadow;
 }
 
-// Transitions
-.transition(@transition: all .15s ease-out) {
-	-webkit-transition:@transition;
-	   -moz-transition:@transition;
-	    -ms-transition:@transition;
-	     -o-transition:@transition;
-	        transition:@transition;
+// transitions
+.transition(@transition: @defaultTransition) {
+    -webkit-transition:@transition;
+       -moz-transition:@transition;
+        -ms-transition:@transition;
+         -o-transition:@transition;
+            transition:@transition;
 }
 .animate() {
-	.transition();
+    .transition();
 }
 .animate(@transition) {
-	.transition(@transition);
+    .transition(@transition);
 }

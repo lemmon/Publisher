@@ -1,30 +1,21 @@
-{% for _page in _pages %}
+{% if (_pages|length) %}
+<ul>
+    {% for _page in _pages %}
+    <li class="state-{{ _page.state.name|asciize }} level-{{ level + 0 }}">
 
-	<tr class="state-{{ _page.state.name|asciize }}">
+        <a class="name" target="main" href="{{ link.section(_page) }}">
+            {% if (_page.type) %}
+            <span class="tag">{{ _page.type }}</span>
+            {% endif %}
+            {% if (_page.state_id != 1) %}
+            <span class="tag state-{{ _page.state.name|asciize }}">{{ _page.state.name }}</span>
+            {% endif %}
+            <span class="caption">{{ _page.name }}</span>
+        </a>
 
-		<td class="image">{% if (not level) %}<img src="{{ link.publisher('admin/img/subpath.png') }}" alt="">{% endif %}</td>
-		<td class="strong {% if (level) %}child-node{% endif %}" {% if (level) %}style="padding-left:{{ level*21 + 7 }}px;background-position:{{ level*21 - 16 }}px 5px"{% endif %}>
-			<a href="{{ link.to(':update', _page) }}">{{ _page.name }}</a>
-		</td>
-		<td class="tiny">
-			{% if (_page.template) %}
-			{{ _page.template }}
-			{% else %}
-			&nbsp;
-			{% endif %}
-		</td>
-		<td class="ar">
-			<span class="tag state-{{ _page.state.name|asciize }}">{{ _page.state.name|t }}</span>
-		</td>
-		<td class="ac sel">{{ _page.top }}</td>
-		<td class="ar tiny">{{ _page.updated_at|tDateTime }}</td>
-		<td class="controls">
-			<a href="{{ link.to(':update', _page) }}">{{ "Update"|t }}</a>{# |
-			<a href="{{ link.to(':delete', _page) }}">{{ "Delete"|t }}</a>#}
-		</td>
+        {% include '_listpages.html' with {'_pages': pages.pages[_page.id], 'level': level + 1} %}
 
-	</tr>
-	
-	{% include '_listpages.html' with {'_pages': pages.pages[_page.id], 'level': level + 1} %}
-
-{% endfor %}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}

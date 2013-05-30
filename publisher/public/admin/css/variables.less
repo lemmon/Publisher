@@ -1,49 +1,65 @@
-// Defaults
-// ------------------------------------------------------------ //
+//  Defaults
+//  ------------------------------------------------------------  //
 
-@defaultBorderRadius: 2px;
 
-// Accent colors
-// ------------------------------------------------------------ //
+@defaultBorderRadius:   2px;
+@defaultTransition:     color .15s ease-out, background-color .15s ease-out, border-color .15s ease-out;
+
+
+//  Accent colors
+//  ------------------------------------------------------------  //
+
 
 /*
-@blue:                #049cdb;
-@blueDark:            #0064cd;
-@green:               #46a546;
-@red:                 #9d261d;
-@yellow:              #ffc40d;
-@orange:              #f89406;
-@pink:                #c3325f;
-@purple:              #7a43b6;
+@blue:                  #049cdb;
+@blueDark:              #0064cd;
+@green:                 #46a546;
+@red:                   #9d261d;
+@yellow:                #ffc40d;
+@orange:                #f89406;
+@pink:                  #c3325f;
+@purple:                #7a43b6;
 */
 
-@black:               #000000;
-@darkGray:            #414141;
-@gray:                #888888;
-@lightGray:           #b0b0b0;
-@white:               #ffffff;
+@black:                 #000000;
+@darkGray:              #414141;
+@gray:                  #888888;
+@lightGray:             #b0b0b0;
+@white:                 #ffffff;
 
-@blue:                #7ac2d2;
-@red:                 #bc4b38;
-@orange:              #d57447;
-@green:               #7a9c41;
-@yellow:              #fec44e;
+@blue:                  #7ac2d2;
+@red:                   #bc4b38;
+@orange:                #d57447;
+@green:                 #7a9c41;
+@yellow:                #fec44e;
 
-// Variables
-// ------------------------------------------------------------ //
 
-@baseFontFamily:      'Source Sans Pro','helvetica neue',arial,sans-serif;
-@baseFontSize:        15px;
-@baseLineHeight:      24px;
+//  Variables
+//  ------------------------------------------------------------  //
 
-@backgroundColor:     @white;
-@textColor:           @darkGray;
-@headingsColor:       @black;
-//@linkColor:           rgba(205, 54, 66, 1);
-@linkColor:           #06c;
 
-// Grid
-// ------------------------------------------------------------ //
+@baseFontFamily:        'Source Sans Pro','helvetica neue',arial,sans-serif;
+@baseFontSize:          14px;
+@baseLineHeight:        24px;
 
-@gutterWidth:         30px;
-@railWidth:           300px;
+@backgroundColor:       @white;
+@textColor:             #414141;
+@accentColor:           #040404;
+@noteColor:             #909090;
+@noteBackgroundColor:   #f1f1f1;
+//@linkColor:             rgba(205, 54, 66, 1);
+@linkColor:             #06c;
+
+@headingsColor:         @accentColor;
+
+
+//  Grid
+//  ------------------------------------------------------------  //
+
+
+@marginWidth:           20px;
+@marginHeight:          15px;
+@gutterWidth:           30px;
+@gutterHeight:          @gutterWidth;
+@navWidth:              80px;
+@railWidth:             22.5%;

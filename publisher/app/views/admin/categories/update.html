@@ -1,116 +1,104 @@
 {% extends '_templates/form.html' %}
 
-{% block title %}{{ item.name }}{% endblock %}
+{% block title item.default('name')  %}
 
 {% block form_type_upload %}YES{% endblock %}
 
-{% block form_primary %}
+{% block form_main %}
 <fieldset>
-	
-	{{ forms.p('name', flash, {'class': 'fit'}) }}
-		{{ forms.label('name', null, 'required') }}
-		{{ forms.input('name', f.name) }}
-	</p>
+    
+    {{ forms.p('name', flash, {'class': 'fit big'}) }}
+        {{ forms.label('name', null, 'required') }}
+        {{ forms.input('name', f.name) }}
+    </p>
 
-	<p class="fit">
-		{{ forms.label('description', null, 'optional') }}
-		{{ forms.text('description', f.description) }}
-	</p>
-	
-</fieldset>
-{% endblock %}
+    <p class="fit">
+        {{ forms.label('description', null, 'optional') }}
+        {{ forms.text('description', f.description) }}
+    </p>
+    
+    {{ forms.p('image', flash) }}
+        {{ forms.label('image', null, 'optional') }}
+        <span class="fieldset">
+            {% if (f.image) %}
+            <span class="image"><img src="{{ link.upload(f.image) }}" style="width:100%"></span>
+            {% endif %}
+            {{ forms.image('image') }}
+        </span>
+    </p>
 
-{% block form_secondary %}
-<fieldset>
+    {{ forms.p('state_id', flash) }}
+        {{ forms.label('state_id', null, 'required') }}
+        <span class="fieldset">
+        {{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}
+        </span>
+    </p>
 
-	{{ forms.p('image', flash) }}
-		{{ forms.label('image', null, 'optional') }}
-		<span class="fieldset">
-			{% if (f.image) %}
-			<span class="image"><img src="{{ link.upload(f.image) }}" style="width:100%"></span>
-			{% endif %}
-			{{ forms.image('image') }}
-		</span>
-	</p>
+    {{ forms.p('locale_id', flash) }}
+        {{ forms.label('locale_id', null, 'required') }}
+        {{ forms.select('locale_id', f.locale_id, locales) }}
+    </p>
 
-	{{ forms.p('state_id', flash) }}
-		{{ forms.label('state_id', null, 'required') }}
-		<span class="fieldset">
-		{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}
-		</span>
-	</p>
-
-	{{ forms.p('locale', flash) }}
-		{{ forms.label('locale', null, 'required') }}
-		{{ forms.select('locale', f.locale, locales) }}
-	</p>
-
-	{{ forms.p('top', flash) }}
-		{{ forms.label('top', null, 'optional') }}
-		{{ forms.input('top', f.top) }}
-	</p>
-
-</fieldset>
+</div>
 {% endblock %}
 
 {% block form_buttons %}
 
-	<button class="primary" type="submit">{{ "Update category"|t }}</button>
-	<a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
-	
+    <button class="primary" type="submit" disabled>{{ "Update category"|t }}</button>
+    
 {% endblock %}
 
 {% block script %}
 <style>
 #f_parent_id label {
-	display:block;
+    display:block;
 }
 #parent_id_thispage {
-	color:#000000;
-	display:block;
-	font-style:italic;
-	font-weight:600;
-	line-height:1px;
+    color:#000000;
+    display:block;
+    font-style:italic;
+    font-weight:600;
+    line-height:1px;
 }
 #parent_id_thispage img {
-	display:inline-block;
-	margin:0 2px 0 7px;
-	vertical-align:middle;
+    display:inline-block;
+    margin:0 2px 0 7px;
+    vertical-align:middle;
 }
 </style>
 <script>
 $(function(){
-	
-	//
-	// locales
-	var $thispage = $('#parent_id_thispage');
-	var languages = {
-		{% for _l in locales %}
-		{% if (loop.index0) %},{% endif -%}
-		{{ _l.id }}: {code: '{{ _l.country.code|lower }}'}
-		{% endfor %}
-	};
-	
-	function format(state){
-		if (state.id){
-			return '<i class="flag" style="background:url(' + '{{ link.vendor('flags/@code.png') }}'.replace('@code', languages[state.id].code) + ')"></i>' + state.text;
-		} else{
-			if (state.text)
-				return '<strong>' + state.text + '</strong>';
-		}
-	}
-	
-	$('#f_parent_id').find('span').filter(':not(.locale-' + $('#f_locale').val() + ')').hide();
-	$('#f_locale').select2({
-		width: '100%',
-		formatResult: format,
-		formatSelection: format
-	}).on('change', function(e){
-		$('#f_parent_id').find('span').filter('.locale-' + e.val).show();
-		$('#f_parent_id').find('span').filter(':not(.locale-' + e.val + ')').hide();
-		$('#f_parent_id').find('input:first').click();
-	});
-	
+    
+    //
+    // locales
+    var $thispage = $('#parent_id_thispage');
+    var languages = {
+        {% for _l in locales %}
+        {% if (loop.index0) %},{% endif -%}
+        {{ _l.id }}: {code: '{{ _l.country.code|lower }}'}
+        {% endfor %}
+    };
+    
+    function format(state){
+        if (state.id){
+            return '<i class="flag" style="background:url(' + '{{ link.vendor('flags/@code.png') }}'.replace('@code', languages[state.id].code) + ')"></i>' + state.text;
+        } else{
+            if (state.text)
+                return '<strong>' + state.text + '</strong>';
+        }
+    }
+    
+    $('#f_parent_id').find('span').filter(':not(.locale-' + $('#f_locale').val() + ')').hide();
+    $('#f_locale').select2({
+        width: '100%',
+        formatResult: format,
+        formatSelection: format
+    }).on('change', function(e){
+        $('#f_parent_id').find('span').filter('.locale-' + e.val).show();
+        $('#f_parent_id').find('span').filter(':not(.locale-' + e.val + ')').hide();
+        $('#f_parent_id').find('input:first').click();
+    });
+    
 });
 </script>
 {% endblock %}

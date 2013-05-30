@@ -1,8 +1,93 @@
-{% extends 'update.html' %}
+{% extends 'layout.html' %}
 
-{% block title %}{{ "New Page"|t }}{% endblock %}
+{% block title "New Page"|t %}
 
-{% block form_buttons %}
-<button class="primary" type="submit">{{ "Create new page"|t }}</button>
-<a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
+{% import '_forms.html' as forms %}
+
+{% block main %}
+<div class="modalish">
+
+    <form method="post" target="form-frame" action="{{ link.self }}">
+        
+        <h2>{{ block('title') }}</h2>
+        {#
+        <p>{{ "You don't have any pages created yet. Create your first one right now."|t }}</p>
+        #}
+        
+        {{ forms.p('name', flash, {'class': 'fit big'}) }}
+            {{ forms.label('name', null, 'required') }}
+            {{ forms.input('name', f.name) }}
+        </p>
+
+        {% if locales %}
+        {{ forms.p('locale_id', flash) }}
+            {{ forms.label('locale_id', null, 'required') }}
+            {{ forms.select_groups('locale_id', f.locale_id, locales) }}
+        </p>
+        {% endif %}
+
+        <div class="cols2">
+
+            <p class="fit">
+                {{ forms.label('template', null, 'optional') }}
+                {{ forms.input('template', f.template) }}
+            </p>
+            
+            <p class="fit">
+                {{ forms.label('type', null, 'optional') }}
+                {{ forms.input('type', f.type) }}
+            </p>
+
+        </div>
+
+        {{ forms.p('state_id', flash) }}
+            {{ forms.label('state_id', null, 'required') }}
+            <span class="fieldset">{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}</span>
+        </p>
+
+        <div style="margin-top:30px">
+            <button class="primary" type="submit">{{ "Create new page"|t }}&hellip;</button>
+            <button class="loading" disabled>{{ "Please wait"|t }}&hellip;</button>
+        </div>
+        
+        <iframe style="border:1px dashed red" name="form-frame" width="100%" height="200"></iframe>
+
+    </form>
+
+</div>
+{% endblock %}
+
+{% block script %}
+{% if (locales) %}
+<script src="{{ link.vendor('select2/select2.min.js') }}"></script>
+<script>
+$(function(){
+
+    //
+    // locales
+    var languages = {
+        {% for _group in locales %}
+        {% if (loop.index0) %},{% endif -%}
+        {% for _l in _group.data %}
+        {% if (loop.index0) %},{% endif -%}
+        {{ _l.id }}: {code: '{{ _l.country.code|lower }}'}
+        {% endfor %}
+        {% endfor %}
+    };
+    function format(state){
+        if (state.id){
+            return '<i class="flag" style="background:url(' + '{{ link.vendor('flags/@code.png') }}'.replace('@code', languages[state.id].code) + ')"></i>' + state.text;
+        }else if (state.text){
+            return '<strong>' + state.text + '</strong>';
+        }
+    }
+    $('#f_locale_id').select2({
+        width: '100%',
+        formatResult: format,
+        formatSelection: format
+    });
+
+});
+</script>
+{% endif %}
 {% endblock %}

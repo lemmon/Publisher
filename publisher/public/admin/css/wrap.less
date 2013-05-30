@@ -1,0 +1,126 @@
+//  Includes
+//  ------------------------------------------------------------  //
+
+
+@import 'reset.less';        // css reset
+@import 'fonts.less';        // fonts
+@import 'variables.less';    // variables
+@import 'mixins.less';       // css3 & other mixins
+
+
+//  Defaults
+//  ------------------------------------------------------------  //
+
+
+html, body {
+    overflow:hidden;
+    width:100%;
+    height:100%;
+}
+
+
+//  Nav
+//  ------------------------------------------------------------  //
+
+
+nav {
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:@navWidth;
+    height:auto;
+    li {
+        a {
+            display:block;
+            width:@navWidth;
+            height:@navWidth;
+            line-height:@navWidth;
+            text-indent:100%;
+            overflow:hidden;
+            color:inherit;
+            text-decoration:none;
+            //color:mix(@accentColor, @backgroundColor, 35%);
+            color:mix(@white, @textColor, 15%);
+            &:hover {
+                //color:mix(@accentColor, @backgroundColor, 65%);
+                color:mix(@white, @textColor, 65%);
+            }
+            &:before {
+                font-family:'FontAwesome';
+                font-size:round(@navWidth / 3);
+                text-indent:0;
+                text-align:center;
+                content:"X";
+                display:block;
+                .animate();
+            }
+        }
+        &.active a {
+            //color:@accentColor;
+            color:mix(@white, @textColor, 85%);
+        }
+        &.nav-pages      a:before { content:"\f0e8"; }
+        &.nav-categories a:before { content:"\f0ae"; }
+        &.nav-media      a:before { content:"\f03e"; }
+        &.nav-users      a:before { content:"\f0c0"; }
+        &.nav-settings   a:before { content:"\f085"; }
+    }
+    //
+    background:#131313;
+}
+
+
+//  Main
+//  ------------------------------------------------------------  //
+
+
+#main {
+    display:block;
+    position:fixed;
+    left:@navWidth;
+    right:0;
+    top:0;
+    bottom:0;
+    height:auto;
+    iframe {
+        width:100%;
+        height:100%;
+    }
+}
+
+
+//  Popup
+//  ------------------------------------------------------------  //
+
+
+.popup {
+    z-index:10001;
+    .overlay {
+        position:fixed;
+        left:0;
+        right:0;
+        top:0;
+        bottom:0;
+        height:auto;
+        background:fade(@darkGray, 85%);
+    }
+    .window {
+        position:fixed;
+        left:7%;
+        right:7%;
+        top:7%;
+        bottom:7%;
+        height:auto;
+        border:1px solid #000;
+        iframe {
+            width:100%;
+            height:100%;
+            background:#fff;
+        }
+    }
+    & > * {
+        display:none;
+    }
+}
+

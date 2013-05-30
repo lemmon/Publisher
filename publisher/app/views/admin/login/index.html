@@ -2,28 +2,30 @@
 
 {% block title %}{{ "Account Login"|t }}{% endblock %}
 
-{% block container %}
+{% block main %}
+<div id="notices"></div>
 <div class="modal">
-	
-	<h2>{{ block("title") }}</h2>
-	
-	<form method="post" action="{{ link.self.includeQuery }}">
-		
-		<fieldset>
-			<p class="fit">
-				<label class="label" for="f_email">{{ "Email"|t }}<br></label>
-				<input type="text" id="f_email" name="email" value="{{ f.email }}">
-			</p>
-			<p class="fit">
-				<label class="label" for="f_password">{{ "Password"|t }}<br></label>
-				<input type="password" id="f_password" name="password">
-			</p>
-		</fieldset>
-		<div class="buttons">
-			<button class="primary" type="submit">{{ "Sign in"|t }}</button>
-		</div>
-		
-	</form>
+    
+    <h2>{{ block("title") }}</h2>
+    
+    <form method="post" action="{{ link.self.includeQuery }}">
+        
+        <fieldset>
+            <p class="fit">
+                <label class="label" for="f_email">{{ "Email"|t }}<br></label>
+                <input type="text" id="f_email" name="email" value="{{ f.email }}">
+            </p>
+            <p class="fit">
+                <label class="label" for="f_password">{{ "Password"|t }}<br></label>
+                <input type="password" id="f_password" name="password">
+            </p>
+        </fieldset>
+        <div class="" style="margin-top:10px;">
+            <button class="loading" disabled>{{ "Please wait"|t }}&hellip;</button>
+            <button class="primary" type="submit">{{ "Sign in"|t }}</button>
+        </div>
+        
+    </form>
 
 </div>
 {% endblock %}

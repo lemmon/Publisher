@@ -1,0 +1,67 @@
+{% extends 'boilerplate.html' %}
+
+{% block head_append %}
+<link rel="stylesheet" href="{{ link.publisher('admin/css/frame.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <div id="rail">
+        <div class="inner">
+            
+            {% block rail %}{% endblock %}
+
+        </div>
+    </div>
+    <div id="main">
+        
+        <iframe name="main" _src="{% block main_iframe_src link.to(':section') %}"></iframe>
+        
+    </div>
+
+    <script src="{{ link.jQuery }}"></script>
+    <script>
+    $(function(){
+        var $rail = $('#rail');
+            $a = $rail.find('a[target=main]'),
+            $main = $('iframe[name=main]'),
+            section = top.location.href.split('#')[1].split('/in/')[0];
+        //
+        // onclick
+        $a.click(function(){
+            var $this = $(this);
+            $a.filter('.active').removeClass('active');
+            $this.addClass('active');
+        });
+        //
+        // init
+        if (section){
+            $main.attr('src', '/admin/' + section);
+        }else{
+            console.log('== ? ==');
+        }
+
+
+        // onchange
+        /*
+        $main.load(function(){
+            var section = this.contentWindow.location.pathname.substring(7),
+                a = section.split('/')[0],
+                b = location.pathname.substring(7).split('/')[0];
+            top.location = top.location.href.split('#')[0] + '#' + section + (a == b ? '' : '/in/' + b);
+        });
+        // init
+        if (section && section.indexOf('/') > 0){
+            $main.attr('src', '/admin/' + section);
+            $a.filter('.active').removeClass('active');
+            $a.filter('[href="/admin/' + section + '"]').addClass('active');
+        }else{
+            $main.attr('src', '{{ link.to(':section') }}');
+        }
+        */
+    });
+    </script>
+    {% block script %}{% endblock %}
+
+{% endblock %}
+

@@ -1,21 +1,21 @@
-{% if (flash.notices or flash.errors) %}
 <div id="notices">
 
-	{% if flash.notices %}
-	<div class="flash_notice">
-		{% for line in flash.notices %}
-		{{ line }}<br>
-		{% endfor %}
-	</div>
-	{% endif %}
+    {% if flash.notices %}
+    <div class="flash_notice">
+        {% for line in flash.notices %}
+        {{ line }}<br>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-	{% if flash.errors %}
-	<div class="flash_error">
-		{% for line in flash.errors %}
-		{{ line }}<br>
-		{% endfor %}
-	</div>
-	{% endif %}
+    {# #}
+    {% if flash.errors %}
+    <div class="flash_error">
+        {% for line in flash.errors %}
+        {{ line }}<br>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {# #}
 
 </div>
-{% endif %}

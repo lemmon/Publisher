@@ -4,124 +4,124 @@
 */
 class TreeItem
 {
-	private $_id;
-	private $_locale;
-	private $_name;
-	private $_parent;
-	private $_children = [];
+    private $_id;
+    private $_locale;
+    private $_name;
+    private $_parent;
+    private $_children = [];
 
-	private static $_instances = [];
-	private static $_rootItems = [];
-
-
-	private function __construct($id, $locale, $name)
-	{
-		// defaults
-		$this->_id     = $id;
-		$this->_locale = $locale;
-		$this->_name   = $name;
-		// root
-		self::$_rootItems[$locale][$id] = $this;
-		// instance
-		self::$_instances[$id] = $this;
-	}
+    private static $_instances = [];
+    private static $_rootItems = [];
 
 
-	static function newInstance($id, $locale, $name)
-	{
-		return new self($id, $locale, $name);
-	}
+    private function __construct($id, $locale, $name)
+    {
+        // defaults
+        $this->_id     = $id;
+        $this->_locale = $locale;
+        $this->_name   = $name;
+        // root
+        self::$_rootItems[$locale][$id] = $this;
+        // instance
+        self::$_instances[$id] = $this;
+    }
 
 
-	static function getInstance($id)
-	{
-		if ($instance=self::$_instances[$id])
-		{
-			return $instance;
-		}
-		else
-		{
-			throw new \Exception(sprintf('Instance Id: %d not available.', $id));
-		}
-	}
+    static function newInstance($id, $locale, $name)
+    {
+        return new self($id, $locale, $name);
+    }
 
 
-	static function getAllItems()
-	{
-		return self::$_instances;
-	}
+    static function getInstance($id)
+    {
+        if ($instance=self::$_instances[$id])
+        {
+            return $instance;
+        }
+        else
+        {
+            throw new \Exception(sprintf('Instance Id: %d not available.', $id));
+        }
+    }
 
 
-	static function getRootItems($locale)
-	{
-		return self::$_rootItems[$locale];
-	}
+    static function getAllItems()
+    {
+        return self::$_instances;
+    }
 
 
-	function getId()
-	{
-		return $this->_id;
-	}
+    static function getRootItems($locale)
+    {
+        return self::$_rootItems[$locale];
+    }
 
 
-	function getLanguageId()
-	{
-		return $this->_locale;
-	}
+    function getId()
+    {
+        return $this->_id;
+    }
 
 
-	function getName()
-	{
-		return $this->_name;
-	}
+    function getLanguageId()
+    {
+        return $this->_locale;
+    }
 
 
-	function getChildren()
-	{
-		return $this->_children;
-	}
+    function getName()
+    {
+        return $this->_name;
+    }
 
 
-	function getRootId()
-	{
-		return $this->_parent ? $this->_parent->getRootId() : $this->_id;
-	}
+    function getChildren()
+    {
+        return $this->_children;
+    }
 
 
-	function getPathQuery($include_self=false)
-	{
-		return ($this->_parent ? $this->_parent->getPathQuery(true) . ($include_self ? ',' : '') : null) . ($include_self ? $this->_id : null);
-	}
+    function getRootId()
+    {
+        return $this->_parent ? $this->_parent->getRootId() : $this->_id;
+    }
 
 
-	function getChildrenQuery()
-	{
-		$q = $this->_id;
-		if ($this->_children)
-		{
-			foreach ($this->_children as $child) $q .= ',' . $child->getChildrenQuery();
-		}
-		return $q;
-	}
+    function getPathQuery($include_self=false)
+    {
+        return ($this->_parent ? $this->_parent->getPathQuery(true) . ($include_self ? ',' : '') : null) . ($include_self ? $this->_id : null);
+    }
 
 
-	function getLevel($level=0)
-	{
-		return $this->_parent ? $this->_parent->getLevel($level+1) : $level;
-	}
+    function getChildrenQuery()
+    {
+        $q = $this->_id;
+        if ($this->_children)
+        {
+            foreach ($this->_children as $child) $q .= ',' . $child->getChildrenQuery();
+        }
+        return $q;
+    }
 
 
-	function getTop()
-	{
-		return array_search($this->_id, array_keys($this->_parent ? $this->_parent->_children : self::$_rootItems[$this->_locale])) + 1;
-	}
+    function getLevel($level=0)
+    {
+        return $this->_parent ? $this->_parent->getLevel($level+1) : $level;
+    }
 
 
-	function addChild($child)
-	{
-		$this->_children[$child->getId()] = $child;
-		$child->_parent = $this;
-		unset(self::$_rootItems[$child->getLanguageId()][$child->getId()]);
-		return $this;
-	}
+    function getTop()
+    {
+        return array_search($this->_id, array_keys($this->_parent ? $this->_parent->_children : self::$_rootItems[$this->_locale])) + 1;
+    }
+
+
+    function addChild($child)
+    {
+        $this->_children[$child->getId()] = $child;
+        $child->_parent = $this;
+        unset(self::$_rootItems[$child->getLanguageId()][$child->getId()]);
+        return $this;
+    }
 }

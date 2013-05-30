@@ -1,5 +1,6 @@
-// Includes
-// ------------------------------------------------------------ //
+//  Includes
+//  ------------------------------------------------------------  //
+
 
 // CSS Reset
 @import 'reset.less';
@@ -18,36 +19,11 @@
 @import 'forms.less';
 @import 'tables.less';
 
-// Classes
-// ------------------------------------------------------------ //
 
-.tag {
-    display:inline-block;
-    //display:none;
-    //font-size:@baseFontSize - 3px;
-    padding:0 4px;
-    font-size:12px;
-    line-height:18px;
-    height:18px;
-    text-transform:uppercase;
-    background:@gray;
-    color:@white;
-    position:relative;
-    top:-1px;
-    .borderRadius(2px);
-}
-.tag {
-    // states
-    &.state-active {
-        background:@green;
-    }
-    &.state-hidden {
-        background:@lightGray;
-    }
-    &.state-draft {
-        background:@orange;
-    }
-}
+//  Classes
+//  ------------------------------------------------------------  //
+
+
 .note, .gray {
     color:@gray;
 }
@@ -57,52 +33,10 @@
     height:16px;
 }
 
-// Header
-// ------------------------------------------------------------ //
 
-header {
-    @_h: @gutterWidth * 1.5;
-    height:@_h;
-    background:mix(@black, @backgroundColor, 5%);
-    font-size:@baseFontSize - 1px;
-    font-weight:400;
-    line-height:@_h;
-    text-transform:uppercase;
-    a {
-        color:@black;
-        text-decoration:none;
-        display:block;
-        background:transparent;
-    }
-    h1 {
-        line-height:inherit;
-        float:left;
-        margin:0 @gutterWidth;
-    }
-    nav {
-        float:left;
-        //letter-spacing:1px;
-        margin-left:@gutterWidth / 2;
-        li {
-            float:left;
-            //margin-right:1px;
-            a {
-                padding:0 (@gutterWidth / 1.5);
-                color:fade(@textColor, 50%);
-                &:hover {
-                    color:fade(@textColor, 85%);
-                }
-            }
-            &.active a {
-                background:@backgroundColor;
-                color:@textColor;
-            }
-        }
-    }
-}
+//  Container
+//  ------------------------------------------------------------  //
 
-// Container
-// ------------------------------------------------------------ //
 
 @_linkBackgroundColor: fade(@yellow, 50%);
 
@@ -144,32 +78,11 @@ header {
     .form-action {
         float:left;
         margin-top:@baseLineHeight / 2 + 0px;
+        font-size:15px;
     }
     .form-section {
         float:right;
         margin-top:@baseLineHeight / 2 + 0px;
-    }
-}
-
-#rail {
-    font-size:@baseFontSize - 2px;
-    h3 {
-        font-size:20px;
-        margin-bottom:0;
-        color:fade(@black, 35%);
-        //text-transform:uppercase;
-    }
-    ul {
-        //margin-bottom:@gutterWidth;
-        margin-bottom:@baseFontSize;
-        //padding-left:@baseFontSize;
-        li.active {
-            a {
-                font-weight:600;
-                color:inherit;
-                text-decoration:none;
-            }
-        }
     }
 }
 
@@ -189,42 +102,123 @@ td.child-node {
     background:url(../img/subpath.png) 5px 5px no-repeat;
 }
 
-// Footer
-// ------------------------------------------------------------ //
 
-footer {
-    font-size:.8em;
-}
-
-// Popup
-// ------------------------------------------------------------ //
-
-.popup {
-    z-index:10001;
-    .overlay {
-        position:fixed;
-        left:0;
-        right:0;
-        top:0;
-        bottom:0;
-        height:auto;
-        background:fade(@darkGray, 85%);
-    }
-    .window {
-        position:fixed;
-        left:7%;
-        right:7%;
-        top:7%;
-        bottom:7%;
-        height:auto;
-        border:1px solid #000;
-        iframe {
-            width:100%;
-            height:100%;
-            background:#fff;
+.posts {
+    .post {
+        padding:1px;
+        //height:@baseLineHeight * 3 + 28;
+        border-top:1px solid #ededed;
+        &:last-child {
+            border-bottom:1px solid #ededed;
+        }
+        &:hover {
+            background:mix(@yellow, #fff, 5%);
+        }
+        a {
+            text-decoration:none;
+            color:@linkColor !important;
+            background:transparent !important;
+            &:hover {
+                text-decoration:underline;
+            }
+        }
+        .image {
+            float:right;
+            //height:100px;
+            line-height:0px;
+        }
+        .inner {
+            padding:14px;
+            margin-right:102px;
+        }
+        .name {
+            .ellipsis();
+            a {
+                //font-weight:600;
+            }
+        }
+        .content {
+            .ellipsis();
+        }
+        .aside {
+            color:fade(@textColor, 35%);
+            .ellipsis();
+            span {
+                color:@textColor;
+            }
         }
     }
-    & > * {
-        display:none;
+}
+.media {
+    .clearfix();
+    .item {
+        float:left;
+        line-height:0px;
+        margin:0 @gutterWidth / 2 @gutterHeight / 2 0;
+        a {
+            display:block;
+            border:1px solid #f1f1f1;
+            padding:4px;
+            background:transparent !important;
+            &:hover {
+                border-color:@linkColor;
+                border-width:2px;
+                padding:3px;
+            }
+        }
     }
+}
+dl {
+    .clearfix();
+    dt {
+        clear:left;
+        float:left;
+        opacity:.35;
+        width:33%;
+        .ellipsis();
+    }
+    dd {
+    }
+}
+.col2 {
+    -webkit-columns:@gutterWidth 2;
+       -moz-columns:@gutterWidth 2;
+            columns:@gutterWidth 2;
+}
+
+
+#modal-overlay {
+    position:fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    height:auto;
+    z-index:1000;
+    background:fade(#fff, 85%);
+    display:none;
+}
+#modal-window {
+    @w: 450px;
+    @h: 231px;
+    iframe {
+        position:fixed;
+        left:50%;
+        top:50%;
+        width:@w;
+        height:@h;
+        margin:-@h / 2 0 0 -@w / 2;
+        z-index:1001;
+        background:#fff;
+        border:1px solid @noteBackgroundColor;
+        .borderRadius();
+        .animate();
+        .boxShadow(0 1px 10px fade(@accentColor, 10%));
+    }
+    &:hover {
+        iframe {
+            border-color:mix(@noteColor, @noteBackgroundColor, 50%);
+        }
+    }
+    display:none;
 }

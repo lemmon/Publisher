@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block title page.name %}
+
+{% block main %}
+<div class="posts">
+    
+    <div id="page-title">
+        {% block form_header %}<h2>{{ block('title') }}</h2>{% endblock %}
+        <div class="form-action">
+            {% block form_action %}
+            <a href="{{ link.to("@/@/create/$id", page) }}">{% block form_action_name %}{{ "Create new Item"|t }}{% endblock %}</a>
+            {% endblock %}
+        </div>
+        <div class="form-section">
+            <a href="{{ link.to('@/pages/update/$id', page) }}">{{ "Edit Page"|t }}</a>
+        </div>
+    </div>
+
+    {% for item in data %}
+    <div class="post state-{{ item.state.name|asciize }}">
+
+        <div class="image"><a href="{{ link.to(':update', item) }}"><img src="{{ link.upload(item.image, '100x100m') }}"></a></div>
+        <div class="inner">
+            <div class="name">
+                {% if (item.state_id != 1) %}<span class="tag state-{{ item.state.name|asciize }}">{{ item.state.name|t }}</span>{% endif %}
+                <a href="{{ link.to(':update', item) }}">{{ item.name }}</a><span></span>
+            </div>
+            <div class="content">
+                {% block post_content %}
+                {{ item.content|p|line(-1)|default("-") }}
+                {% endblock %}
+            </div>
+            <div class="aside">
+                {% if (item.published_at) %}
+                {{ "Published on"|t }}
+                <span>{{ item.published_at|tDateTime }}</span>
+                {% else %}
+                {{ "Last updated on"|t }}
+                <span>{{ item.updated_at|tDateTime }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

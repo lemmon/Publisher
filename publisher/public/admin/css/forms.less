@@ -21,14 +21,6 @@ form {
             margin-left:9px;
         }
     }
-    div.buttons {
-        clear:both;
-        margin-top:@gutterWidth / 2;
-        .back {
-            color:@gray;
-            margin-left:15px;
-        }
-    }
     .cols2 {
         & > * {
             width:49%;
@@ -52,6 +44,9 @@ form {
             &:last-child {
                 margin-right:0;
             }
+            &.span2 {
+                width:66%
+            }
         }
         &:after {
             content:"";
@@ -68,15 +63,97 @@ label.label {
     padding:2px 0;
     position:relative;
     //top:-1px;
-    font-size:@baseFontSize - 2px;
+    font-size:@baseFontSize - 1px;
     color:fade(@black, 65%);
     span {
-        font-size:@baseFontSize - 4px;
+        font-size:@baseFontSize - 3px;
         &.required {
             color:@red;
         }
     }
 }
+
+
+.fields {
+    padding-bottom:@gutterHeight * 2 + 34px;
+    & > * {
+        /*
+        max-width:900px;
+        margin:0 auto;
+        &.big {
+            max-width:none;
+        }
+        */
+        padding:0 @gutterWidth;
+    }
+}
+
+.buttons {
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    padding:@gutterHeight @gutterWidth * 2;
+    background:#fff;
+    .clearfix();
+    &:before {
+        display:block;
+        content:"";
+        position:absolute;
+        left:0;
+        right:0;
+        top:-7px;
+        height:7px;
+        background-image:url(../img/buttons-shadow.png);
+        background-position:50% 50%;
+        background-repeat:no-repeat;
+        background-size:100% 100%;
+        opacity:.1;
+    }
+    p {
+        margin:0;
+        line-height:34px;
+    }
+    .back {
+        color:@gray;
+        margin-left:15px;
+    }
+}
+
+.tabs {
+    //max-width:none;
+    padding:0;
+    margin:@gutterHeight 0;
+    text-align:center;
+    &:before {
+        content:"";
+        display:block;
+        width:100%;
+        height:1px;
+        background:#ededed;
+        position:relative;
+        top:floor(@baseLineHeight / 2) + 2px;
+    }
+    a {
+        position:relative;
+        display:inline-block;
+        background:@backgroundColor !important;
+        padding:0 @baseFontSize / 2;
+        margin:0 5px;
+        text-decoration:none;
+        text-transform:uppercase;
+        font-size:12px;
+        .borderRadius(10px);
+        &.active {
+            background-color:#ededed !important;
+            color:@textColor !important;
+        }
+    }
+}
+.tab {
+    //padding:0 @gutterWidth;
+}
+
 
 // Notices
 // ------------------------------------------------------------ //
@@ -110,16 +187,11 @@ input[type=text], input[type=password], select, textarea {
     outline:none;
     text-shadow:none;
     .borderRadius(2px);
-    
     color:@black;
     font-family:inherit;
     background:mix(@black, @backgroundColor, 2%);
     border:1px solid fade(@black, 5%);
-    //-webkit-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-    //   -moz-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-    //    -ms-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-    //     -o-transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
-    //        transition:background-color .1s ease-out, border-color .1s ease-out, box-shadow .1s ease-out;
+    //.animate(border-color .1s ease-out);
     -webkit-box-sizing:border-box;
      -khtml-box-sizing:border-box;
        -moz-box-sizing:border-box;
@@ -139,8 +211,6 @@ input[type=text], input[type=password], select, textarea {
     &:hover {
         border-color:fade(@black, 35%);
     }
-    
-    
 }
 select {
     height:34px;
@@ -152,14 +222,28 @@ textarea {
     resize:vertical;
 }
 
+input[type=radio], input[type=checkbox] {
+    &:disabled {
+        opacity:.5;
+    }
+}
+
 p.fit {
     input[type=text], input[type=password], textarea {
         width:100%;
     }
 }
+form {
+    .big {
+        input[type=text] {
+            height:51px;
+            font-size:22px;
+        }
+    }
+}
 .error {
     input[type=text], input[type=password], textarea, span.fieldset {
-        border-color:fade(@red, 85%);
+        border-color:fade(@red, 85%) !important;
         border-width:2px;
         padding:6px;
         .borderRadius(3px);
@@ -183,28 +267,48 @@ p.fit {
 // ------------------------------------------------------------ //
 
 button {
-    font-family:arial,sans-serif;
+    font-family:inherit;
+    font-weight:400;
+    font-size:14px;
     width:auto;
     height:34px;
     padding:7px 25px;
     margin:0;
-    font-size:14px;
-    font-weight:bold;
     color:#fff;
     background:#999;
     border:1px solid fade(@black, 35%);
     outline:none;
     .borderRadius(3px);
-    
-    font-family:inherit;
-    font-weight:400;
-    //.animate();
-    
-    &.primary {
-        background:@linkColor;
-    }
+    .animate();
     &:focus, &:hover {
         background:@darkGray;
+    }
+    &:disabled {
+        //background:#999;
+        //opacity:.5;
+    }
+    &.primary {
+        background:@linkColor;
+        &:focus, &:hover {
+            background:@darkGray;
+        }
+    }
+    /*
+    &:disabled {
+    }
+    */
+}
+button[type=submit]:disabled, .buttons button:disabled {
+    display:none;
+}
+button {
+    &.loading {
+        display:none;
+        background:#fff;
+        color:@noteColor;
+        border-color:@noteBackgroundColor;
+        background:#fff url(../img/loader-909090.gif) 15px 50% no-repeat;
+        padding-left:25px + 16px;
     }
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) { /* webkit */

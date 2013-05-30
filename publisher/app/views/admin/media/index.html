@@ -1,18 +1,45 @@
-{% extends '_templates/list.html' %}
+{% extends '_templates/form.html' %}
 
-{% block title %}{{ "Media"|t }}{% endblock %}
+{% block title "Media"|t %}
 
-{% block form_action %}<a href="{{ link.to(":create") }}">{{ "Upload new"|t }} &rarr;</a>{% endblock %}
+{% block main %}
 
-{% block main_content %}
-<div class="media">
-	
-	{% for item in data %}
-	<div class="item">
-		<a href="{{ link.to(':update', item) }}">{{ item.name }}</a>
-		({{ item.file_mime_type }}/{{ item.file_mime_subtype }})
-	</div>
-	{% endfor %}
-	
-</div>
+    <div class="media">
+        {% for item in data %}
+        <div class="item">
+            <a href="#"><img src="{{ link.upload(item.file, '200x200b') }}"></a>
+        </div>
+        {% endfor %}
+    </div>
+
+    {{ parent() }}
+
+{% endblock %}
+
+{% block form_main %}
+{% endblock %}
+
+{% block form_action link.to(':create') %}
+{% block form_type_upload true %}
+
+{% block form_buttons_buttons %}
+<input type="hidden" name="name" value="">
+<input type="file" id="f_file" name="file">
+<button class="primary" id="f_select_file" style="display:none">{{ "Upload new media"|t }}&hellip;</button>
+<button class="primary" id="f_file_submit" type="submit" disabled>{{ "Submit"|t }}</button>
+{% endblock %}
+
+{% block script %}
+<script>
+$(function(){
+    $('#f_file').hide().change(function(){
+        $(this).parents('form:first').submit();
+    });
+    $('#f_select_file').show().click(function(){
+        $('#f_file').click();
+        return false;
+    });
+    $('#f_file_submit').hide();
+});
+</script>
 {% endblock %}

@@ -1,19 +1,22 @@
+{#
 {% extends 'layout.html' %}
 
 {% block title %}{{ "Posts"|t }}{% endblock %}
 
-{% block container %}
+{% block main %}
 <section class="modal">
 
-	<form method="get" action="{{ link.to(':create') }}">
-		
-		<h2>{{ "Posts"|t }}</h2>
-		<p>{{ "You don't have any posts created yet. Create your first one right now."|t }}</p>
-		<div class="buttons" style="margin-top:15px;">
-			<button class="primary" type="submit">{{ "Create your first post"|t }}&hellip;</button>
-		</div>
-		
-	</form>
+    <form method="get" action="{{ link.to(':create') }}">
+        
+        <h2>{{ "Posts"|t }}</h2>
+        <p>{{ "You don't have any posts created yet. Create your first one right now."|t }}</p>
+        <div class="buttons" style="margin-top:15px;">
+            <button class="primary" type="submit">{{ "Create your first post"|t }}&hellip;</button>
+        </div>
+        
+    </form>
 
 </section>
 {% endblock %}
+#}
+Empty;

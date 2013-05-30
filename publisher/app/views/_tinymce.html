@@ -4,7 +4,8 @@
 $(function(){
     // tinymce
     tinyMCE.init({
-        mode : 'textareas',
+        mode : 'specific_textareas',
+        editor_selector : 'richtext',
         theme : 'advanced',
         skin : 'lepublisher',
         setup : function(ed){
@@ -51,7 +52,7 @@ $(function(){
                 title : 'Insert Image',
                 onclick : function() {
                     ed.focus();
-                    $('.popup > *').show();
+                    modalShow('{{ link.to(':section', 'media', 'create') }}');
                     return;
                 }
             });
@@ -88,11 +89,12 @@ $(function(){
             + ',img[src|width|height|class<left?right]'
             + ',iframe[width|height|src|frameborder:0|allowfullscreen]',
         entity_encoding : 'raw',
-        convert_urls : false
-    });
-    // media popup
-    $('.popup > .overlay').click(function(){
-        $('.popup > *').hide();
+        convert_urls : false,
+        onchange_callback : function(ed){
+            /*
+            $('form:has(#' + ed.editorId + ') button:disabled').attr('disabled', false);
+            */
+        }
     });
     // on form submit
     $('form:has(textarea)').submit(function(){
@@ -138,7 +140,7 @@ function insertImage(id, src){
     }else{
         $(myNode).before(toInsert);
     }
-    $('.popup > *').hide();
+    modalHide();
 }
 function fixImage($img){
     var $parent = $img.parent();

@@ -11,43 +11,26 @@ class Admin_Media_Controller extends Admin_Backend_Controller
 
     function index()
     {
-        if ($data = Media::find() and $data->count())
-        {
-            $this->data += [
-                'data' => $data,
-            ];
-        }
-        else
-        {
-            return $this->template->display('empty');
-        }
+        $this->data += [
+            'data' => Media::find(),
+        ];
     }
 
 
-    function frame()
+    function main()
     {
-        switch ($this->route->getParam(4))
-        {
-            case 'images':
-                $this->data['data'] = Media::find(['file_mime_type' => 'image']);
-                return $this->template->display('frame/images');
-                break;
-            default:
-                throw new \Exception('wtf?');
-                break;
-        }
+        return $this->index() ?: $this->template->display('index');
     }
 
 
     function create()
     {
-        // scaffolding
-        $res = Scaffold::create($this);
-        // return
-        if ($this->route->getParam(4) == 'from' and $this->route->getParam(5) == 'popup')
-            return $this->route->to('@/media/frame/images');
-        else
-            return $res;
+        return $this->_res(Scaffold::create($this, [], $item), function() use ($item){
+            return [
+                'file' => $this->route->getUpload($item->file),
+                'file_id' => $item->id,
+            ];
+        });
     }
 
 

@@ -2,15 +2,15 @@
 
 {% block main %}
 
-	<div id="page-title">
-		{% block form_header %}<h2>{{ block('title') }}</h2>{% endblock %}
-		<div class="form-action">{% block form_action %}{% endblock %}</div>
-		<div class="form-section">{% block form_section %}{% endblock %}</div>
-	</div>
-	
-	{% block main_content %}{% endblock %}
+    <div id="page-title">
+        {% block form_header %}<h2>{{ block('title') }}</h2>{% endblock %}
+        <div class="form-action">{% block form_action %}{% endblock %}</div>
+        <div class="form-section">{% block form_section %}{% endblock %}</div>
+    </div>
+    
+    {% block main_content %}{% endblock %}
 
-	{% include '_paginate.html' %}
+    {% include '_paginate.html' %}
 
 {% endblock %}
 

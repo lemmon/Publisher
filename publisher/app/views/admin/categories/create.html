@@ -1,10 +1,9 @@
 {% extends 'update.html' %}
 
-{% block title %}{{ "New Category"|t }}{% endblock %}
+{% block title "New Category"|t %}
 
 {% block form_buttons %}
 
-	<button class="primary" type="submit">{{ "Create new category"|t }}</button>
-	<a class="back" href="{{ link.returnTo(":section") }}">{{ "back"|t }}</a>
+    <button class="primary" type="submit" disabled>{{ "Create new category"|t }}</button>
 
 {% endblock %}

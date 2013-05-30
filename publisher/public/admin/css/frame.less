@@ -1,0 +1,156 @@
+//  Includes
+//  ------------------------------------------------------------  //
+
+
+@import 'reset.less';        // css reset
+@import 'fonts.less';        // fonts
+@import 'variables.less';    // variables
+@import 'mixins.less';       // css3 & other mixins
+@import 'scaffolding.less';  // defaults
+
+
+//  Defaults
+//  ------------------------------------------------------------  //
+
+
+html, body {
+    overflow:hidden;
+    width:100%;
+    height:100%;
+}
+
+
+//  Sidebar
+//  ------------------------------------------------------------  //
+
+
+@railBackgroundColor: mix(#06c, #fff, 3.5%);
+
+#rail {
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:@railWidth;
+    height:auto;
+    background:@railBackgroundColor;
+    border-right:1px solid fade(#06c, 6.5%);
+    margin-left:-1px;
+    overflow-y:auto;
+    & > .inner {
+        padding:@marginHeight @marginWidth;
+        //
+    }
+    .section {
+        position:relative;
+        margin-bottom:@gutterHeight;
+        a.more-button {
+            position:absolute;
+            right:0;
+            top:(@baseLineHeight - 18px) / 2;
+            text-shadow:none;
+            text-decoration:none;
+            display:inline-block;
+            padding:0 4px;
+            font-size:12px;
+            line-height:18px;
+            height:18px;
+            text-transform:uppercase;
+            font-style:normal;
+            background:@gray;
+            color:@white;
+            .borderRadius(2px);
+            display:none;
+            &:hover {
+                background-color:@red;
+                background-color:#000;
+            }
+        }
+        &:hover {
+            a.more-button {
+                display:inline-block;
+            }
+        }
+    }
+}
+
+
+a {
+    color:@white;
+    text-decoration:none;
+    &:hover {
+        text-decoration:underline;
+    }
+    //
+    color:@accentColor;
+}
+
+
+h2 {
+    padding-left:21px;
+    background-position:0 4px;
+    background-repeat:no-repeat;
+    margin-top:@baseLineHeight;
+    color:mix(@textColor, @railBackgroundColor, 35%);
+    &:first-child {
+        margin-top:0;
+    }
+    //
+    text-shadow:0 1px 0 fade(#fff, 85%);
+}
+ul {
+    margin-top:round(@baseLineHeight / 3);
+    ul {
+        margin:0;
+    }
+    li {
+        padding-left:21px;
+        background:url(../img/subpath.png) 0 2px no-repeat;
+        a {
+            display:block;
+            font-size:14px;
+            height:@baseLineHeight;
+            margin:1px 0;
+            .ellipsis();
+            &:hover {
+                text-decoration:none;
+                .caption {
+                    text-decoration:underline;
+                    //border-bottom:1px dotted @white;
+                }
+            }
+        }
+        a.active {
+            //text-decoration:none;
+        }
+    }
+}
+div.newitem {
+    padding-left:21px;
+    background:url(../img/subpath.png) 0 2px no-repeat;
+    a {
+        font-style:italic;
+        color:mix(@textColor, #fafafa, 35%);
+        &:hover {
+            color:@linkColor;
+        }
+    }
+}
+
+
+//  Main
+//  ------------------------------------------------------------  //
+
+
+#main {
+    position:fixed;
+    left:@railWidth;
+    right:0;
+    top:0;
+    bottom:0;
+    height:auto;
+    iframe {
+        width:100%;
+        height:100%;
+    }
+}
