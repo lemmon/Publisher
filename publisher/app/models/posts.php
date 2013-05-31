@@ -2,7 +2,7 @@
 /**
 * 
 */
-class Posts extends \Lemmon\Model\AbstractModel
+class Posts extends AbstractModuleModel
 {
     static $required  = ['name', 'state_id' => 'allow_null', 'locale_id'];
     static $timestamp = ['created_at', 'updated_at'];
@@ -10,11 +10,8 @@ class Posts extends \Lemmon\Model\AbstractModel
     static $uploadDir = 'posts/%Y-%m';
 
 
-    function __init()
+    function __initModule()
     {
-        if (defined('SITE_ID')) {
-            $this->where('site_id', SITE_ID);
-        }
         // order
         $this->order('COALESCE(published_at, updated_at) DESC');
         // frontend

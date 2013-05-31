@@ -6,7 +6,16 @@ class AbstractModuleRow extends AbstractRow
 {
 
 
+    protected function __initItem() {}
     protected function __validate(array &$f) {}
+
+
+    final protected function __init()
+    {
+        if ($this->_getState() != self::STATE_EMPTY and defined('SITE_ID') and $this->site_id != SITE_ID) {
+            throw new Exception('Access Denied');
+        }
+    }
 
 
     final protected function onValidate(&$f)

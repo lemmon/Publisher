@@ -5,7 +5,7 @@ use \Lemmon\Sql\Query as SqlQuery;
 /**
 * 
 */
-class Post extends \Lemmon\Model\AbstractRow
+class Post extends AbstractModuleRow
 {
     static protected $model = 'Posts';
 
@@ -48,7 +48,7 @@ class Post extends \Lemmon\Model\AbstractRow
     }
 
 
-    protected function onValidate(&$f)
+    protected function __validate(&$f)
     {
         //
         // content
