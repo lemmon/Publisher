@@ -6,90 +6,104 @@ use \Lemmon\Sql\Query as SqlQuery,
 /**
 * 
 */
-class AbstractPage extends \Lemmon\Model\AbstractRow
+abstract class AbstractPage extends \Lemmon\Model\AbstractRow
 {
     static protected $model = 'Pages';
 
-    private $_temp = [];
+    protected $cache = [];
 
 
-    function getChildren()
+    function getContent()
     {
-        return Pages::find(['parent_id' => $this->id]);
-    }
-
-
-    protected function onValidate(&$f)
-    {
-        //
-        // site_id
-        if (defined('SITE_ID')) {
-            $f['site_id'] = SITE_ID;
-        }
-        //
-        // content
-        $this->_temp['blocks'] = $f['blocks'];
-        unset($f['blocks']);
-        //
-        // template
-        if ($f['template'])
-            $f['template'] = \Lemmon\String::asciize($f['template'], '_');
-        //
-        // top
-        if (!$f['top'])
-            $f['top'] = 99999;
-    }
-
-
-    protected function onAfterCreate()
-    {
-        $this->_insertContent();
-        $this->_updateTop();
-        Pages::rebuildTree();
-    }
-
-
-    protected function onAfterUpdate()
-    {
-        $this->_insertContent();
-        if ($this->data['top'] != $this->dataDefault['top'] or $this->data['parent_id'] != $this->dataDefault['parent_id'])
-        {
-            $this->_updateTop();
-            Pages::rebuildTree();
+        if (!array_key_exists('content', $this->cache)) {
+            return $this->cache['content'] = (new SqlQuery)->select('pages_blocks')->where([
+                'page_id' => $this->id,
+                'name'    => 'content',
+            ])->first()->content;
+        } else {
+            return $this->cache['content'];
         }
     }
 
 
-    private function _insertContent()
+    function getBlocks()
     {
-        if ($this->_temp['blocks'] and is_array($this->_temp['blocks'])) {
-            foreach ($this->_temp['blocks'] as $name => $content) {
-                (new SqlQuery)->replace('pages_blocks')->set([
-                    'page_id'    => $this->id,
-                    'name'       => $name,
-                    #'content'    => \Lemmon\String::sanitizeHtml($content),
-                    'content'    => $content,
-                ])->exec();
-            }
+        return $this->cache['blocks'] ?: $this->cache['blocks'] = (new SqlQuery)->select('pages_blocks')->where('page_id',  $this->id)->pairs('name', 'content');
+    }
+
+
+    function getBlock($name)
+    {
+        return $this->getBlocks()[$name];
+        /*
+        return (new SqlQuery)->select('pages_blocks')->where([
+            'page_id' => $this->id,
+            'name'    => $name,
+        ])->first()->content;
+        */
+    }
+
+
+    function setBlock($name, $content)
+    {
+        $this->cache['blocks'][$name] = $content;
+        $this->cache['blocks_to_save'][$name] = $name;
+        $this->requireSave();
+    }
+
+
+    function setBlocks(array $blocks)
+    {
+        $this->cache['blocks'] = array_merge((array)$this->cache['blocks'], $blocks);
+        $this->cache['blocks_to_save'] = array_merge((array)$this->cache['blocks_to_save'], array_combine(array_keys($blocks), array_keys($blocks)));
+        $this->requireSave();
+    }
+
+
+    function getTags()
+    {
+        if (array_key_exists('tags', $this->cache)) {
+            return $this->cache['tags'];
+        } elseif ($this->id) {
+            return $this->cache['tags'] = (new SqlQuery)->select('pages_tags')->where(['page_id' => $this->id])->distinct('tag');
         }
     }
 
 
-    private function _updateTop()
+    function getLocale()
     {
-        $top = $this->top;
-        $pairs = (new SqlQuery)->select('pages')->where([
-            'locale_id' => $this->locale_id,
-            'parent_id' => $this->parent_id,
-            '!id'       => $this->id,
-        ])->order('top')->distinct('id');
-        if ($top < 1)
-            $top = 1;
-        elseif ($top > count($pairs))
-            $top = count($pairs) + 1;
-        foreach (array_slice($pairs, 0, $top - 1) as $i => $id)
-            (new SqlQuery)->update('pages')->set('top', $i + 1)->where('id', $id)->exec();
-        foreach (array_slice($pairs, $top - 1, null) as $i => $id)
-            (new SqlQuery)->update('pages')->set('top', $i + $top + 1)->where('id', $id)->exec();
+        return Locales::fetch($this->locale_id);
+    }
+
+
+    function getRoot()
+    {
+        return Page::find($this->root_id);
+    }
+
+
+    function getParent()
+    {
+        if ($this->parent_id) {
+            return Page::find($this->parent_id);
+        }
+    }
+
+
+    function getState()
+    {
+        return States::getOptions()[$this->state_id];
+    }
+
+
+    function getUrl()
+    {
+        if (!$this->parent_id and $this->top == 1) {
+            // this is root page
+            return Route::getInstance()->to(':home');
+        } else {
+            // subpage
+            return Route::getInstance()->to(':page', $this);
+        }
     }
 }

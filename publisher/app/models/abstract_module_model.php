@@ -4,6 +4,7 @@
 */
 class AbstractModuleModel extends \Lemmon\Model\AbstractModel
 {
+    static $allowChildren = false;
 
 
     final protected function __init()

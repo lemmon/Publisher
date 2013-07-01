@@ -5,9 +5,18 @@
 @sideWidth: 27%;
 @mainWidth: 100% - @railWidth;
 
+html, body {
+    height:100%;
+}
 #container {
     padding:@gutterWidth;
     position:relative;
+    min-height:100%;
+    -webkit-box-sizing:border-box;
+     -khtml-box-sizing:border-box;
+       -moz-box-sizing:border-box;
+        -ms-box-sizing:border-box;
+            box-sizing:border-box;
 }
 #main {
     width:auto;

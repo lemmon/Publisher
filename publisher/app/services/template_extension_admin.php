@@ -11,6 +11,7 @@ class TemplateExtensionAdmin extends \Lemmon\Template\ExtensionTwig
         return [
         
             'resizeTo' => new \Twig_Filter_Function('TemplateExtensionAdmin::resizeTo', ['is_safe' => ['html']]),
+            'toTs'     => new \Twig_Filter_Function('strtotime'),
         
         ] + parent::getFilters();
     }

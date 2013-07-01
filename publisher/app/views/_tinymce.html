@@ -79,12 +79,14 @@ $(function(){
             alignright : {selector : 'div.image', classes : 'right'}
         },
         style_formats : [
-            {title : 'Heading', block : 'h3'},
-            {title : 'Subheading', block : 'h4'},
-            {title : 'Paragraph', block : 'p'}
+            {title : 'H1', block : 'h1'},
+            {title : 'H2', block : 'h2'},
+            {title : 'H3', block : 'h3'},
+            {title : 'H4', block : 'h4'},
+            {title : 'P', block : 'p'}
         ],
         fix_list_elements : true,
-        valid_elements : 'p,strong/b,em/i,br,h3,h4,ul,ol,li,blockquote,dl,dt,dd,a[href|target]'
+        valid_elements : 'p,strong/b,em/i,br,h1,h2,h3,h4,h5,ul,ol,li,blockquote,dl,dt,dd,a[href|target]'
             + ',div[class]'
             + ',img[src|width|height|class<left?right]'
             + ',iframe[width|height|src|frameborder:0|allowfullscreen]',

@@ -1,107 +1,140 @@
 <?php
 
-use \Lemmon\Sql\Query as SqlQuery;
+use \Lemmon\Sql\Query as SqlQuery,
+    \Lemmon\Sql\Expression as SqlExpression;
 
 /**
-* 
+* Backend.
 */
 class Page extends AbstractPage
 {
-    private $_cache = [];
-    private $_active;
+    private $_temp = [];
+
+
+    function allowChildren()
+    {
+        // different type
+        if ($this->type) {
+            return (bool)get_class_vars($this->type)['allowChildren'];
+        }
+        // everything else is okay
+        return true;
+    }
 
 
     function getChildren()
     {
-        if ($this->id)
-            return Application::$isFrontend
-                // accessible for frontend templating
-                ? new QueryPages(['parent_id' => $this->id])
-                // get generic children
-                : parent::getChildren()
-                ;
-    }
-
-
-    function getContent()
-    {
-        if (!array_key_exists('content', $this->_cache))
-        {
-            return $this->_cache['content'] = (new SqlQuery)->select('pages_blocks')->where([
-                'page_id' => $this->id,
-                'name'    => 'content',
-            ])->first()->content;
-        }
-        else
-        {
-            return $this->_cache['content'];
+        if ($this->id) {
+            return Pages::find(['parent_id' => $this->id]);
         }
     }
 
 
-    function getBlock($name)
+    protected function onValidate(&$f)
     {
-        return (new SqlQuery)->select('pages_blocks')->where([
-            'page_id' => $this->id,
-            'name'    => $name,
-        ])->first()->content;
-    }
-
-
-    function getLocale()
-    {
-        return Locales::fetch($this->locale_id);
-    }
-
-
-    function getRoot()
-    {
-        return Page::find($this->root_id);
-    }
-
-
-    function getParent()
-    {
-        if ($this->parent_id)
-            return Page::find($this->parent_id);
-    }
-
-
-    function getState()
-    {
-        return States::getOptions()[$this->state_id];
-    }
-
-
-    function getUrl()
-    {
-        if (!$this->parent_id and $this->top == 1)
-        {
-            return Route::getInstance()->to(':home');
+        //
+        // site_id
+        if (defined('SITE_ID')) {
+            $f['site_id'] = SITE_ID;
         }
-        else
-        {
-            return Route::getInstance()->to(':page', $this);
+        //
+        // content
+        if (array_key_exists('blocks', $f)) {
+            // we have received general content
+            $this->_temp['blocks'] = $f['blocks'];
+            unset($f['blocks']);
+        }
+        if ($this->cache['blocks_to_save']) {
+            // additional blocks to save
+            $this->_temp['blocks'] = array_merge((array)$this->_temp['blocks'], array_intersect_key($this->cache['blocks'], $this->cache['blocks_to_save']));
+        }
+        //
+        // tags
+        if (array_key_exists('tags', $f)) {
+            $this->_temp['tags'] = $f['tags'];
+            unset($f['tags']);
+        }
+        //
+        // template
+        if ($f['template']) {
+            $f['template'] = \Lemmon\String::asciize($f['template'], '_');
+        }
+        //
+        // top
+        if (!$f['top']) {
+            $f['top'] = 99999;
         }
     }
 
 
-    function isActive($active = null)
+    protected function onAfterCreate()
     {
-        if ($active !== null)
-        {
-            $this->_active = $active;
-            return $this;
-        }
-        else
-        {
-            return is_null($_ = $this->_active) ? $this->id == Nav::getCurrentPage()->id : $_;
+        $this->_insertContent();
+        $this->_updateTop();
+        Pages::rebuildTree();
+    }
+
+
+    protected function onAfterUpdate()
+    {
+        $this->_insertContent();
+        if ($this->data['top'] != $this->dataDefault['top'] or $this->data['parent_id'] != $this->dataDefault['parent_id']) {
+            $this->_updateTop();
+            Pages::rebuildTree();
         }
     }
 
 
-    function isSelected()
+    private function _insertContent()
     {
-        return in_array($this->id, explode(',', Nav::getCurrentPage()->path_query));
+        // insert content
+        if ($this->_temp['blocks'] and is_array($this->_temp['blocks'])) {
+            foreach ($this->_temp['blocks'] as $name => $content) {
+                (new SqlQuery)->replace('pages_blocks')->set([
+                    'page_id'    => $this->id,
+                    'name'       => $name,
+                    #'content'    => \Lemmon\String::sanitizeHtml($content),
+                    'content'    => $content,
+                ])->exec();
+            }
+        }
+        // insert tags
+        if ($tags = $this->_temp['tags']) {
+            // insert tags
+            $tags = explode(',', $tags);
+            // sanitize and save
+            foreach ($tags as $i => $tag) {
+                if ($tag = \Lemmon\String::asciize($tag)) {
+                    (new SqlQuery)->replace('pages_tags')->set(['page_id' => $this->id, 'tag' => $tag])->exec();
+                    $tags[$i] = $tag;
+                } else {
+                    unset($tags[$i]);
+                }
+            }
+            // remove unwanted
+            (new SqlQuery)->delete('pages_tags')->where(['page_id' => $this->id, '!tag' => $tags])->exec();
+        } else {
+            // remove all tags
+            (new SqlQuery)->delete('pages_tags')->where(['page_id' => $this->id])->exec();
+        }
+    }
+
+
+    private function _updateTop()
+    {
+        $top = $this->top;
+        $pairs = (new SqlQuery)->select('pages')->where([
+            'locale_id' => $this->locale_id,
+            'parent_id' => $this->parent_id,
+            '!id'       => $this->id,
+        ])->order('top')->distinct('id');
+        if ($top < 1)
+            $top = 1;
+        elseif ($top > count($pairs))
+            $top = count($pairs) + 1;
+        foreach (array_slice($pairs, 0, $top - 1) as $i => $id)
+            (new SqlQuery)->update('pages')->set('top', $i + 1)->where('id', $id)->exec();
+        foreach (array_slice($pairs, $top - 1, null) as $i => $id)
+            (new SqlQuery)->update('pages')->set('top', $i + $top + 1)->where('id', $id)->exec();
     }
 }

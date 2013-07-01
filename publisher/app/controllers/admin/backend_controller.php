@@ -12,22 +12,18 @@ abstract class Admin_Backend_Controller extends Application
     {
         //
         // auth
-        if ($this->auth = new Auth and $this->auth->hasIdentity() and $user = $this->auth->getIdentity())
-        {
+        if ($this->auth = new Auth and $this->auth->hasIdentity() and $user = $this->auth->getIdentity()) {
             // user signed in
             $this->data['user'] = $this->user = $user;
         }
-        elseif (self::getController() != 'admin/login')
-        {
+        elseif (self::getController() != 'admin/login') {
             // must login
             return $this->request->redir(':login');
         }
         //
         // i18n
-        if ($i18n = $this->config['i18n'] and (is_string($i18n) or ($i18n = $i18n['admin'])))
-        {
-            if (file_exists($_file = USER_DIR . "/i18n/{$i18n}.php"))
-            {
+        if ($i18n = $this->config['i18n'] and (is_string($i18n) or ($i18n = $i18n['admin']))) {
+            if (file_exists($_file = USER_DIR . "/i18n/{$i18n}.php")) {
                 Lemmon_I18n::setBase(dirname($_file));
                 Lemmon_I18n::setLocale($i18n);
             }
@@ -42,8 +38,9 @@ abstract class Admin_Backend_Controller extends Application
     }
 
 
-    protected function _res($res, $add = [])
+    protected function _res($res = null, $add = [])
     {
+        // Route instance
         if ($res instanceof \Lemmon\Route\Link or $f_errors = $this->flash->getErrors()) {
             header('Content-Type: application/json');
             echo json_encode([
@@ -54,6 +51,10 @@ abstract class Admin_Backend_Controller extends Application
                 ],
             ] + (array)(is_callable($add) ? $add() : $add), JSON_PRETTY_PRINT);
             exit;
+        }
+        // function
+        elseif (is_callable($res)) {
+            return $this->_res($res(), $add);
         }
     }
 }

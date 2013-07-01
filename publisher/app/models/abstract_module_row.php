@@ -4,8 +4,6 @@
 */
 class AbstractModuleRow extends AbstractRow
 {
-
-
     protected function __initItem() {}
     protected function __validate(array &$f) {}
 
@@ -26,5 +24,17 @@ class AbstractModuleRow extends AbstractRow
         if (defined('SITE_ID')) {
             $f['site_id'] = SITE_ID;
         }
+    }
+
+
+    function getUrl()
+    {
+        return $this->getRoute()->to(':module_item', $this);
+    }
+
+
+    function getPage()
+    {
+        return Page::find($this->page_id);
     }
 }

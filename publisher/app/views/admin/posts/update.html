@@ -4,8 +4,7 @@
 
 {% block form_type_upload %}YES{% endblock %}
 
-{% block form_main %}
-<div>
+{% block form_fields %}
     
     {{ forms.p('name', flash, {'class': 'fit big'}) }}
         {{ forms.label('name', null, 'required') }}
@@ -82,8 +81,7 @@
         
     </div>
 
-</div>
-{% endblock %}
+    {% endblock %}
 
 {% block form_buttons_buttons %}
 <button class="primary" type="submit">{{ "Update post"|t }}</button>

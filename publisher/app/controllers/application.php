@@ -8,6 +8,7 @@ class Application extends \Lemmon\Framework
 
     protected $config;
     protected $site;
+    protected $page;
 
 
     final protected function __initApplication()
@@ -18,14 +19,14 @@ class Application extends \Lemmon\Framework
         
         //
         // site
-        if ($site = Sites::findCurrent()) {
+        if ($site = $this->route->getSite()) {
             // site found
             $this->data['site'] = $this->site = $site;
-            define('SITE_ID', $site->id);
-        } else {
-            // site not found
-            die('Site not found.');
         }
+        
+        //
+        // page
+        $this->page = $this->route->getPage();
         
         //
         // section

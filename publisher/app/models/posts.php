@@ -14,8 +14,5 @@ class Posts extends AbstractModuleModel
     {
         // order
         $this->order('COALESCE(published_at, updated_at) DESC');
-        // frontend
-        if (Application::$isFrontend)
-            $this->where(['state_id' => 1]);
     }
 }

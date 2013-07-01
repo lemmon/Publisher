@@ -10,13 +10,15 @@
                 name="parent_id"
                 value="{{ _page.id }}"
                 {% if (_page.id == f.parent_id) %}checked{% endif %}
-                {% if (_page.type) %}disabled{% endif %}
+                {% if (not _page.allowChildren) %}disabled{% endif %}
                 >
             {% if (_page.type) %}
-            <span class="strike">{{ _page.name }}</span>
             <span class="tag">{{ _page.type }}</span>
-            {% else %}
+            {% endif %}
+            {% if (_page.allowChildren) %}
             {{ _page.name }}
+            {% else %}
+            <span class="strike">{{ _page.name }}</span>
             {% endif %}
             {% if (_page.state_id != 1) %}
             <span class="tag state-{{ _page.state.name|asciize }}">{{ _page.state.name }}</span>

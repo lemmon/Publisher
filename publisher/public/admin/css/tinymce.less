@@ -40,14 +40,44 @@ ul {
 h1, h2, h3, h4, h5, h6 {
     color:@headingsColor;
     //line-height:@baseLineHeight * 2;
+    font-weight:600;
+    line-height:1.33;
+    position:relative;
+    border-top:1px dashed #ddd;
+    &:after {
+        display:block;
+        content:"H1";
+        position:absolute;
+        right:0;
+        top:1px;
+        background:#ddd;
+        color:#fff;
+        font-size:10px;
+        line-height:1em;
+        font-weight:normal;
+        padding:2px;
+    }
+}
+h1 {
+    font-size:25px;
+}
+h2 {
+    font-size:21px;
+    &:after {
+        content:"H2";
+    }
 }
 h3 {
     font-size:19px;
-    font-weight:600;
+    &:after {
+        content:"H3";
+    }
 }
 h4 {
     font-size:17px;
-    font-weight:600;
+    &:after {
+        content:"H4";
+    }
 }
 img {
     max-width:100%;

@@ -1,7 +1,4 @@
 <?php
-
-use \Lemmon\Sql\Expression as SqlExpression;
-
 /**
 * 
 */
@@ -13,11 +10,5 @@ class Sites extends \Lemmon\Model\AbstractModel
 
     function __init()
     {
-    }
-
-
-    static function findCurrent()
-    {
-        return self::find()->where(new SqlExpression('link = ? OR domain = ?', '', Route::getHost()))->first();
     }
 }

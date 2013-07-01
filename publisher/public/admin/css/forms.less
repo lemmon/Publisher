@@ -2,8 +2,12 @@
 // ------------------------------------------------------------ //
 
 form {
+    h2 {
+        font-size:25px;
+        margin-bottom:@gutterHeight / 2;
+    }
     p {
-        line-height:1;
+        line-height:1em;
         margin-bottom:10px;
     }
     span.fieldset {
@@ -58,10 +62,9 @@ form {
 
 label.label {
     display:inline-block;
-    line-height:19px;
     line-height:1em;
     padding:2px 0;
-    position:relative;
+    //position:relative;
     //top:-1px;
     font-size:@baseFontSize - 1px;
     color:fade(@black, 65%);
@@ -75,6 +78,7 @@ label.label {
 
 
 .fields {
+    padding-top:@gutterHeight / 2;
     padding-bottom:@gutterHeight * 2 + 34px;
     & > * {
         /*

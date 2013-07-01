@@ -87,9 +87,15 @@
             // form result
             $form.find('iframe[name=form-frame]').load(function(){
                 var $this = $(this),
-                    res = $.parseJSON($this.contents().text());
+                    res = $this.contents().text();
+                // try to parse result
+                try{
+                    res = $.parseJSON(res);
+                }catch (e){
+                    res = {};
+                }
                 // process result
-                if (res.flash.errors){
+                if (res.flash && res.flash.errors){
                     // on error
                     $('#notices').html('<div class="flash_error">' + res.flash.errors.join('<br>') + '</div>').slideDown('fast');
                     $form.find('.error').removeClass('error');

@@ -2,54 +2,55 @@
 /**
 * 
 */
-class Posts_Controller extends Frontend_Controller
+class Posts_Controller extends AbstractFrontend_Controller
 {
 
 
-	function detail()
-	{
-		// nav
-		if ($id = $this->route->id and $post = Post::find($id))
-		{
-			// current page
-			Nav::setCurrentPage(
-				$page = Page::find(['template' => 'posts'])->isActive(false)
-			);
-			
-			// template
-			$this->data += [
-				'page' => $page,
-				'post' => $post,
-			];
-			return $this->template->display('post');
-		}
-		else
-		{
-			die('404');
-		}
-	}
+    function index()
+    {
+        $this->data += [
+            'posts' => (new QueryPosts(['page_id' => $this->page->id])),
+        ];
+    }
 
 
-	function category()
-	{
-		// nav
-		if ($id = $this->route->id and $category = Category::find($id))
-		{
-			// current page
-			Nav::setCurrentPage(
-				$page = Page::find(['template' => 'posts'])->isActive(false)
-			);
-			
-			// template
-			$this->data += [
-				'page'     => $page,
-				'category' => $category,
-			];
-			return $this->template->display('category');
-		}
-		else
-		{
-			die('404');
-		}
-	}
+    function detail()
+    {
+        // nav
+        if ($id = $this->route->id and $post = Post::find($id) and $page = Page::find($post->page_id)) {
+            // current page
+            Nav::setCurrentPage($page, false);
+            // template
+            $this->data += [
+                'page' => $page,
+                'post' => $post,
+            ];
+            //
+            return $this->template->display('posts_detail');
+        } else {
+            // Post not found
+            die('404');
+        }
+    }
+
+
+    function category()
+    {
+        // nav
+        if ($id = $this->route->id and $category = Category::find($id) and $page = false)
+        {
+            // current page
+            Nav::setCurrentPage($page, false);
+            // template
+            $this->data += [
+                'page'     => $page,
+                'category' => $category,
+            ];
+            //
+            return $this->template->display('posts_category');
+        } else {
+            // Category not found
+            die('404');
+        }
+    }
 }

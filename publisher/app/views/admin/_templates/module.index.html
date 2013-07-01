@@ -3,7 +3,7 @@
 {% block title page.name %}
 
 {% block main %}
-<div class="posts">
+<div>
     
     <div id="page-title">
         {% block form_header %}<h2>{{ block('title') }}</h2>{% endblock %}
@@ -17,33 +17,43 @@
         </div>
     </div>
 
-    {% for item in data %}
-    <div class="post state-{{ item.state.name|asciize }}">
+    {% block main_content %}
+    <div class="posts">
+        {% for item in data %}
+        <div class="post state-{{ item.state.name|asciize }}">
 
-        <div class="image"><a href="{{ link.to(':update', item) }}"><img src="{{ link.upload(item.image, '100x100m') }}"></a></div>
-        <div class="inner">
-            <div class="name">
-                {% if (item.state_id != 1) %}<span class="tag state-{{ item.state.name|asciize }}">{{ item.state.name|t }}</span>{% endif %}
-                <a href="{{ link.to(':update', item) }}">{{ item.name }}</a><span></span>
+            {% if (item.image) %}
+            <div class="image"><a href="{{ link.to(':update', item) }}"><img src="{{ link.upload(item.image, '250x250m') }}"></a></div>
+            {% endif %}
+            <div class="inner">
+                <div class="name">
+                    {% if (item.state_id != 1) %}<span class="tag state-{{ item.state.name|asciize }}">{{ item.state.name|t }}</span>{% endif %}
+                    <a href="{{ link.to(':update', item) }}">{{ item.name }}</a><span></span>
+                </div>
+                <div class="content">
+                    {% block post_content %}
+                    {{ item.content|p|line(-1)|default("-") }}
+                    {% endblock %}
+                </div>
+                <div class="aside">
+                    {%- if (item.published_at) -%}
+                    {{- "Published on"|t }}
+                    <span>{{ item.published_at|tDateTime }}</span>
+                        {%- if (item.updated_at and item.updated_at|toTs - item.published_at|toTs > 18000) -%}
+                        , {{ "updated at"|t }}
+                        <span>{{ item.updated_at|tDateTime }}</span>
+                        {%- endif -%}
+                    {%- else -%}
+                    {{- "Last updated on"|t }}
+                    <span>{{ item.updated_at|tDateTime }}</span>
+                    {%- endif -%}
+                </div>
             </div>
-            <div class="content">
-                {% block post_content %}
-                {{ item.content|p|line(-1)|default("-") }}
-                {% endblock %}
-            </div>
-            <div class="aside">
-                {% if (item.published_at) %}
-                {{ "Published on"|t }}
-                <span>{{ item.published_at|tDateTime }}</span>
-                {% else %}
-                {{ "Last updated on"|t }}
-                <span>{{ item.updated_at|tDateTime }}</span>
-                {% endif %}
-            </div>
+
         </div>
-
+        {% endfor %}
     </div>
-    {% endfor %}
-
+    {% endblock %}
+    
 </div>
 {% endblock %}

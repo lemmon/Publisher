@@ -2,36 +2,26 @@
 /**
 * 
 */
-class Pages_Controller extends Frontend_Controller
+class Pages_Controller extends AbstractFrontend_Controller
 {
+
+
+    protected function __initModule()
+    {
+        if (!$this->page) {
+            // 404
+            http_response_code(404);
+            die('HTTP Error 404: Page Not Found');
+        }
+    }
 
 
     function index()
     {
-        $locale = reset(Locales::fetchActive());
-        $page   = Pages::find(['locale_id' => $locale['id'], 'parent_id' => null])->first();
-        //
-        Nav::setCurrentPage($page);
-        $this->data['page'] = $page;
-        //
-        return $this->template->display(($page->template) ?: 'default');
     }
 
 
     function subpage()
     {
-        // nav
-        if ($id = $this->route->id and $page = Page::find($id))
-        {
-            Nav::setCurrentPage($page);
-            $this->data['page'] = $page;
-            //
-            return $this->template->display(($page->template) ?: 'default');
-        }
-        else
-        {
-            header('HTTP/1.0 404 Not Found');
-            die('404');
-        }
     }
 }

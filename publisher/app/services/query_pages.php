@@ -6,14 +6,15 @@ class QueryPages extends AbstractQueryModel
 {
 
 
-	function __model()
-	{
-		return (new Pages)->where('state_id', 1);
-	}
+    function __model()
+    {
+        return Pages::find(['state_id > ?' => 0]);
+    }
 
 
-	static function findById($id)
-	{
-		return Page::find($id);
-	}
+    static function findById($id)
+    {
+        return (new self(['id' => $id]))[0];
+        #return Page::find($id);
+    }
 }

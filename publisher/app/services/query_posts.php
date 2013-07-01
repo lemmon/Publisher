@@ -9,7 +9,7 @@ class QueryPosts extends AbstractQueryModel
 
     function __model()
     {
-        return new Posts;
+        return Posts::find(['state_id' => 1]);
     }
 
 
@@ -34,11 +34,8 @@ class QueryPosts extends AbstractQueryModel
     }
 
 
-    function getRecent($limit = null)
+    function getRecent($limit = null, $scope = 'published')
     {
-        $this->model->order('published_at DESC');
-        if ($limit)
-            $this->model->limit($limit);
-        return $this;
+        return parent::getRecent($limit, $scope);
     }
 }

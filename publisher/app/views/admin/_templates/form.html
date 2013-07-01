@@ -5,7 +5,13 @@
 {% block main %}
 <form method="post" target="form-frame" action="{% block form_action %}{{ link.self.includeQuery }}{% endblock %}" {% block form_type %}{% if (block('form_type_upload')) %}enctype="multipart/form-data"{% endif %}{% endblock %}>
 
-    {% block form_main %}{% endblock %}
+    {% block form_lead %}{% endblock %}
+
+    {% block form_main %}
+    <div class="fields">
+        {% block form_fields %}{% endblock %}
+    </div>
+    {% endblock %}
     
     <div class="buttons">
         {% block form_buttons %}

@@ -2,14 +2,13 @@
 
 {% block title %}{{ item.name }}{% endblock %}
 
-{% block form_main %}
-<div class="fields">
+{% block form_fields %}
     
     {{ forms.p('name', flash, {'class': 'fit big'}) }}
         {{ forms.label('name', null, 'required') }}
         {{ forms.input('name', f.name) }}
     </p>
-
+    
     <div class="tabs">
 
         <a href="#">{{ "Content"|t }}</a>
@@ -58,6 +57,11 @@
             {{ forms.input('top', f.top) }}
         </p>
         
+        <p>
+            {{ forms.label('tags', null, 'optional') }}
+            {{ forms.input('tags', f.tags is iterable ? f.tags|join(', ') : f.tags) }}
+        </p>
+        
     </div>
     <div class="tab">
         
@@ -77,14 +81,6 @@
         
     </div>
 
-    {#
-    {{ forms.p('locale', flash) }}
-        {{ forms.label('locale', null, 'required') }}
-        {{ forms.select_groups('locale', f.locale, locales) }}
-    </p>
-    #}
-
-</div>
 {% endblock %}
 
 {% block form_buttons_buttons %}
