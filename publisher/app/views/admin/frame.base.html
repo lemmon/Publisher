@@ -15,7 +15,7 @@
     </div>
     <div id="main">
         
-        <iframe name="main" _src="{% block main_iframe_src link.to(':section') %}"></iframe>
+        <iframe name="main" _src="{% block main_iframe_src link.to(':admin/section') %}"></iframe>
         
     </div>
 
@@ -56,7 +56,7 @@
             $a.filter('.active').removeClass('active');
             $a.filter('[href="/admin/' + section + '"]').addClass('active');
         }else{
-            $main.attr('src', '{{ link.to(':section') }}');
+            $main.attr('src', '{{ link.to(':admin/section') }}');
         }
         */
     });

@@ -3,7 +3,7 @@
 {% block title %}{{ "Admins"|t }}{% endblock %}
 
 {% block container_title_actions %}
-<a href="{{ link.to(":create") }}">{{ "Create new"|t }} &rarr;</a>
+<a href="{{ link.to(':admin/create') }}">{{ "Create new"|t }} &rarr;</a>
 {% endblock %}
 
 {% block content %}
@@ -24,13 +24,13 @@
 
 			{% for item in data %}
 			<tr class="{{ cycle(["even", "odd"], loop.index) }}">
-				<td><a href="{{ link.toReturn(":update", item) }}" class="strong">{{ item.name }}</a></td>
+				<td><a href="{{ link.toReturn(':admin/update', item) }}" class="strong">{{ item.name }}</a></td>
 				<td>{{ item.email }}</td>
 				<td class="tag">{% if (item.is_admin) %}<span class="green">{{ "Admin"|t }}</span>{% endif %}</td>
 				<td class="tiny gray nowrap ar">{{ item.created_at|tDateTime }}</td>
 				<td class="nowrap">
-					<a href="{{ link.toReturn(":update", item) }}">{{ "Update"|t }}</a> |
-					<a href="{{ link.toReturn(":delete", item) }}" onclick="return confirm('Are you sure to delete this entry?')">{{ "Delete"|t }}</a>
+					<a href="{{ link.toReturn(':admin/update', item) }}">{{ "Update"|t }}</a> |
+					<a href="{{ link.toReturn(':admin/delete', item) }}" onclick="return confirm('Are you sure to delete this entry?')">{{ "Delete"|t }}</a>
 				</td>
 			</tr>
 			{% endfor %}

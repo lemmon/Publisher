@@ -6,7 +6,7 @@ use \Lemmon\Sql\Query as SqlQuery,
 /**
 * 
 */
-abstract class AbstractPage extends \Lemmon\Model\AbstractRow
+abstract class AbstractPage extends AbstractRow
 {
     static protected $model = 'Pages';
 
@@ -98,12 +98,12 @@ abstract class AbstractPage extends \Lemmon\Model\AbstractRow
 
     function getUrl()
     {
-        if (!$this->parent_id and $this->top == 1) {
+        if ($this->parent_id == null and $this->top == 1 and $this->locale_id == $this->getRoute()->getSite()->locale_id) {
             // this is root page
-            return Route::getInstance()->to(':home');
+            return $this->getRoute()->to(':home');
         } else {
             // subpage
-            return Route::getInstance()->to(':page', $this);
+            return $this->getRoute()->to(':page', $this);
         }
     }
 }

@@ -18,22 +18,18 @@ abstract class Admin_Backend_Controller extends Application
         }
         elseif (self::getController() != 'admin/login') {
             // must login
-            return $this->request->redir(':login');
+            return $this->request->redir(':admin/login');
         }
         //
         // i18n
-        if ($i18n = $this->config['i18n'] and (is_string($i18n) or ($i18n = $i18n['admin']))) {
-            if (file_exists($_file = USER_DIR . "/i18n/{$i18n}.php")) {
-                Lemmon_I18n::setBase(dirname($_file));
-                Lemmon_I18n::setLocale($i18n);
-            }
-        }
+        $this->i18n->setLocale($this->site->locale_id);
+        $this->i18n->load(USER_DIR . "/i18n/{$this->site->locale_id}/admin.php");
         //
         // templating
         $this->template = (new \Lemmon\Template\Template(ROOT_DIR . '/app/views', self::getAction()))
             ->appendFilesystem(self::getController())
             ->appendFilesystem(self::getController(), USER_DIR . '/app/views')
-            ->setExtension(new TemplateExtensionAdmin);
+            ->setExtension(new TemplateExtensionAdmin($this->i18n));
             ;
     }
 

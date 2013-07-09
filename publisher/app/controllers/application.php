@@ -4,11 +4,10 @@
 */
 class Application extends \Lemmon\Framework
 {
-    static $isFrontend;
-
     protected $config;
     protected $site;
     protected $page;
+    protected $i18n;
 
 
     final protected function __initApplication()
@@ -17,17 +16,20 @@ class Application extends \Lemmon\Framework
         $this->data['flash'] = $this->flash = new \Lemmon\Form\Flash($this->route);
         // /FLASH
         
+        Env::setDev(true);
+        
         //
         // site
         if ($site = $this->route->getSite()) {
             // site found
             $this->data['site'] = $this->site = $site;
         }
-        
         //
         // page
         $this->page = $this->route->getPage();
-        
+        //
+        // i18n
+        $this->i18n = new \Lemmon\I18n\I18n();
         //
         // section
         return $this->__initSection();

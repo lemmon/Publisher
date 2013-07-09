@@ -16,7 +16,7 @@ class Admin_Login_Controller extends Admin_Backend_Controller
                 // ok
                 $this->auth->storeIdentity();
                 $this->flash->setNotice('You have been successfully logged in');
-                return $this->request->redir(':home');
+                return $this->request->redir(':admin/home');
             }
             else
             {

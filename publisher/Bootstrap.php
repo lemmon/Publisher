@@ -18,11 +18,6 @@ require LIBS_DIR . '/Lemmon/Framework.php';
 //
 // autoloader
 $loader = new Lemmon\Autoloader;
-$loader->addMask('*_Controller', function($class){
-    return USER_DIR . '/app/controllers/' . strtolower(str_replace('__', DIRECTORY_SEPARATOR, preg_replace('/(.)([A-Z])/u', '$1_$2', substr($class, 0, -11)))) . '_controller.php';
-});
-$loader->add(USER_DIR . '/app/models/$file.php');
-$loader->add(USER_DIR . '/app/services/$file.php');
 $loader = Lemmon\Framework::autoloader($loader);
 $loader->add('$root/app/services/$file.php');
 $loader->register(Lemmon\Autoloader::INCLUDE_PSR0);

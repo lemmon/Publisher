@@ -3,7 +3,7 @@
 {% block title %}{{ "Languages"|t }}{% endblock %}
 
 {% block container_title_actions %}
-<a href="{{ link.to(":create") }}">{{ "Create new"|t }} &rarr;</a>
+<a href="{{ link.to(':admin/create') }}">{{ "Create new"|t }} &rarr;</a>
 {% endblock %}
 
 {% block content %}
@@ -29,7 +29,7 @@
 					<span class="">{{ item.code }}</span>
 				</td>
 				<td>
-					<a href="{{ link.toReturn(":update", item) }}" class="strong">{{ item.country.language_local }}</a>
+					<a href="{{ link.toReturn(':admin/update', item) }}" class="strong">{{ item.country.language_local }}</a>
 					<em class="gray">{{ item.countries.pairs("id", "name_short")|join(", ") }}</em>
 				</td>
 				<td class="nowrap ar tag">
@@ -44,8 +44,8 @@
 				</td>
 				<td class="tiny gray nowrap ar">{{ item.created_at|tDateTime }}</td>
 				<td class="nowrap">
-					<a href="{{ link.toReturn(":update", item) }}">{{ "Update"|t }}</a> |
-					<a href="{{ link.toReturn(":delete", item) }}" onclick="return confirm('Are you sure to delete this entry?')">{{ "Delete"|t }}</a>
+					<a href="{{ link.toReturn(':admin/update', item) }}">{{ "Update"|t }}</a> |
+					<a href="{{ link.toReturn(':admin/delete', item) }}" onclick="return confirm('Are you sure to delete this entry?')">{{ "Delete"|t }}</a>
 				</td>
 			</tr>
 			{% endfor %}

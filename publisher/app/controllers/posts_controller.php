@@ -19,12 +19,9 @@ class Posts_Controller extends AbstractFrontend_Controller
         // nav
         if ($id = $this->route->id and $post = Post::find($id) and $page = Page::find($post->page_id)) {
             // current page
-            Nav::setCurrentPage($page, false);
+            $this->setCurrentPage($page, false);
             // template
-            $this->data += [
-                'page' => $page,
-                'post' => $post,
-            ];
+            $this->data['post'] = $post;
             //
             return $this->template->display('posts_detail');
         } else {
@@ -40,12 +37,9 @@ class Posts_Controller extends AbstractFrontend_Controller
         if ($id = $this->route->id and $category = Category::find($id) and $page = false)
         {
             // current page
-            Nav::setCurrentPage($page, false);
+            $this->setCurrentPage($page, false);
             // template
-            $this->data += [
-                'page'     => $page,
-                'category' => $category,
-            ];
+            $this->data['category'] = $category;
             //
             return $this->template->display('posts_category');
         } else {

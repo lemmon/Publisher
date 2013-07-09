@@ -2,7 +2,7 @@
 /**
 * 
 */
-class AbstractModuleModel extends \Lemmon\Model\AbstractModel
+abstract class AbstractModuleModel extends \Lemmon\Model\AbstractModel
 {
     static $allowChildren = false;
 

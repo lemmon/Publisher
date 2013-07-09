@@ -20,13 +20,13 @@ class Locales
 
     static function fetchAll()
     {
-        if (!array_key_exists('locales', self::$_cache))
-        {
+        if (!array_key_exists('locales', self::$_cache)) {
             $locales = I18n::getLocales();
-            foreach ($locales as $_code => $_caption)
-            {
+            foreach ($locales as $_code => $_caption) {
                 $locales[$_code] = [
                     'id'       => $_code,
+                    'code'     => explode('_', $_code)[0],
+                    'name'     => explode(' (', $_caption)[0],
                     'caption'  => $_caption,
                     'country'  => [
                         'code' => explode('_', $_code)[1],
@@ -34,9 +34,7 @@ class Locales
                 ];
             }
             return self::$_cache['locales'] = $locales;
-        }
-        else
-        {
+        } else {
             return self::$_cache['locales'];
         }
     }
@@ -44,30 +42,32 @@ class Locales
 
     private static function _getActive()
     {
-        return array_flip(array_merge(
-            Db::getDefault()->query()->select('pages')->distinct('locale_id'),
-            Db::getDefault()->query()->select('posts')->distinct('locale_id'),
-            Db::getDefault()->query()->select('categories')->distinct('locale_id')
-        ));
+        $res = [];
+        foreach (Pages::find(['parent_id' => null, 'top' => 1])->all() as $page) {
+            $res[$page->locale_id] = [
+                'url' => (string)$page->getUrl(),
+            ];
+        }
+        return $res;
     }
 
 
-    static function fetchActive()
+    static function fetchActive($first = null)
     {
-        if (!array_key_exists('active', self::$_cache))
-        {
-            $active = self::_getActive();
+        if (!array_key_exists('active', self::$_cache)) {
+            // load from db
+            $res = self::_getActive();
+            // default locale
+            if ($first) {
+                $res = [$first => $res[$first]] + $res;
+            }
+            // locales
             $locales = self::fetchAll();
-            $res = [];
-            foreach ($locales as $_code => $_locale)
-            {
-                if ($active[$_code] !== null)
-                    $res[$_code] = $_locale;
+            foreach ($res as $code => $item) {
+                $res[$code] = array_merge($locales[$code], (array)$item);
             }
             return self::$_cache['active'] = $res;
-        }
-        else
-        {
+        } else {
             return self::$_cache['active'];
         }
     }

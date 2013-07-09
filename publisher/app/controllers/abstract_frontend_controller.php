@@ -9,36 +9,35 @@ abstract class AbstractFrontend_Controller extends Application
     final protected function __initSection()
     {
         //
-        // app environment
-        Application::$isFrontend = true;
-        //
-        // i18n
-        if ($i18n = $this->config['i18n'] and (is_string($i18n) or ($i18n = $i18n['front']))) {
-            if (file_exists($_file = USER_DIR . "/i18n/{$i18n}.php")) {
-                Lemmon_I18n::setBase(dirname($_file));
-                Lemmon_I18n::setLocale($i18n);
-            }
-        }
-        //
         // templates
         $this->template = (new \Lemmon\Template\Template(USER_DIR . '/template', 'index'))
-            ->setExtension(new TemplateExtensionUser);
+            ->setExtension(new TemplateExtensionUser($this->i18n));
         //
         // default services
         $this->data += [
-            'nav'   => new Nav,
+            'nav'   => new Nav($this->site),
             'query' => new Query,
         ];
         //
         // page
         if ($page = $this->page) {
             $this->data['page'] = $this->page;
-            Nav::setCurrentPage($page, (string)$page->getUrl() == (string)$this->route->getSelf());
+            $this->setCurrentPage($page, (string)$page->getUrl() == (string)$this->route->getSelf());
             $this->template->display($page->template ?: ($page->type ? ($page->type . (self::getAction() == 'index' ? '' : '_' . self::getAction())) : 'default'));
         }
         //
         // init
         $this->__initModule();
+    }
+
+
+    protected function setCurrentPage($page, $active = true)
+    {
+        // i18n
+        $this->i18n->setLocale($page->locale_id);
+        $this->i18n->load(USER_DIR . "/i18n/{$page->locale_id}/frontend.php");
+        // nav
+        Nav::setCurrentPage($page, $active);
     }
 
 

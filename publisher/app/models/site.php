@@ -11,14 +11,27 @@ class Site extends \Lemmon\Model\AbstractRow
 
     static private $_current;
 
+    private $_cache = [];
+
 
     static function findCurrent()
     {
-        if (!($res = self::$_current)) {
-            $server_name = preg_replace('/\.dev$/', '', $_SERVER['SERVER_NAME']);
-            return self::$_current = Sites::find()->where(new SqlExpression('link = ? OR domain = ?', '', $server_name))->first();
+        return self::$_current ?: (self::$_current = self::find(['host' => $_SERVER['HTTP_HOST']]));
+    }
+
+
+    function getLink()
+    {
+        if ($this->link_id) {
+            return $this->link_id;
+        }
+        elseif (!array_key_exists('link', $this->_cache)) {
+            #$host = preg_replace('/(.dev)?(:\d+)?/', '', $this->host);
+            #$link = preg_match('/([^\.]+)\.(.+)/', $host, $m);
+            #return $this->_cache['link'] = $m[2] . '/' . $m[1];
+            return $this->_cache['link'] = preg_replace('/^([^\.]+)\.(.*)(.dev)?(:\d+)?$/U', '$2/$1', $this->host);
         } else {
-            return $res;
+            return $this->_cache['link'];
         }
     }
 }

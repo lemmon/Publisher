@@ -2,7 +2,7 @@
 /**
 * 
 */
-class AbstractModuleRow extends AbstractRow
+abstract class AbstractModuleRow extends AbstractRow
 {
     protected function __initItem() {}
     protected function __validate(array &$f) {}

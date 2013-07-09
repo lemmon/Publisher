@@ -5,39 +5,43 @@
 class Nav
 {
     private static $_instance;
-    private static $_cache = array();
+    private static $_cache = [];
     
     private static $_locale;
     private static $_page;
     private static $_pageNotActive;
 
+    private $_site;
 
-    public function __construct()
+
+    function __construct($site)
     {
+        // site
+        $this->_site = $site;
         // instance
         self::$_instance = $this;
     }
 
 
-    final public static function getInstance()
+    final static function getInstance()
     {
         return self::$_instance;
     }
 
 
-    public static function setCurrentLocale($locale)
+    static function setCurrentLocale($locale)
     {
         self::$_locale = $locale;
     }
 
 
-    public static function getCurrentLocale()
+    static function getCurrentLocale()
     {
         return self::$_locale;
     }
 
 
-    public static function setCurrentPage($page, $active = true)
+    static function setCurrentPage($page, $active = true)
     {
         if (is_numeric($page)) {
             $page = Page::find($page);
@@ -50,13 +54,13 @@ class Nav
     }
 
 
-    public static function getCurrentPage()
+    static function getCurrentPage()
     {
         return self::$_page;
     }
 
 
-    public static function getActivePageId()
+    static function getActivePageId()
     {
         return self::$_pageNotActive ? null : self::$_page->id;
     }
@@ -83,5 +87,11 @@ class Nav
     function getLocale()
     {
         return self::$_locale;
+    }
+
+
+    function getLocales()
+    {
+        return Locales::fetchActive($this->_site->locale_id);
     }
 }

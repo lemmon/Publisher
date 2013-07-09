@@ -4,17 +4,37 @@
 */
 class TemplateExtensionUser extends \Lemmon\Template\ExtensionTwig
 {
+    protected $i18n;
+
+
+    function __construct(\Lemmon\I18n\I18n $i18n = null)
+    {
+        $this->i18n = $i18n;
+    }
 
 
     function getFilters()
     {
         return [
         
+            't'         => new \Twig_Filter_Function([$this, 't']),
             'pp'        => new \Twig_Filter_Function('TemplateExtensionUser::pp'/*, ['is_safe' => ['html']]*/),
             'noImages'  => new \Twig_Filter_Function('TemplateExtensionUser::noImages'/*, ['is_safe' => ['html']]*/),
             'emailHide' => new \Twig_Filter_Function('TemplateExtensionUser::emailHide'/*, ['is_safe' => ['html']]*/),
+
+            /*
+            new \Twig_SimpleFilter('t', function(){
+                return $this->i18n->t();
+            }),
+            */
         
         ] + parent::getFilters();
+    }
+
+
+    function t($foo)
+    {
+        return call_user_func_array([$this->i18n, 't'], func_get_args());
     }
 
 

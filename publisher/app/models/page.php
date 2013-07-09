@@ -9,6 +9,7 @@ use \Lemmon\Sql\Query as SqlQuery,
 class Page extends AbstractPage
 {
     private $_temp = [];
+    static $_admin = true;
 
 
     function allowChildren()

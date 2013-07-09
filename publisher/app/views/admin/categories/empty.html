@@ -5,7 +5,7 @@
 {% block main %}
 <section class="modal">
 
-    <form method="post" target="form-frame" action="{{ link.to(':create') }}">
+    <form method="post" target="form-frame" action="{{ link.to(':admin/create') }}">
         
         <h2>{{ block('title') }}</h2>
         <p>{{ "You don't have any categories created yet. Create your first one right now."|t }}</p>

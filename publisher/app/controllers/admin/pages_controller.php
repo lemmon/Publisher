@@ -19,10 +19,10 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
         if (Pages::find()->count()) {
             // has pages
             $this->data['pages']   = Pages::fetchActiveByLanguage();
-            $this->data['locales'] = Locales::fetchActive();
+            $this->data['locales'] = Locales::fetchActive($this->site->locale_id);
         } else {
             // need to create first page
-            return $this->route->to(':create');
+            return $this->route->to(':admin/create');
         }
     }
 

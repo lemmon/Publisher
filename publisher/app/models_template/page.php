@@ -7,6 +7,8 @@ class Page extends AbstractPage
     private $_active;
     private $_selected;
 
+    static $_template = true;
+
 
     function getChildren()
     {
