@@ -7,36 +7,43 @@ use \Lemmon\Form\Scaffold;
 */
 abstract class Admin_AbstractModule_Controller extends Admin_Backend_Controller
 {
+    protected $config = [];
 
 
-    protected function getPage($page_id = null)
+    protected function getPage($id)
     {
-        if (($page_id or $page_id = $this->route->page) and $page = Page::find($page_id)) {
-            $this->data['page'] = $page;
-            return $page;
+        if ($page = Page::find($id)) {
+            // page found
+            return $this->data['page'] = $this->page = $page;
+        } else {
+            // page not found
+            throw new \Exception('Page not found.');
         }
+    }
+
+
+    protected function getConfig()
+    {
+        return $this->config;
     }
 
 
     function index()
     {
-        if ($page = $this->getPage()) {
-            // Page found okay
-            $this->data += [
-                'data' => call_user_func([Scaffold::getModelName($this), 'find'], ['page_id' => $page->id]),
-            ];
-        } else {
-            // Page not found
-            die('Error.');
-        }
+        // page
+        $page = $this->getPage($this->route->page);
+        // data
+        $this->data += [
+            'data' => call_user_func([Scaffold::getModelName($this, $this->getConfig()), 'find'], ['page_id' => $page->id]),
+        ];
     }
 
 
     private function _getOptions()
     {
-        $this->data += $this->getOptions() + [
+        $this->data += [
             'states' => States::getOptions(),
-        ];
+        ] + $this->getOptions();
     }
 
 
@@ -48,32 +55,29 @@ abstract class Admin_AbstractModule_Controller extends Admin_Backend_Controller
 
     function create()
     {
-        if ($page = $this->getPage($this->route->id)) {
-            // options
-            $this->_getOptions();
-            // scaffolding
-            return $this->_res(Scaffold::create($this, [
-                'redir' => function($item){
-                    return (string)$this->route->getSection($item->getPage());
-                },
-                'default' => [
-                    'state_id'  => 1,
-                ],
-                'force' => [
-                    'page_id'   => $page->id,
-                    'locale_id' => $page->locale_id,
-                ],
-            ]));
-        } else {
-            // Page not found
-            die('Error.');
-        }
+        // page
+        $page = $this->getPage($this->route->id);
+        // options
+        $this->_getOptions();
+        // scaffolding
+        return $this->_res(Scaffold::create($this, [
+            'redir' => function($item){
+                return (string)$this->route->getSection($item->getPage());
+            },
+            'default' => [
+                'state_id'  => 1,
+            ],
+            'force' => [
+                'page_id'   => $page->id,
+                'locale_id' => $page->locale_id,
+            ] + $this->getConfig(),
+        ]));
     }
 
 
     function update()
     {
-        if ($item = call_user_func([Scaffold::getModelName($this), 'find'], $this->route->id)->first() and $page = $this->getPage($item->page_id)) {
+        if ($item = call_user_func([Scaffold::getModelName($this, $this->getConfig()), 'find'], $this->route->id)->first() and $page = $this->getPage($item->page_id)) {
             // options
             $this->_getOptions();
             // scaffolding
@@ -83,8 +87,8 @@ abstract class Admin_AbstractModule_Controller extends Admin_Backend_Controller
                 },
             ]));
         } else {
-            // Page not found
-                die('Error.');
+            // Item not found
+            die('404: Entry not found');
         }
     }
 }

@@ -32,8 +32,5 @@ class Env extends \Lemmon\Environment
             ]);
 
         }
-        
-        // uploads
-        \Lemmon\Model\Schema::setDefaultUploadDir(BASE_DIR . '/user/uploads');
     }
 }

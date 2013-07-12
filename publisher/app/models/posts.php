@@ -10,7 +10,7 @@ class Posts extends AbstractModuleModel
     static $uploadDir = 'posts/%Y-%m';
 
 
-    function __initModule()
+    protected function __initModule()
     {
         // order
         $this->order('COALESCE(published_at, updated_at) DESC');

@@ -130,6 +130,10 @@ class Route extends \Lemmon\Route
             die('Route/ Site not found');
         }
         //
+        // user uploads
+        \Lemmon\Model\Schema::setDefaultUploadDir(USER_DIR . '/uploads');
+        //
+        //
         // autoloader
         //
         $loader = new \Lemmon\Autoloader;

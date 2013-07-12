@@ -163,17 +163,22 @@ label.label {
 // ------------------------------------------------------------ //
 
 #notices {
+    position:absolute;
+    left:2px;
+    right:2px;
+    top:2px;
+    z-index:1001;
     .flash_error,
     .flash_notice {
         padding:8px 0 7px;
         text-align:center;
     }
     .flash_error {
-        background:fade(@red, 35%);
+        background:fade(mix(@red, @backgroundColor, 35%), 95%);
         //border-bottom:1px solid fade(@red, 65%);
     }
     .flash_notice {
-        background:fade(@yellow, 35%);
+        background:fade(mix(@yellow, @backgroundColor, 35%), 95%);
         //border-bottom:1px solid fade(@yellow, 65%);
     }
 }
