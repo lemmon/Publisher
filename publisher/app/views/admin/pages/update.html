@@ -42,7 +42,7 @@
         
         <p class="fit">
             {{ forms.label('parent_id', null, 'optional') }}
-            <span class="fieldset" id="f_parent_id">
+            <span class="fieldset field" id="f_parent_id">
 
                 <label rel="0"><input type="radio" name="parent_id" value="" {% if (not f.parent_id) %}checked{% endif %}> <em>{{ 'root page'|t }}</em></label>
                 <strong id="parent_id_thispage"><img src="{{ link.publisher('admin/img/subpath.png') }}"> <span>{{ "This Page"|t }}</span><br></strong>

@@ -7,7 +7,7 @@
 {% endmacro %}
 
 {% macro label(name, caption, gravity) %}
-<label class="label" for="f_{{ name|asciize("_") }}">{{ caption|default(name|human)|t }} {% if (gravity) %}<span class="{{ gravity|asciize }}">({{ gravity|t }})</span>{% endif %}<br></label>
+<label class="label" for="f_{{ name|asciize("_") }}">{{ caption|default(name|human)|t }} {%- if (gravity) %} <span class="{{ gravity|asciize }}">({{ gravity|t }})</span>{% endif %}<br></label>
 {% endmacro %}
 
 {% macro input(name, value, size, maxlength) %}
@@ -34,8 +34,8 @@
 {% if (undefined) %}
 <label><input type="radio" name="{{ name }}" value="" {% if (not value) %}checked{% endif %}> {{ undefined }}</label>{{ break|raw }}
 {% endif %}
-{% for item in collection %}
-<label><input type="radio" name="{{ name }}" value="{{ item.id }}" {% if (item.id==value and value is not sameas(false)) %}checked{% endif %}> {{ item.caption|t }}</label>{{ break|raw }}
+{% for key, item in collection %}
+<label><input type="radio" name="{{ name }}" value="{{ item.id|default(key) }}" {% if (item.id|default(key) == value and value is not sameas(false)) %}checked{% endif %}> {{ item.caption|default(item)|t }}</label>{{ break|raw }}
 {% endfor %}
 {% endmacro %}
 
@@ -101,22 +101,13 @@
 <input type="file" id="f_{{ name|asciize("_") }}" name="{{ name }}">
 {% endmacro %}
 
-{% macro radio_collection(name, value, collection, break, undefined) %}
-{% if (undefined) %}
-<label><input type="radio" name="{{ name }}" value="" {% if (not value) %}checked{% endif %}> {{ undefined }}</label>{{ break|raw }}
-{% endif %}
-{% for item in collection %}
-<label><input type="radio" name="{{ name }}" value="{{ item.id }}" {% if (item.id==value and value is not sameas(false)) %}checked{% endif %}> {{ item.caption|t }}</label>{{ break|raw }}
-{% endfor %}
-{% endmacro %}
-
 {% macro select(name, value, collection, has_empty, attr) %}
 <select id="f_{{ name|asciize("_") }}" name="{{ name }}"{% for _key, _val in attr %} {{ _key }}="{{ _val }}"{% endfor %}>
     {% if (has_empty or has_empty is none) %}
     <option class="null" value="">{{ has_empty }}</option>
     {% endif %}
-    {% for item in collection %}
-    <option value="{{ item.id }}" {% if (item.id == value) %}selected{% endif %}>{{ item.caption|t }}</option>
+    {% for kay, item in collection %}
+    <option value="{{ item.id|default(key) }}" {% if (item.id|default(key) == value) %}selected{% endif %}>{{ item.caption|default(item)|t }}</option>
     {% endfor %}
 </select>
 {% endmacro %}

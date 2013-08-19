@@ -49,6 +49,7 @@ abstract class AbstractPage extends AbstractRow
         $this->cache['blocks'][$name] = $content;
         $this->cache['blocks_to_save'][$name] = $name;
         $this->requireSave();
+        return $this;
     }
 
 
@@ -57,6 +58,7 @@ abstract class AbstractPage extends AbstractRow
         $this->cache['blocks'] = array_merge((array)$this->cache['blocks'], $blocks);
         $this->cache['blocks_to_save'] = array_merge((array)$this->cache['blocks_to_save'], array_combine(array_keys($blocks), array_keys($blocks)));
         $this->requireSave();
+        return $this;
     }
 
 

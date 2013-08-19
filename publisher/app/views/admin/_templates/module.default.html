@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title page.name %}
+
+{% block main %}
+<div>
+    
+    <div id="page-title">
+        {% block form_header %}<h2>{{ block('title') }}</h2>{% endblock %}
+        <div class="form-action">
+            {% block form_action %}{% endblock %}
+        </div>
+        <div class="form-section">
+            {% block form_section %}
+            <a href="{{ link.to('@/pages/update/$id', page) }}">{{ "Edit Page"|t }}</a>
+            {% endblock %}
+        </div>
+    </div>
+
+    {% block main_content %}{% endblock %}
+    
+</div>
+{% endblock %}

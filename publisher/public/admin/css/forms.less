@@ -7,22 +7,25 @@ form {
         margin-bottom:@gutterHeight / 2;
     }
     p {
-        line-height:1em;
+        line-height:@baseFontSize + 3px;
         margin-bottom:10px;
     }
     span.fieldset {
         display:block;
-        background:mix(@black, @backgroundColor, 2%);
-        border:1px solid fade(@black, 5%);
-        .borderRadius(2px);
         min-height:30px;
         line-height:30px;
-        padding:1px;
+        padding:2px;
         label {
             //margin-left:9px;
         }
         input[type=radio] {
             margin-left:9px;
+        }
+        &.field {
+            padding:1px;
+            background:mix(@black, @backgroundColor, 2%);
+            border:1px solid fade(@black, 5%);
+            .borderRadius(2px);
         }
     }
     .cols2 {
@@ -61,9 +64,9 @@ form {
 }
 
 label.label {
-    display:inline-block;
-    line-height:1em;
-    padding:2px 0;
+    display:inline;
+    //line-height:1em;
+    //padding:2px 0;
     //position:relative;
     //top:-1px;
     font-size:@baseFontSize - 1px;

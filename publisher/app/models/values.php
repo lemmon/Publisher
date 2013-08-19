@@ -12,11 +12,24 @@ class Values
 
     static function get($key)
     {
-        if (array_key_exists($key, self::$_cache)) {
-            // load from cache
+        // load many
+        if (strpos($key, '%') !== false) {
+            $many = [];
+            foreach ((new SqlQuery)->select('values')->where(['key LIKE ?' => $key] + (defined('SITE_ID') ? ['site_id' => SITE_ID] : ''))->all() as $item) {
+                $res = $item->value;
+                if ($res{1} == ':' and preg_match('/^\w:\d+:/', $res)) {
+                    $res = unserialize($res);
+                }
+                $many[$item->key] = $res;
+            }
+            return $many;
+        }
+        // load from cache
+        elseif (array_key_exists($key, self::$_cache)) {
             return self::$_cache[$key];
-        } else {
-            // load from db
+        }
+        // load from db
+        else {
             $res = (new SqlQuery)->select('values')->where(['key' => $key] + (defined('SITE_ID') ? ['site_id' => SITE_ID] : ''))->first()->value;
             // parse Json if necessary
             if ($res{1} == ':' and preg_match('/^\w:\d+:/', $res)) {
