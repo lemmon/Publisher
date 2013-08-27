@@ -8,7 +8,9 @@
 
         <h2 style="background-image:url({{ link.vendor('flags/{$(country.code)}.png', _locale) }})">
             {{ _locale.caption }}
+            {#
             <a class="more-button" target="main" href="{{ link.to('@/@/create/%1', _locale.id) }}">{{ "New Page"|t }}</a>
+            #}
         </h2>
 
         {% include '_listpages.html' with {'_pages': pages.langs[_locale.id]} %}

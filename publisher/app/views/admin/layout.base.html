@@ -25,7 +25,7 @@
     var section = location.pathname.substring(7),
         sectionThis = section.split('/')[0],
         sectionIn = parent.location.pathname.substring(7).split('/')[0];
-    if (window.name != 'modal'){
+    if (window.name != 'modal' && window != top.window){
         top.location = top.location.href.split('#')[0] + '#' + section + (sectionIn && sectionThis != sectionIn ? '/in/' + sectionIn : '');
     }
     //
@@ -37,11 +37,13 @@
         
         //
         // title
-        var $titleThis = $('title'),
-            $titleTop = $(top.document).find('title'),
-            titleThis = $titleThis.text(),
-            titleTop = $titleTop.text().split(' | ')[0];
-        $titleTop.text(titleTop + (titleThis ? ' | ' + titleThis : ''));
+        if (window != top.window){
+            var $titleThis = $('title'),
+                $titleTop = $(top.document).find('title'),
+                titleThis = $titleThis.text(),
+                titleTop = $titleTop.text().split(' | ')[0];
+            $titleTop.text(titleTop + (titleThis ? ' | ' + titleThis : ''));
+        }
         
         //
         // enable button on form change
@@ -81,8 +83,7 @@
             // form submit
             $form.submit(function(){
                 $('#notices').slideUp();
-                $form.find('.buttons button,button[type=submit]').attr('disabled', true);
-                $form.find('button.loading').css('display', 'inline-block');
+                $form.find('button:first').attr('disabled', true)/*.html('Please wait&hellip;')*/.addClass('loading');
             });
             // form result
             $form.find('iframe[name=form-frame]').load(function(){
@@ -116,8 +117,7 @@
                 }
                 // return buttons to normal states
                 if (!isRedir){
-                    $form.find('button.loading').css('display', '');
-                    $form.find('.buttons button,button[type=submit]').attr('disabled', false);
+                    $form.find('button:first').removeClass('loading').attr('disabled', false);
                 }
                 //
                 return false;

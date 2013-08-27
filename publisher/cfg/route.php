@@ -224,8 +224,7 @@ class Route extends \Lemmon\Route
 
     function getTemplate($link)
     {
-        return $this->to('user/' . $this->_site->getLink() . '/template/' . $link);
-        return $this->to('user/template/' . $link);
+        return $this->_site->link_id ? $this->to('user/' . $this->_site->getLink() . '/template/' . $link) : $this->to('user/template/' . $link);
     }
 
 

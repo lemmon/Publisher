@@ -110,13 +110,20 @@ ul {
             display:block;
             font-size:14px;
             height:@baseLineHeight;
-            margin:1px 0;
             .ellipsis();
             &:hover {
                 text-decoration:none;
                 .caption {
                     text-decoration:underline;
                     //border-bottom:1px dotted @white;
+                }
+            }
+            &.newpage {
+                opacity:.2;
+                font-style:italic;
+                &:hover {
+                    opacity:1;
+                    text-decoration:underline;
                 }
             }
         }

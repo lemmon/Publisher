@@ -79,7 +79,6 @@ label.label {
     }
 }
 
-
 .fields {
     padding-top:@gutterHeight / 2;
     padding-bottom:@gutterHeight * 2 + 34px;
@@ -310,16 +309,12 @@ button {
     }
     */
 }
-button[type=submit]:disabled, .buttons button:disabled {
-    display:none;
-}
 button {
     &.loading {
-        display:none;
-        background:#fff;
+        .animate(none);
         color:@noteColor;
         border-color:@noteBackgroundColor;
-        background:#fff url(../img/loader-909090.gif) 15px 50% no-repeat;
+        background:#fff url(../img/loader-909090.gif) 15px 50% no-repeat !important;
         padding-left:25px + 16px;
     }
 }

@@ -71,6 +71,8 @@ AddCharset utf-8 .html .css .js .xml .json .rss
 # user
   RewriteCond %{HTTP_HOST} ^([^\.]+)\.([^:]+).dev [NC]
   RewriteRule user/template/(.*) user/%2/%1/template/$1 [L]
+# common root files
+  RewriteRule ^([\w\-]+\.(png|ico|txt|xml))$ /publisher/public/home/$1 [L]
 # framework
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

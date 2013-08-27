@@ -21,11 +21,18 @@
             </p>
         </fieldset>
         <div class="" style="margin-top:10px;">
-            <button class="loading" disabled>{{ "Please wait"|t }}&hellip;</button>
             <button class="primary" type="submit">{{ "Sign in"|t }}</button>
         </div>
         
     </form>
 
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+if (window != top.window){
+    top.location = location.href;
+}
+</script>
 {% endblock %}

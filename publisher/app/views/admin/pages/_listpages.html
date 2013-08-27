@@ -4,11 +4,6 @@
     <li class="state-{{ _page.state.name|asciize }} level-{{ level + 0 }}">
 
         <a class="name" target="main" href="{{ link.section(_page) }}">
-            {#
-            {% if (_page.type) %}
-            <span class="tag">{{ _page.type }}</span>
-            {% endif %}
-            #}
             {% if (_page.state_id != 1) %}
             <span class="tag state-{{ _page.state.name|asciize }}">{{ _page.state.name }}</span>
             {% endif %}
@@ -19,5 +14,10 @@
 
     </li>
     {% endfor %}
+    {% if (level == 0) %}
+    <li>
+        <a class="newpage" target="main" href="{{ link.to('@/@/create/%1', _locale.id) }}">{{ "Create new page"|t }}&hellip;</a>
+    </li>
+    {% endif %}
 </ul>
 {% endif %}

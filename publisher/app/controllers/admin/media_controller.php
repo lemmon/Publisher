@@ -39,4 +39,10 @@ class Admin_Media_Controller extends Admin_Backend_Controller
         // scaffolding
         return Scaffold::update($this);
     }
+
+
+    function frame()
+    {
+        die('--frame?');
+    }
 }

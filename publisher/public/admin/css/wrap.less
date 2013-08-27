@@ -6,6 +6,7 @@
 @import 'fonts.less';        // fonts
 @import 'variables.less';    // variables
 @import 'mixins.less';       // css3 & other mixins
+@import 'scaffolding.less';  // defaults
 
 
 //  Defaults
@@ -31,34 +32,39 @@ nav {
     width:@navWidth;
     height:auto;
     li {
+        text-align:center;
         a {
             display:block;
             width:@navWidth;
-            height:@navWidth;
-            line-height:@navWidth;
-            text-indent:100%;
-            overflow:hidden;
-            color:inherit;
+            height:@navHeight;
+            line-height:@navHeight / 7 * 2;
+            color:@white;
             text-decoration:none;
             //color:mix(@accentColor, @backgroundColor, 35%);
             color:mix(@white, @textColor, 15%);
+            //color:mix(@white, @textColor, 85%);
             &:hover {
                 //color:mix(@accentColor, @backgroundColor, 65%);
                 color:mix(@white, @textColor, 65%);
+                //color:@white;
             }
             &:before {
                 font-family:'FontAwesome';
-                font-size:round(@navWidth / 3);
+                font-size:round(@navWidth / 4);
                 text-indent:0;
                 text-align:center;
                 content:"X";
                 display:block;
+                height:@navHeight / 7 * 3;
+                line-height:@navHeight / 7 * 3;
+                padding-top:@navHeight / 7;
                 .animate();
             }
         }
         &.active a {
             //color:@accentColor;
             color:mix(@white, @textColor, 85%);
+            //color:@white;
         }
         &.nav-pages      a:before { content:"\f0e8"; }
         &.nav-categories a:before { content:"\f0ae"; }
@@ -68,6 +74,7 @@ nav {
     }
     //
     background:#131313;
+    background:#32383d;
 }
 
 
