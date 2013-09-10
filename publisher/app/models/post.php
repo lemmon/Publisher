@@ -19,24 +19,6 @@ class Post extends AbstractModuleRow
     }
 
 
-    function getLocale()
-    {
-        return Locales::fetch($this->locale_id);
-    }
-
-
-    function getState()
-    {
-        return States::getOptions()[$this->state_id];
-    }
-
-
-    function getPage()
-    {
-        return Page::find($this->page_id);
-    }
-
-
     function getCategories()
     {
         if (array_key_exists('categories', $this->_cache))

@@ -1,62 +1,83 @@
-{% extends 'layout.html' %}
+{% extends 'update.base.html' %}
 
 {% block title "New Page"|t %}
 
-{% import '_forms.html' as forms %}
-
 {% block main %}
-<div class="modalish">
+<div class="modalish">{{ parent() }}</div>
+{% endblock %}
 
-    <form method="post" target="form-frame" action="{{ link.self }}">
-        
-        <h2>{{ block('title') }}</h2>
+{% block form_lead %}
+{% endblock %}
+
+{% block form_fields %}
+
+    <h2>{{ block('title') }}</h2>
+
+    {{ forms.p('name', flash, {'class': 'big'}) }}
+        {{ forms.label('name', null, 'required') }}
+        {{ forms.input('name', f.name) }}
         {#
-        <p>{{ "You don't have any pages created yet. Create your first one right now."|t }}</p>
+        <span class="hint">Some hint goes here</span>
         #}
+    </p>
+
+    {% if locales %}
+    {{ forms.p('locale_id', flash) }}
+        {{ forms.label('locale_id', null, 'required') }}
+        {{ forms.select_groups('locale_id', f.locale_id, locales) }}
+    </p>
+    {% endif %}
+    
+    {{ forms.p('parent_id', flash) }}
+        {{ forms.label('parent_id', 'Unlinked', 'optional') }}
+        <span class="fieldset"><label>{{ forms.checkbox('parent_id', f.parent_id == -1, -1) }} {{ "This page will not be linked to main site structure"|t }}</label></span>
+    </p>
+
+    <div style="display:none">
         
-        {{ forms.p('name', flash, {'class': 'fit big'}) }}
-            {{ forms.label('name', null, 'required') }}
-            {{ forms.input('name', f.name) }}
-        </p>
-
-        {% if locales %}
-        {{ forms.p('locale_id', flash) }}
-            {{ forms.label('locale_id', null, 'required') }}
-            {{ forms.select_groups('locale_id', f.locale_id, locales) }}
-        </p>
-        {% endif %}
-
         <div class="cols2">
 
-            <p class="fit">
+            {{ forms.p('template', flash) }}
                 {{ forms.label('template', null, 'optional') }}
                 {{ forms.input('template', f.template) }}
             </p>
-            
-            <p class="fit">
+        
+            {{ forms.p('type', flash) }}
                 {{ forms.label('type', null, 'optional') }}
                 {{ forms.input('type', f.type) }}
             </p>
 
         </div>
-
-        {{ forms.p('state_id', flash) }}
-            {{ forms.label('state_id', null, 'required') }}
-            <span class="fieldset">{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}</span>
+    
+        <p>
+            {{ forms.label('tags', null, 'optional') }}
+            {{ forms.input('tags', f.tags is iterable ? f.tags|join(', ') : f.tags) }}
         </p>
-
-        <div style="margin-top:30px">
-            <button class="primary" type="submit">{{ "Create new page"|t }}&hellip;</button>
-        </div>
         
-        <iframe style="border:1px dashed red" name="form-frame" width="100%" height="200"></iframe>
+    
+    </div>
+    <div id="moreoptions" class="more"><a href="#">{{ "Display more options"|t }}&hellip;</a></div>
 
-    </form>
+{% endblock %}
 
-</div>
+{% block form_buttons_buttons %}
+<button class="primary" type="submit">{{ "Create new page"|t }}&hellip;</button>
 {% endblock %}
 
 {% block script %}
+{{ parent() }}
+<script>
+$(function(){
+    
+    //
+    // more options
+    $('#moreoptions').click(function(){
+        $(this).hide().prev().show();
+        return false;
+    })
+
+});
+</script>
 {% if (locales) %}
 <script src="{{ link.vendor('select2/select2.min.js') }}"></script>
 <script>

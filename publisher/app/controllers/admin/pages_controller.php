@@ -68,7 +68,7 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
 
             // locale not found
             $this->data += [
-                'locales' => Locales::fetchAllWithPreferred(),
+                'locales' => Locales::fetchInactiveWithPreferred(),
                 'states' => States::getOptions(),
             ];
             $this->data['f'] = [

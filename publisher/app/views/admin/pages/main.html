@@ -3,18 +3,23 @@
 {% block rail %}
 
     {% for _locale in locales %}
-    {% if (pages.langs[_locale.id]) %}
+    {% if (pages.langs[_locale.id] or pages.unlinked[_locale.id]) %}
     <div class="section">
 
         <h2 style="background-image:url({{ link.vendor('flags/{$(country.code)}.png', _locale) }})">
-            {{ _locale.caption }}
-            {#
-            <a class="more-button" target="main" href="{{ link.to('@/@/create/%1', _locale.id) }}">{{ "New Page"|t }}</a>
-            #}
+            <span class="locale">{{ _locale.name }} ({{ _locale.country.code }})</span>
+            {{- '' -}}
+            <span class="newpage"><a target="main" href="{{ link.to('@/@/create/%1', _locale.id) }}"><span class="caption">{{ "Create new"|t }}</span></a></span>
         </h2>
+        
 
         {% include '_listpages.html' with {'_pages': pages.langs[_locale.id]} %}
 
+        {% if (pages.unlinked[_locale.id]) %}
+        <h3 class="unlinked">{{ "Unlinked pages"|t }}</h3>
+        {% include '_listpages.html' with {'_pages': pages.unlinked[_locale.id]} %}
+        {% endif %}
+        
     </div>
     {% endif %}
     {% endfor %}
@@ -22,17 +27,25 @@
     <div class="section other">
 
         <h2 style="background-image:url({{ link.vendor('flags/_world.png', _locale) }})">
-            {{ "Different locale" }}
+            <a target="main" href="{{ link.to('@/@/create') }}"><span class="caption">{{ "Add another locale"|t }}&hellip;</span></a>
         </h2>
-
-        <ul>
-            <li>
-                <a target="main" href="{{ link.to(':admin/create') }}">{{ "Create new page"|t }}&hellip;</a>
-            </li>
-        </ul>
 
     </div>
     
+    <style>
+    div.section h2 .newpage { display:none; }
+    div.section h2 .newpage:before {
+        font-family:'FontAwesome';
+        content:"\f111";
+        padding:0 5px;
+        font-size:.35em;
+        position:relative;
+        top:-.50em;
+    }
+    div.section:hover h2 .newpage { display:inline; }
+    </style>
+    
+    {#
     <style>
     .other a {
         opacity:.2;
@@ -47,5 +60,6 @@
         opacity:1 !important;
     }
     </style>
+    #}
     
 {% endblock %}

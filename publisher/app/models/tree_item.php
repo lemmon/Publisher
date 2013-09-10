@@ -12,6 +12,7 @@ class TreeItem
 
     private static $_instances = [];
     private static $_rootItems = [];
+    private static $_unlinkedItems = [];
 
 
     private function __construct($id, $locale, $name)
@@ -35,12 +36,9 @@ class TreeItem
 
     static function getInstance($id)
     {
-        if ($instance=self::$_instances[$id])
-        {
+        if ($instance = self::$_instances[$id]) {
             return $instance;
-        }
-        else
-        {
+        } else {
             throw new \Exception(sprintf('Instance Id: %d not available.', $id));
         }
     }
@@ -61,6 +59,12 @@ class TreeItem
     function getId()
     {
         return $this->_id;
+    }
+
+
+    function getParentId()
+    {
+        return $this->_parent->_id;
     }
 
 
@@ -88,7 +92,7 @@ class TreeItem
     }
 
 
-    function getPathQuery($include_self=false)
+    function getPathQuery($include_self = false)
     {
         return ($this->_parent ? $this->_parent->getPathQuery(true) . ($include_self ? ',' : '') : null) . ($include_self ? $this->_id : null);
     }
@@ -97,15 +101,14 @@ class TreeItem
     function getChildrenQuery()
     {
         $q = $this->_id;
-        if ($this->_children)
-        {
+        if ($this->_children) {
             foreach ($this->_children as $child) $q .= ',' . $child->getChildrenQuery();
         }
         return $q;
     }
 
 
-    function getLevel($level=0)
+    function getLevel($level = 0)
     {
         return $this->_parent ? $this->_parent->getLevel($level+1) : $level;
     }
@@ -113,7 +116,7 @@ class TreeItem
 
     function getTop()
     {
-        return array_search($this->_id, array_keys($this->_parent ? $this->_parent->_children : self::$_rootItems[$this->_locale])) + 1;
+        return array_search($this->_id, array_keys($this->_parent ? $this->_parent->_children : (self::$_rootItems[$this->_locale][$this->_id] ? self::$_rootItems[$this->_locale] : self::$_unlinkedItems[$this->_locale]))) + 1;
     }
 
 
@@ -123,5 +126,12 @@ class TreeItem
         $child->_parent = $this;
         unset(self::$_rootItems[$child->getLanguageId()][$child->getId()]);
         return $this;
+    }
+
+
+    function setUnlinked()
+    {
+        self::$_unlinkedItems[$this->getLanguageId()][$this->getId()] = $this;
+        unset(self::$_rootItems[$this->getLanguageId()][$this->getId()]);
     }
 }

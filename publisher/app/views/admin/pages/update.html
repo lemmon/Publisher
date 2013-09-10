@@ -1,6 +1,6 @@
-{% extends '_templates/form.html' %}
+{% extends 'update.base.html' %}
 
-{% block title %}{{ item.name }}{% endblock %}
+{% block title item.name %}
 
 {% block form_fields %}
     
@@ -19,10 +19,17 @@
     </div>
     <div class="tab">
         
-        <p class="fit">
+        <div>
             {{ forms.label('blocks[content]', 'Content', 'recommended') }}
-            {{ forms.text('blocks[content]', f.blocks['content']|default(f.block('content')), {class: 'richtext'}) }}
-        </p>
+            <article class="edit" data-name="content">
+                {#
+                {{ f.blocks['content']|default(f.block('content'))|html }}
+                #}
+                {# #}
+                {{ f.block('content')|html }}
+                {# #}
+            </article>
+        </div>
 
     </div>
     <div class="tab">
@@ -40,26 +47,31 @@
     </div>
     <div class="tab">
         
-        <p class="fit">
-            {{ forms.label('parent_id', null, 'optional') }}
-            <span class="fieldset field" id="f_parent_id">
+        {{ forms.label('parent_id', null, 'optional') }}
+        <div class="row cols2" id="f_parent_id">
+            
+            <div><div class="fieldset field">
+                
+                <ul><li>
+                    <label><input type="radio" name="parent_id" value="" {% if (not f.parent_id) %}checked{% endif %}> <em>{{ 'root page'|t }}</em></label>
+                    {% include '_form_listpages.html' with {'_pages': pages.root} %}
+                </li></ul>
+            
+            </div></div>
+            <div><div class="fieldset field">
+                
+                <ul><li>
+                    <label rel="-1"><input type="radio" name="parent_id" value="-1" {% if (f.parent_id == -1) %}checked{% endif %}> <em>{{ 'unlinked'|t }}</em></label>
+                    {% include '_form_listpages.html' with {'_pages': pages.unlinked} %}
+                </li></ul>
+                
+            </div></div>
 
-                <label rel="0"><input type="radio" name="parent_id" value="" {% if (not f.parent_id) %}checked{% endif %}> <em>{{ 'root page'|t }}</em></label>
-                <strong id="parent_id_thispage"><img src="{{ link.publisher('admin/img/subpath.png') }}"> <span>{{ "This Page"|t }}</span><br></strong>
-
-                {% include '_form_listpages.html' with {'_pages': pages.root} %}
-
-            <span>
-        </p>
+        </div>
 
         <p>
             {{ forms.label('top', null, 'optional') }}
             {{ forms.input('top', f.top) }}
-        </p>
-        
-        <p>
-            {{ forms.label('tags', null, 'optional') }}
-            {{ forms.input('tags', f.tags is iterable ? f.tags|join(', ') : f.tags) }}
         </p>
         
     </div>
@@ -79,45 +91,45 @@
 
         </div>
         
+        <p>
+            {{ forms.label('tags', null, 'optional') }}
+            {{ forms.input('tags', f.tags is iterable ? f.tags|join(', ') : f.tags) }}
+        </p>
+
     </div>
 
 {% endblock %}
 
 {% block form_buttons_buttons %}
 <button class="primary" type="submit">{{ "Update page"|t }}</button>
-{#
-{% if (item.type) %}
-<a class="back" href="{{ link.section(item) }}">{{ "back"|t }}</a>
-{% endif %}
-#}
 {% endblock %}
 
 {% block form_buttons_back_link item.type ? link.section(item) : none %}
 
 {% block script %}
+{{ parent() }}
 <style>
-#f_parent_id label {
-    display:block;
-    position:relative;
-}
-#parent_id_thispage {
-    color:#000000;
-    display:block;
+#f_parent_id .thispage {
     font-weight:600;
-    line-height:1px;
-    padding-left:27px;
+    position:relative;
+    padding-left:29px;
 }
-#parent_id_thispage img {
-    display:inline-block;
-    margin:0 2px 0 0;
-    vertical-align:middle;
-}
-#f_parent_id > span label input[type=radio] {
+#f_parent_id .thispage img {
     position:absolute;
-    left:-19px;
-    top:8px;
-    margin:0;
-    border:0;
+    left:7px;
+    top:3px;
+}
+#f_parent_id ul ul {
+    margin-left:20px;
+}
+#f_parent_id .fieldset {
+    line-height:25px;
+}
+#f_parent_id .fieldset > :first-child {
+    margin-top:5px;
+}
+#f_parent_id .fieldset > :last-child {
+    margin-bottom:5px;
 }
 </style>
 <script>
@@ -125,31 +137,26 @@ $(function(){
     
     //
     // parent
-    var $thispage = $('#parent_id_thispage'),
-        $labelSelected;
+    var $thispage = $('<li class="thispage"><img src="{{ link.publisher('admin/img/subpath.png') }}"> <span>{{ "This Page"|t }}</span></li>');
     $('#f_parent_id').find('input').click(function(){
-        updateParent($(this).parent(), $('#f_top').val());
+        updateParent($(this).parents('li:first'), $('#f_top').val());
     }).filter(':checked').click();
     $('#f_top').keyup(function(){
-        updateParent($labelSelected, $(this).val());
+        updateParent($thispage.parents('li:first'), $(this).val());
     });
-    function updateParent($label, top){
-        $labelSelected = $label;
-        var rel = $label.attr('rel'),
-            $children = $label.nextAll('.id-' + rel);
-        if ((top <= 1 && top.length > 0) || $children.size() == 0){
-            $thispage.insertAfter($label).css('margin-left', $label.css('margin-left'));
-        }else if (top <= $children.size() && top.length > 0){
-            $thispage.insertBefore($children.filter(':eq(' + (top - 1) + ')')).css('margin-left', $label.css('margin-left'));
-        }else if (rel == '0'){
-            $thispage.insertAfter($('#f_parent_id').find('label:last')).css('margin-left', $label.css('margin-left'));
-        }else{
-            var _id = $label.attr('class').match(/id-\d+/)[0];
-            if ($label.nextAll('.' + _id).size()){
-                $thispage.insertBefore($label.nextAll('.' + _id + ':first')).css('margin-left', $label.css('margin-left'));
-            }else{
-                $thispage.insertAfter($children.filter(':last')).css('margin-left', $label.css('margin-left'));
-            }
+    function updateParent($li, top){
+        var $ul = $li.children('ul:first');
+            $ulChildren = $ul.children().not($thispage);
+        top = parseInt(top) || -1;
+        if (top < 0 || top > $ulChildren.size()) {
+            // is last of children
+            $thispage.appendTo($ul);
+        } else if (top <= 1) {
+            // is first
+            $thispage.prependTo($ul);
+        } else {
+            // ...or somewhere in the middle
+            $thispage.insertBefore($ulChildren.filter(':eq(' + (top - 1) + ')'));
         }
     }
     
@@ -157,4 +164,3 @@ $(function(){
 </script>
 {% include '_tinymce.html' %}
 {% endblock %}
-

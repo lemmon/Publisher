@@ -8,8 +8,30 @@
 html, body {
     height:100%;
 }
+
+.row {
+    margin-left:-@gutterWidth;
+    .clearfix();
+    & > * {
+        float:left;
+        padding-left:@gutterWidth;
+        margin:0 !important;
+        -webkit-box-sizing:border-box;
+         -khtml-box-sizing:border-box;
+           -moz-box-sizing:border-box;
+            -ms-box-sizing:border-box;
+                box-sizing:border-box;
+    }
+    &.cols2 {
+        & > * {
+            width:50%;
+        }
+    }
+}
+
 #container {
     padding:@gutterWidth;
+    /*
     position:relative;
     min-height:100%;
     -webkit-box-sizing:border-box;
@@ -17,6 +39,7 @@ html, body {
        -moz-box-sizing:border-box;
         -ms-box-sizing:border-box;
             box-sizing:border-box;
+    */
 }
 #main {
     width:auto;

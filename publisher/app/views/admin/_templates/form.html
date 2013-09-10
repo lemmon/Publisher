@@ -22,6 +22,7 @@
             {% if (states) %}
             <span class="" style="margin-left:2em">{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}</span>
             {% endif %}
+            {% if (block('form_buttons_back_link')) %}{% block form_buttons_back %}<a class="back" style="margin-left:2em" href="{% block form_buttons_back_link none %}">{{ "back"|t }}</a>{% endblock %}{% endif %}
         </p>
         {% endblock %}
     </div>

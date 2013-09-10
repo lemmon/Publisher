@@ -91,11 +91,15 @@ class Page extends AbstractPage
         // insert content
         if ($this->_temp['blocks'] and is_array($this->_temp['blocks'])) {
             foreach ($this->_temp['blocks'] as $name => $content) {
+                // sanitize
+                do {
+                    $content = preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $content, -1, $n);
+                } while ($n);
+                // save
                 (new SqlQuery)->replace('pages_blocks')->set([
-                    'page_id'    => $this->id,
-                    'name'       => $name,
-                    #'content'    => \Lemmon\String::sanitizeHtml($content),
-                    'content'    => $content,
+                    'page_id' => $this->id,
+                    'name'    => $name,
+                    'content' => $content,
                 ])->exec();
             }
         }
@@ -125,6 +129,7 @@ class Page extends AbstractPage
     {
         $top = $this->top;
         $pairs = (new SqlQuery)->select('pages')->where([
+            'site_id'   => defined('SITE_ID') ? SITE_ID : null,
             'locale_id' => $this->locale_id,
             'parent_id' => $this->parent_id,
             '!id'       => $this->id,

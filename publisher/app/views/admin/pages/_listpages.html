@@ -14,10 +14,5 @@
 
     </li>
     {% endfor %}
-    {% if (level == 0) %}
-    <li>
-        <a class="newpage" target="main" href="{{ link.to('@/@/create/%1', _locale.id) }}">{{ "Create new page"|t }}&hellip;</a>
-    </li>
-    {% endif %}
 </ul>
 {% endif %}

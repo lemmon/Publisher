@@ -1,0 +1,47 @@
+{% extends '_templates/form.html' %}
+
+{% block title item.default('name') %}
+
+{% block form_fields %}
+
+    {{ forms.p('name', flash, {'class': 'big'}) }}
+        {{ forms.label('name', null, 'required') }}
+        {{ forms.input('name', f.name) }}
+    </p>
+    
+    <div class="tabs">
+
+        <a href="#">{{ "Content"|t }}</a>
+        <a href="#">{{ "Navigation"|t }}</a>
+
+    </div>
+    <div class="tab">
+  
+        <div>
+            {{ forms.label('content', null, 'recommended') }}
+            <article class="edit" data-name="content">
+                {{ f.content|html }}
+            </article>
+        </div>
+  
+    </div>
+    <div class="tab">
+
+        {{ forms.p('weight', flash) }}
+            {{ forms.label('weight', null, 'optional') }}
+            {{ forms.input('weight', f.weight) }}
+        </p>
+
+    </div>
+
+{% endblock %}
+
+{% block form_buttons_back_link link.section(item.page) %}
+
+{% block form_buttons_buttons %}
+<button class="primary" type="submit">{{ "Update entry"|t }}</button>
+{% endblock %}
+
+{% block script %}
+{% include '_tinymce.html' %}
+{% endblock %}

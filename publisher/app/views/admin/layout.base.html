@@ -7,10 +7,11 @@
 {% block body %}
 
     {% include '_notices.html' %}
-  
+
     <div id="container">
 
-        {% block main %}{% endblock %}
+        {% block main %}
+        {% endblock %}
     
     </div>
     
@@ -35,6 +36,8 @@
         $modalWindowIframe;
     $(function(){
         
+        var $notices = $('#notices');
+        
         //
         // title
         if (window != top.window){
@@ -44,20 +47,6 @@
                 titleTop = $titleTop.text().split(' | ')[0];
             $titleTop.text(titleTop + (titleThis ? ' | ' + titleThis : ''));
         }
-        
-        //
-        // enable button on form change
-        /*
-        $('form:has(button:disabled)').each(function(){
-            var $form = $(this),
-                $button = $form.find('button:disabled');
-            $form.find('input,select,textarea').change(function(){
-                $button.attr('disabled', false);
-            });
-        });
-        //
-        $('button:disabled').attr('disabled', false);
-        */
         
         //
         // tabs
@@ -82,8 +71,26 @@
                 isRedir = false;
             // form submit
             $form.submit(function(){
-                $('#notices').slideUp();
-                $form.find('button:first').attr('disabled', true)/*.html('Please wait&hellip;')*/.addClass('loading');
+                // parse editareas
+                $form.find('div[rel=article]').remove();
+                $form.find('article.edit').each(function(){
+                    var $this = $(this),
+                        $article = $this.clone(),
+                        $fields = $('<div rel="article"></div>').insertAfter($this),
+                        name = $this.data('name');
+                    // sanitize html
+                    $article.children('.html').replaceWith(function(){ return $(this).html() });
+                    $('<input>', {
+                        type: 'hidden',
+                        name: 'blocks[' + name + ']',
+                        value: $article.html()
+                    }).appendTo($fields);
+                });
+                // clear error notices
+                $notices.find('.error').remove();
+                $notices.children().hide();
+                // button loading state
+                $form.find('button:first').attr('disabled', true).addClass('loading');
             });
             // form result
             $form.find('iframe[name=form-frame]').load(function(){
@@ -96,13 +103,20 @@
                     res = {};
                 }
                 // process result
+                $form.find('.error').removeClass('error').find('.hint').show();
+                $form.find('.errormsg').remove();
                 if (res.flash && res.flash.errors){
                     // on error
-                    $('#notices').html('<div class="flash_error">' + res.flash.errors.join('<br>') + '</div>').slideDown('fast');
-                    $form.find('.error').removeClass('error');
+                    $notices.html('<div class="flash error">' + res.flash.errors.join('<br>') + '</div>');
                     $.each(res.flash.fields, function(field, messages){
-                        $('[rel=f_' + field + ']').addClass('error');
+                        var $p = $('[rel=f_' + field + ']');
+                        $p.addClass('error');
+                        if (messages){
+                            $p.find('.hint').hide();
+                            $p.append('<span class="errormsg">' + messages.join('<br>') + '</span>');
+                        }
                     });
+                    //alert(res.flash.errors.join('<br>'));
                 }else if (res.redir){
                     if ($form.data('success') == 'true'){
                         $form.trigger('success', [res]);

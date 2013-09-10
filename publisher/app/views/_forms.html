@@ -18,8 +18,8 @@
 <textarea id="f_{{ name|asciize("_") }}" name="{{ name }}" {%- for _key, _val in args %} {{ _key }}="{{ _val }}"{% endfor %}>{{ value }}</textarea>
 {% endmacro %}
 
-{% macro checkbox(name, checked) %}
-<input type="checkbox" id="f_{{ name|asciize("_") }}" name="{{ name }}" value="1" {%- if (checked) %} checked{% endif %}>
+{% macro checkbox(name, checked, value) %}
+<input type="checkbox" id="f_{{ name|asciize("_") }}" name="{{ name }}" value="{{ value|default(1) }}" {%- if (checked) %} checked{% endif %}>
 {% endmacro %}
 
 {% macro file(name, value) %}

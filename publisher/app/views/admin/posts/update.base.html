@@ -1,0 +1,88 @@
+{% extends '_templates/form.html' %}
+
+{% block form_type_upload %}YES{% endblock %}
+
+{% block form_fields %}
+    
+    {{ forms.p('name', flash, {'class': 'fit big'}) }}
+        {{ forms.label('name', null, 'required') }}
+        {{ forms.input('name', f.name) }}
+    </p>
+    
+    <div class="tabs">
+
+        <a href="#">{{ "Content"|t }}</a>
+        <a href="#">{{ "Categories"|t }}</a>
+        <a href="#">{{ "Image"|t }}</a>
+        <a href="#">{{ "SEO"|t }}</a>
+
+    </div>
+    <div class="tab">
+
+        <p class="fit">
+            {{ forms.label('content', null, 'recommended') }}
+            {{ forms.text('content', f.content, {class: 'richtext'}) }}
+        </p>
+
+    </div>
+    <div class="tab">
+        
+        <p class="span2">
+            {{ forms.label('categories', null, 'optional') }}
+            <span class="fieldset" id="f_categories">
+
+                {% for _locale, _categories in categories %}
+                <span class="locale-{{ _locale }}">
+                    {% for _category in _categories %}
+                    <label>
+                        <input type="checkbox" name="categories[]" value="{{ _category.id }}" {%- if (item.categories[_category.id]) %} checked{% endif %}>
+                        {{ _category.name }}
+                        {#
+                        <span class="tag">{{ "Foo"|t }}</span>
+                        #}
+                        <br>
+                    </label>
+                    {% endfor %}
+                </span>
+                {% else %}
+                <em style="display:block;text-align:center;padding:3em 0;color:gray">No categories defined yet.</em>
+                {% endfor %}
+
+            <span>
+        </p>
+
+    </div>
+    <div class="tab">
+
+        {{ forms.p('image', flash) }}
+            {{ forms.label('image', null, 'optional') }}
+            <span class="fieldset">
+                {% if (f.image) %}
+                <span class="image"><img src="{{ link.upload(f.image) }}" style="max-width:100%;max-height:350px;"><br></span>
+                {% endif %}
+                {{ forms.image('image') }}
+            </span>
+        </p>
+        
+    </div>
+    <div class="tab">
+        
+        <p class="fit">
+            {{ forms.label('redirect', null, 'optional') }}
+            {{ forms.input('redirect', f.redirect) }}
+        </p>
+        
+        <p class="fit">
+            {{ forms.label('meta_description', null, 'optional') }}
+            {{ forms.text('meta_description', f.meta_description) }}
+        </p>
+        
+    </div>
+
+{% endblock %}
+
+{% block form_buttons_back_link link.section(item.page) %}
+
+{% block script %}
+{% include '_tinymce.html' %}
+{% endblock %}

@@ -76,27 +76,47 @@ html, body {
 
 
 a {
-    color:@white;
+    color:@accentColor;
     text-decoration:none;
     &:hover {
         text-decoration:underline;
     }
-    //
-    color:@accentColor;
 }
 
 
-h2 {
+h2, h3 {
+    position:relative;
     padding-left:21px;
+    color:mix(@textColor, @railBackgroundColor, 35%);
+    text-shadow:0 1px 0 fade(#fff, 85%);
+    height:@baseLineHeight;
+}
+h2 {
     background-position:0 4px;
     background-repeat:no-repeat;
     margin-top:@baseLineHeight;
-    color:mix(@textColor, @railBackgroundColor, 35%);
     &:first-child {
         margin-top:0;
     }
-    //
-    text-shadow:0 1px 0 fade(#fff, 85%);
+    a {
+        color:inherit;
+        &:hover {
+            color:@accentColor;
+            text-shadow:none;
+        }
+    }
+}
+h3 {
+    margin-top:@baseFontSize;
+    &.unlinked {
+        &:before {
+            font-family:'FontAwesome';
+            content:"\f127";
+            position:absolute;
+            left:2px;
+            top:0;
+        }
+    }
 }
 ul {
     margin-top:round(@baseLineHeight / 3);
@@ -104,13 +124,13 @@ ul {
         margin:0;
     }
     li {
+        position:relative;
         padding-left:21px;
         background:url(../img/subpath.png) 0 2px no-repeat;
         a {
             display:block;
             font-size:14px;
             height:@baseLineHeight;
-            .ellipsis();
             &:hover {
                 text-decoration:none;
                 .caption {
@@ -118,15 +138,32 @@ ul {
                     //border-bottom:1px dotted @white;
                 }
             }
-            &.newpage {
-                opacity:.2;
-                font-style:italic;
+        }
+        /*
+        &.newpage {
+            background:transparent;
+            a {
+                .caption {
+                    //opacity:.2;
+                    font-style:italic;
+                }
+                &:before {
+                    font-family:'FontAwesome';
+                    content:"\f067";
+                    font-style:normal;
+                    position:absolute;
+                    left:3px;
+                    top:1;
+                    opacity:.2;
+                }
                 &:hover {
-                    opacity:1;
-                    text-decoration:underline;
+                    .caption {
+                        opacity:1;
+                    }
                 }
             }
         }
+        */
         a.active {
             //text-decoration:none;
         }

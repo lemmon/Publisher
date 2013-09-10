@@ -43,7 +43,7 @@ class Locales
     private static function _getActive()
     {
         $res = [];
-        foreach (Pages::find(['parent_id' => null, 'top' => 1])->all() as $page) {
+        foreach (Pages::find(['site_id' => defined('SITE_ID') ? SITE_ID : null, '(parent_id IS NULL OR parent_id = -1)', 'top' => 1])->all() as $page) {
             $res[$page->locale_id] = [
                 'url' => (string)$page->getUrl(),
             ];
@@ -113,6 +113,22 @@ class Locales
         else
         {
             return self::$_cache['preferred'];
+        }
+    }
+
+
+    static function fetchInactiveWithPreferred()
+    {
+        if (!array_key_exists('preferred-inactive', self::$_cache))
+        {
+            $preferred = self::fetchAllWithPreferred();
+            unset($preferred['active']);
+            /* */
+            return self::$_cache['preferred-inactive'] = $preferred;
+        }
+        else
+        {
+            return self::$_cache['preferred-inactive'];
         }
     }
 }

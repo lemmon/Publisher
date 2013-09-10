@@ -1,30 +1,21 @@
-{% for _page in _pages %}
-
+<ul>
+    {% for _page in _pages %}
     {% if (_page.id != item.id) %}
-    <label
-        class="id-{{ _page.parent_id + 0 }}"
-        rel="{{ _page.id }}"
-        style="margin-left:{{ (level + 1) * 20 }}px"
-            ><input
+    <li>
+        <label><input
                 type="radio"
                 name="parent_id"
                 value="{{ _page.id }}"
                 {% if (_page.id == f.parent_id) %}checked{% endif %}
                 {% if (not _page.allowChildren) %}disabled{% endif %}
                 >
-            {% if (_page.type) %}
-            <span class="tag">{{ _page.type }}</span>
-            {% endif %}
-            {% if (_page.allowChildren) %}
-            {{ _page.name }}
-            {% else %}
-            <span class="strike">{{ _page.name }}</span>
-            {% endif %}
-            {% if (_page.state_id != 1) %}
-            <span class="tag state-{{ _page.state.name|asciize }}">{{ _page.state.name }}</span>
-            {% endif %}
-    </label>
-    {% include '_form_listpages.html' with {'_pages': pages.pages[_page.id], 'level': level + 1} %}
+            {%- if (_page.allowChildren) %} {{ _page.name }}
+            {%- else %} <span class="strike">{{ _page.name }}</span>{% endif -%}
+            {%- if (_page.type) %} <span class="tag">{{ _page.type }}</span>{% endif -%}
+            {%- if (_page.state_id != 1) %} <span class="tag state-{{ _page.state.name|asciize }}">{{ _page.state.name }}</span>{% endif -%}
+        </label>
+        {% include '_form_listpages.html' with {'_pages': pages.pages[_page.id], 'level': level + 1} %}
+    </li>
     {% endif %}
-
-{% endfor %}
+    {% endfor %}
+</ul>

@@ -1,8 +1,7 @@
-{% extends 'update.html' %}
+{% extends 'update.base.html' %}
 
-{% block title %}{{ "New Post"|t }}{% endblock %}
+{% block title "New Post"|t %}
 
 {% block form_buttons_buttons %}
 <button class="primary" type="submit">{{ "Create post"|t }}</button>
-<a class="back" href="{{ link.section(page) }}">{{ "back"|t }}</a>
 {% endblock %}

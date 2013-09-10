@@ -3,5 +3,30 @@
 {% block title "Pages"|t %}
 
 {% block main %}
-Hello World!
+
+    <style>
+    #glyph {
+        width:100px;
+        height:100px;
+        position:absolute;
+        left:50%;
+        top:50%;
+        margin-top:-50px;
+        margin-left:-50px;
+    }
+    #glyph:before {
+        display:block;
+        width:100px;
+        height:100px;
+        line-height:100px;
+        font-size:66.66px;
+        text-align:center;
+        font-family:'FontAwesome';
+        content:'\f0e8';
+        color:#000;
+        opacity:.2;
+    }
+    </style>
+    <div id="glyph"></div>
+
 {% endblock %}
