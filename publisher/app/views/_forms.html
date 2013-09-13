@@ -14,6 +14,10 @@
 <input class="input" type="text" id="f_{{ name|asciize("_") }}" name="{{ name }}" value="{{ value }}" size="{{ size|default(55) }}" maxlength="{{ maxlength|default(size)|default(255) }}">
 {% endmacro %}
 
+{% macro password(name) %}
+<input type="password" id="f_{{ name|asciize("_") }}" name="{{ name }}">
+{% endmacro %}
+
 {% macro text(name, value, args) %}
 <textarea id="f_{{ name|asciize("_") }}" name="{{ name }}" {%- for _key, _val in args %} {{ _key }}="{{ _val }}"{% endfor %}>{{ value }}</textarea>
 {% endmacro %}

@@ -11,16 +11,15 @@
     <nav id="nav">
         <ul>
             {% block nav %}
-            <li class="nav-pages active"><a target="frame" href="{{ link.to('admin/pages/main') }}">{{ "Pages"|t }}</a></li>
-            {#
-            <li class="nav-categories"><a target="frame" href="{{ link.to('admin/categories/main') }}">{{ "Categories"|t }}</a></li>
-            #}
+            <li class="nav-pages"><a target="frame" href="{{ link.to('admin/pages/main') }}">{{ "Pages"|t }}</a></li>
+            {#<li class="nav-categories"><a target="frame" href="{{ link.to('admin/categories/main') }}">{{ "Categories"|t }}</a></li>#}
             <li class="nav-media"><a target="frame" href="{{ link.to('admin/media/main') }}">{{ "Media"|t }}</a></li>
-            {#
             <li class="nav-users"><a target="frame" href="{{ link.to('admin/users/main') }}">{{ "Users"|t }}</a></li>
-            #}
             <li class="nav-settings"><a target="frame" href="{{ link.to('admin/settings/main') }}">{{ "Settings"|t }}</a></li>
             {% endblock %}
+        </ul>
+        <ul class="last">
+            <li class="nav-account"><a target="frame" href="{{ link.to('admin/account/main') }}">{{ "Account"|t }}</a></li>
         </ul>
     </nav>
     
@@ -28,53 +27,8 @@
         <iframe name="frame"></iframe>
     </div>
     
-    <div class="popup">
-        <div class="overlay"></div>
-        <div class="window"><iframe></iframe></div>
-    </div>
-    
     <script src="{{ link.jQuery }}"></script>
-    <script src="{{ link.vendor('select2/select2.min.js') }}"></script>
-    <script>
-    function refresh(force){
-        try{
-            var $nav = $('#nav'),
-                $frame = $('iframe[name=frame]'),
-                anchor = top.location.href.split('#')[1]
-                section = anchor.split('/in/')[1] || anchor.split('/')[0];
-            // nav onclick
-            $nav.find('a').click(function(){
-                var $this = $(this),
-                    $li = $this.parent(),
-                    section = $this.attr('href').split('/')[2];
-                $li.addClass('active').siblings('.active').removeClass('active');
-                top.location = top.location.href.split('#')[0] + '#' + section;
-            });
-            // nav init
-            if (section){
-                var $li = $nav.find('li').filter('.nav-' + section),
-                    $a = $li.find('a');
-                if ($li.size()){
-                    $li.addClass('active');
-                    $li.siblings('.active').removeClass('active');
-                    $frame.attr('src', $a.attr('href'));
-                }
-            }
-            // force
-            if (force){
-                $frame.get(0).contentWindow.location = '/admin/' + section + '/main';
-            }
-        }catch (e){
-            $('iframe[name=frame]').attr('src', $('#nav').find('a:first').attr('href'));
-        }
-    }
-    $(function(){
-        refresh();
-        $(window).on('hashchange', function(){
-            //console.log(window.location.hash.replace(/^#/, ''));
-        });
-    });
-    </script>
+    <script src="{{ link.publisher('admin/js/wrap.js') }}"></script>
     {% block script %}{% endblock %}
     
 {% endblock %}

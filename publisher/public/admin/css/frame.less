@@ -35,11 +35,11 @@ html, body {
     height:auto;
     background:@railBackgroundColor;
     border-right:1px solid fade(#06c, 6.5%);
+    //border-right:1px solid #d5e7f7;
     margin-left:-1px;
     overflow-y:auto;
     & > .inner {
         padding:@marginHeight @marginWidth;
-        //
     }
     .section {
         position:relative;
@@ -70,6 +70,10 @@ html, body {
             a.more-button {
                 display:inline-block;
             }
+        }
+        & > ul {
+            margin-left:-@marginWidth;
+            margin-right:-@marginWidth;
         }
     }
 }
@@ -125,47 +129,43 @@ ul {
     }
     li {
         position:relative;
-        padding-left:21px;
         background:url(../img/subpath.png) 0 2px no-repeat;
         a {
             display:block;
             font-size:14px;
             height:@baseLineHeight;
+            border:1px solid transparent;
+            border-width:1px 0;
+            .animate(none);
             &:hover {
                 text-decoration:none;
-                .caption {
-                    text-decoration:underline;
-                    //border-bottom:1px dotted @white;
-                }
+                background-color:desaturate(fade(#06c, 6.5%), 100%);
+                border-color:desaturate(fade(#06c, 6.5%), 100%);
             }
         }
-        /*
-        &.newpage {
-            background:transparent;
+        /* */
+        &.active > a {
+            background-color:fade(#06c, 6.5%);
+            border-color:fade(#06c, 6.5%);
+        }
+        /* */
+        &.level-0 {
+            background-position:@marginWidth 2px;
             a {
-                .caption {
-                    //opacity:.2;
-                    font-style:italic;
-                }
-                &:before {
-                    font-family:'FontAwesome';
-                    content:"\f067";
-                    font-style:normal;
-                    position:absolute;
-                    left:3px;
-                    top:1;
-                    opacity:.2;
-                }
-                &:hover {
-                    .caption {
-                        opacity:1;
-                    }
-                }
+                padding-left:@marginWidth + 21px;
             }
         }
-        */
-        a.active {
-            //text-decoration:none;
+        &.level-1 {
+            background-position:@marginWidth + 21px 2px;
+            a {
+                padding-left:@marginWidth + 42px;
+            }
+        }
+        &.level-2 {
+            background-position:@marginWidth + 42px 2px;
+            a {
+                padding-left:@marginWidth + 63px;
+            }
         }
     }
 }

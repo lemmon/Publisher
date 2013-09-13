@@ -20,14 +20,12 @@
             <button class="primary" type="submit">{{ "Submit"|t }}</button>
             {% endblock %}
             {% if (states) %}
-            <span class="" style="margin-left:2em">{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}</span>
+            <span style="margin-left:2em">{{ forms.radio_collection('state_id', f.state_id is defined ? f.state_id : false, states) }}</span>
             {% endif %}
             {% if (block('form_buttons_back_link')) %}{% block form_buttons_back %}<a class="back" style="margin-left:2em" href="{% block form_buttons_back_link none %}">{{ "back"|t }}</a>{% endblock %}{% endif %}
         </p>
         {% endblock %}
     </div>
-    
-    <iframe style="border:1px dashed red" name="form-frame" width="100%" height="200"></iframe>
 
 </form>
 {% endblock %}

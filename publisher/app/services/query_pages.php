@@ -15,6 +15,12 @@ class QueryPages extends AbstractQueryModel
     static function findById($id)
     {
         return (new self(['id' => $id]))[0];
-        #return Page::find($id);
+    }
+
+
+    function byType($type)
+    {
+        $this->model->where(['type' => $type]);
+        return $this;
     }
 }

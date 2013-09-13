@@ -35,12 +35,6 @@ abstract class AbstractPage extends AbstractRow
     function getBlock($name)
     {
         return $this->getBlocks()[$name];
-        /*
-        return (new SqlQuery)->select('pages_blocks')->where([
-            'page_id' => $this->id,
-            'name'    => $name,
-        ])->first()->content;
-        */
     }
 
 
@@ -100,10 +94,23 @@ abstract class AbstractPage extends AbstractRow
 
     function getUrl()
     {
-        if ($this->parent_id == null and $this->top == 1 and $this->locale_id == $this->getRoute()->getSite()->locale_id) {
+        if ($redirect = $this->redirect) {
+            // redirect
+            if ($redirect{0} == '/') {
+                return $this->getRoute()->to($redirect);
+            }
+            elseif (preg_match('#:?//#', $redirect)) {
+                return $this->getRoute()->to($redirect);
+            }
+            else {
+                return $this->getRoute()->to(':page_slug', $this);
+            }
+        }
+        elseif ($this->parent_id == null and $this->top == 1 and $this->locale_id == $this->getRoute()->getSite()->locale_id) {
             // this is root page
             return $this->getRoute()->to(':home');
-        } else {
+        }
+        else {
             // subpage
             return $this->getRoute()->to(':page', $this);
         }

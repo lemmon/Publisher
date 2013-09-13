@@ -139,6 +139,19 @@ label.label {
         padding:@gutterHeight @gutterWidth * 3;
     }
 }
+.modal {
+    form {
+        p {
+            margin:10px 0;
+            &:first-of-type {
+                margin-top:@baseLineHeight;
+            }
+            &:last-of-type {
+                margin-bottom:@baseLineHeight;
+            }
+        }
+    }
+}
 
 .tabs {
     //max-width:none;
@@ -400,20 +413,12 @@ button {
     &:focus, &:hover {
         background:@darkGray;
     }
-    &:disabled {
-        //background:#999;
-        //opacity:.5;
-    }
     &.primary {
         background:@linkColor;
         &:focus, &:hover {
             background:@darkGray;
         }
     }
-    /*
-    &:disabled {
-    }
-    */
 }
 button {
     &.loading {

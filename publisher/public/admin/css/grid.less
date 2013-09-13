@@ -23,8 +23,30 @@ html, body {
                 box-sizing:border-box;
     }
     &.cols2 {
+        @_w: 100% / 2;
         & > * {
-            width:50%;
+            width:@_w;
+        }
+    }
+    &.cols3 {
+        @_w: 100% / 3;
+        & > * {
+            width:@_w;
+            &.span2 {
+                width:@_w * 2;
+            }
+        }
+    }
+    &.cols4 {
+        @_w: 100% / 4;
+        & > * {
+            width:@_w;
+            &.span2 {
+                width:@_w * 2;
+            }
+            &.span3 {
+                width:@_w * 3;
+            }
         }
     }
 }
@@ -63,8 +85,8 @@ html, body {
 .modal {
     width:500px;
     margin:(@gutterWidth * 5) auto;
-    background:fade(@black, 3%);
-    border:1px solid fade(@black, 3%);
+    //background:fade(@black, 3%);
+    //border:1px solid fade(@black, 3%);
     padding:@gutterWidth;
     .borderRadius(5px);
     h2 {

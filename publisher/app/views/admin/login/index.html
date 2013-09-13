@@ -1,32 +1,28 @@
-{% extends 'layout.html' %}
+{% extends '_templates/form.html' %}
 
-{% block title %}{{ "Account Login"|t }}{% endblock %}
+{% block title %}{{ 'Account Login'|t }} / {{ site.name }}{% endblock %}
 
 {% block main %}
-<div id="notices"></div>
-<div class="modal">
-    
-    <h2>{{ block("title") }}</h2>
-    
-    <form method="post" action="{{ link.self.includeQuery }}">
-        
-        <fieldset>
-            <p class="fit">
-                <label class="label" for="f_email">{{ "Email"|t }}<br></label>
-                <input type="text" id="f_email" name="email" value="{{ f.email }}">
-            </p>
-            <p class="fit">
-                <label class="label" for="f_password">{{ "Password"|t }}<br></label>
-                <input type="password" id="f_password" name="password">
-            </p>
-        </fieldset>
-        <div class="" style="margin-top:10px;">
-            <button class="primary" type="submit">{{ "Sign in"|t }}</button>
-        </div>
-        
-    </form>
+<div class="modalish">{{ parent() }}</div>
+{% endblock %}
 
-</div>
+{% block form_fields %}
+    
+    <h2>{{ 'Account Login'|t }}</h2>
+    
+    {{ forms.p('email', flash) }}
+        {{ forms.label('email') }}
+        {{ forms.input('email', f.name) }}
+    </p>
+    {{ forms.p('password', flash) }}
+        {{ forms.label('password') }}
+        {{ forms.password('password') }}
+    </p>
+        
+{% endblock %}
+
+{% block form_buttons_buttons %}
+<button class="primary" type="submit">{{ "Sign in"|t }}</button>
 {% endblock %}
 
 {% block script %}
@@ -34,5 +30,12 @@
 if (window != top.window){
     top.location = location.href;
 }
+$(function(){
+    
+    $('form:first').data('success', 'true').bind('success', function(e, data){
+        location = data.redir;
+    });
+    
+});
 </script>
 {% endblock %}

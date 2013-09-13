@@ -1,0 +1,110 @@
+{% extends 'update.html' %}
+
+{% block title "New Page"|t %}
+
+{% block main %}
+<div class="modalish">{{ parent() }}</div>
+{% endblock %}
+
+{% block form_fields %}
+
+    <h2>{{ block('title') }}</h2>
+
+    {{ forms.p('name', flash, {'class': 'big'}) }}
+        {{ forms.label('name', null, 'required') }}
+        {{ forms.input('name', f.name) }}
+        {#
+        <span class="hint">Some hint goes here</span>
+        #}
+    </p>
+
+    {% if locales %}
+    {{ forms.p('locale_id', flash) }}
+        {{ forms.label('locale_id', null, 'required') }}
+        {{ forms.select_groups('locale_id', f.locale_id, locales) }}
+    </p>
+    {% endif %}
+    
+    {{ forms.p('parent_id', flash) }}
+        {{ forms.label('parent_id', 'Unlinked', 'optional') }}
+        <span class="fieldset"><label>{{ forms.checkbox('parent_id', f.parent_id == -1, -1) }} {{ "This page will not be linked to main site structure"|t }}</label></span>
+    </p>
+
+    <div style="display:none">
+        
+        <div class="cols2">
+
+            {{ forms.p('template', flash) }}
+                {{ forms.label('template', null, 'optional') }}
+                {{ forms.input('template', f.template) }}
+            </p>
+        
+            {{ forms.p('type', flash) }}
+                {{ forms.label('type', null, 'optional') }}
+                {{ forms.input('type', f.type) }}
+            </p>
+
+        </div>
+    
+        <p>
+            {{ forms.label('tags', null, 'optional') }}
+            {{ forms.input('tags', f.tags is iterable ? f.tags|join(', ') : f.tags) }}
+        </p>
+        
+    
+    </div>
+    <div id="moreoptions" class="more"><a href="#">{{ "Display more options"|t }}&hellip;</a></div>
+
+{% endblock %}
+
+{% block form_buttons_buttons %}
+<button class="primary" type="submit">{{ "Create new page"|t }}&hellip;</button>
+{% endblock %}
+
+{% block script %}
+{{ parent() }}
+<script>
+$(function(){
+    
+    //
+    // more options
+    $('#moreoptions').click(function(){
+        $(this).hide().prev().show();
+        return false;
+    })
+
+});
+</script>
+{% if (locales) %}
+<script src="{{ link.vendor('select2/select2.min.js') }}"></script>
+<script>
+$(function(){
+
+    //
+    // locales
+    var languages = {
+        {% for _group in locales %}
+        {% if (loop.index0) %},{% endif -%}
+        {% for _l in _group.data %}
+        {% if (loop.index0) %},{% endif -%}
+        {{ _l.id }}: {code: '{{ _l.country.code|lower }}'}
+        {% endfor %}
+        {% endfor %}
+    };
+    function format(state){
+        if (state.id){
+            return '<i class="flag" style="background:url(' + '{{ link.vendor('flags/@code.png') }}'.replace('@code', languages[state.id].code) + ')"></i>' + state.text;
+        }else if (state.text){
+            return '<strong>' + state.text + '</strong>';
+        }
+    }
+    $('#f_locale_id').select2({
+        width: '100%',
+        formatResult: format,
+        formatSelection: format
+    });
+
+});
+</script>
+{% endif %}
+{% endblock %}

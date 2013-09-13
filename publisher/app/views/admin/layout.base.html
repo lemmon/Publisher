@@ -19,50 +19,10 @@
     <div id="modal-window"><iframe name="modal" src=""></iframe></div>
 
     <script src="{{ link.jQuery }}"></script>
-    <script src="{{ link.vendor('select2/select2.min.js') }}"></script>
+    <script src="{{ link.publisher('admin/js/layout.js') }}"></script>
     <script>
-    //
-    // location
-    var section = location.pathname.substring(7),
-        sectionThis = section.split('/')[0],
-        sectionIn = parent.location.pathname.substring(7).split('/')[0];
-    if (window.name != 'modal' && window != top.window){
-        top.location = top.location.href.split('#')[0] + '#' + section + (sectionIn && sectionThis != sectionIn ? '/in/' + sectionIn : '');
-    }
-    //
-    // others
-    var $modalOverlay,
-        $modalWindow,
-        $modalWindowIframe;
     $(function(){
         
-        var $notices = $('#notices');
-        
-        //
-        // title
-        if (window != top.window){
-            var $titleThis = $('title'),
-                $titleTop = $(top.document).find('title'),
-                titleThis = $titleThis.text(),
-                titleTop = $titleTop.text().split(' | ')[0];
-            $titleTop.text(titleTop + (titleThis ? ' | ' + titleThis : ''));
-        }
-        
-        //
-        // tabs
-        $('.tabs').each(function(){
-            var $list = $(this),
-                $tabs = $list.nextAll('.tab');
-            $list.find('a').each(function(i){
-                var $this = $(this);
-                $this.click(function(){
-                    $this.addClass('active').siblings('.active').removeClass('active');
-                    $tabs.filter(':not(:eq(' + i + '))').hide();
-                    $tabs.filter(':eq(' + i + ')').show();
-                    return false;
-                });
-            }).filter(':first').click();
-        });
         
         //
         // forms submit
@@ -97,9 +57,9 @@
                 var $this = $(this),
                     res = $this.contents().text();
                 // try to parse result
-                try{
+                try {
                     res = $.parseJSON(res);
-                }catch (e){
+                } catch (e) {
                     res = {};
                 }
                 // process result
@@ -111,26 +71,26 @@
                     $.each(res.flash.fields, function(field, messages){
                         var $p = $('[rel=f_' + field + ']');
                         $p.addClass('error');
-                        if (messages){
+                        if (messages) {
                             $p.find('.hint').hide();
                             $p.append('<span class="errormsg">' + messages.join('<br>') + '</span>');
                         }
                     });
                     //alert(res.flash.errors.join('<br>'));
                 }else if (res.redir){
-                    if ($form.data('success') == 'true'){
+                    if ($form.data('success') == 'true') {
                         $form.trigger('success', [res]);
-                    }else{
+                    } else {
                         var redir = res.redir.replace(/^\/\w+\//, '');
                             toSection = redir.match(/[^\/]+/)[0],
-                            to = top.location.pathname + '#' + redir + ((sectionIn && sectionThis != sectionIn ? '/in/' + sectionIn : '') || (toSection != sectionThis ? '/in/' + sectionThis : ''));
-                        top.location = to;
+                            toHash = '#!' + redir + ((sectionIn && sectionThis != sectionIn ? '/in/' + sectionIn : '') || (toSection != sectionThis ? '/in/' + sectionThis : ''));
+                        top.location.hash = to;
                         top.refresh(true);
                         isRedir = true;
                     }
                 }
                 // return buttons to normal states
-                if (!isRedir){
+                if (!isRedir) {
                     $form.find('button:first').removeClass('loading').attr('disabled', false);
                 }
                 //
@@ -138,30 +98,7 @@
             });
         });
         
-        //
-        // modal
-        $modalOverlay = $('#modal-overlay');
-        $modalWindow = $('#modal-window')
-        $modalWindowIframe = $modalWindow.find('iframe');
-        $modalOverlay.click(function(){
-            modalHide();
-        });
-        
     });
-    //
-    // modal
-    function modalShow(url){
-        $modalOverlay.show();
-        $modalWindowIframe.load(function(){
-            $modalWindow.show();
-            $modalWindowIframe.unbind('load');
-        }).attr('src', url);
-    }
-    function modalHide(){
-        $modalOverlay.hide();
-        $modalWindow.hide();
-        $modalWindowIframe.attr('src', 'about:blank');
-    }
     </script>
     {% block script %}{% endblock %}
     

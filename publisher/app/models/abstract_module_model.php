@@ -14,12 +14,18 @@ abstract class AbstractModuleModel extends \Lemmon\Model\AbstractModel
 
     final protected function __init()
     {
+        //
         // site_id
         if (defined('SITE_ID')) {
             $this->where('site_id', SITE_ID);
         }
+        //
+        // item type
+        $this->where('type_id', $this->getSchema()->rowClass);
+        //
         // default order
         $this->order('COALESCE(weight, 0), name');
+        //
         // init module
         $this->__initModule();
     }
@@ -27,5 +33,17 @@ abstract class AbstractModuleModel extends \Lemmon\Model\AbstractModel
 
     protected function __initModule()
     {
+    }
+
+
+    static function fetchActiveByLanguage()
+    {
+        $data = [];
+        // load items
+        foreach (self::find() as $item) {
+            $data[$item->locale_id][$item->id] = $item;
+        }
+        //
+        return $data;
     }
 }

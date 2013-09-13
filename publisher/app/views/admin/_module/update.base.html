@@ -17,13 +17,15 @@
     </div>
     <div class="tab">
   
+        {% block f_content %}
         <div>
             {{ forms.label('content', null, 'recommended') }}
             <article class="edit" data-name="content">
-                {{ f.content|html }}
+                {{ f.get('content')|html }}
             </article>
         </div>
-  
+        {% endblock %}
+        
     </div>
     <div class="tab">
 

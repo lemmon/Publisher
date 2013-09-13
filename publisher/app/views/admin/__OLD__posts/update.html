@@ -1,5 +1,8 @@
 {% extends 'update.base.html' %}
 
+{% block title item.default('name') %}
+
 {% block form_buttons_buttons %}
 <button class="primary" type="submit">{{ "Update post"|t }}</button>
 {% endblock %}
+

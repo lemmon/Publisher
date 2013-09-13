@@ -7,7 +7,10 @@
             {% if (_page.state_id != 1) %}
             <span class="tag state-{{ _page.state.name|asciize }}">{{ _page.state.name }}</span>
             {% endif %}
-            <span class="caption">{{ _page.name }}</span>
+            <span class="caption">
+                {{- _page.name -}}
+                {%- if (_page.caption) %} ({{ _page.caption }}){% endif -%}
+            </span>
         </a>
 
         {% include '_listpages.html' with {'_pages': pages.pages[_page.id], 'level': level + 1} %}

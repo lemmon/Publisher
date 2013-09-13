@@ -31,6 +31,13 @@ nav {
     bottom:0;
     width:@navWidth;
     height:auto;
+    background:#32383d;
+    ul {
+        position:absolute;
+        &.last {
+            bottom:0;
+        }
+    }
     li {
         text-align:center;
         a {
@@ -40,20 +47,16 @@ nav {
             line-height:@navHeight / 7 * 2;
             color:@white;
             text-decoration:none;
-            //color:mix(@accentColor, @backgroundColor, 35%);
             color:mix(@white, @textColor, 15%);
-            //color:mix(@white, @textColor, 85%);
             &:hover {
-                //color:mix(@accentColor, @backgroundColor, 65%);
                 color:mix(@white, @textColor, 65%);
-                //color:@white;
             }
             &:before {
                 font-family:'FontAwesome';
                 font-size:round(@navWidth / 4);
                 text-indent:0;
                 text-align:center;
-                content:"X";
+                content:"";
                 display:block;
                 height:@navHeight / 7 * 3;
                 line-height:@navHeight / 7 * 3;
@@ -62,19 +65,15 @@ nav {
             }
         }
         &.active a {
-            //color:@accentColor;
             color:mix(@white, @textColor, 85%);
-            //color:@white;
         }
         &.nav-pages      a:before { content:"\f0e8"; }
         &.nav-categories a:before { content:"\f0ae"; }
         &.nav-media      a:before { content:"\f03e"; }
         &.nav-users      a:before { content:"\f0c0"; }
         &.nav-settings   a:before { content:"\f085"; }
+        &.nav-account    a:before { content:"\f007"; }
     }
-    //
-    background:#131313;
-    background:#32383d;
 }
 
 

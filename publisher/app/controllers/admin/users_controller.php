@@ -2,12 +2,11 @@
 /**
 * 
 */
-class Admin_Users_Controller extends Application
+class Admin_Users_Controller extends Admin_Backend_Controller
 {
 
 
-	function index()
-	{
-		$this->data['data'] = Users::find()->order('name')->all();
-	}
+    function main()
+    {
+    }
 }

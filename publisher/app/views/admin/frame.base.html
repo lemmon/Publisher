@@ -15,7 +15,7 @@
     </div>
     <div id="main">
         
-        <iframe name="main" _src="{% block main_iframe_src link.to(':admin/section') %}"></iframe>
+        <iframe name="main"></iframe>
         
     </div>
 
@@ -25,13 +25,15 @@
         var $rail = $('#rail');
             $a = $rail.find('a[target=main]'),
             $main = $('iframe[name=main]'),
-            section = (top.location.href.split('#')[1] || '').split('/in/')[0];
+            section = top.location.hash.indexOf('/in/') > -1 ? top.location.hash.replace(/^#/, '').split('/in/')[0] : null;
         //
         // onclick
         $a.click(function(){
             var $this = $(this);
-            $a.filter('.active').removeClass('active');
-            $this.addClass('active');
+            $('.active').removeClass('active');
+            $this.parent().addClass('active');
+            $main.attr('src', $this.attr('href'));
+            return false;
         });
         //
         // init
@@ -40,25 +42,6 @@
         }else{
             $main.attr('src', '{{ link.to(':admin/section') }}');
         }
-
-
-        // onchange
-        /*
-        $main.load(function(){
-            var section = this.contentWindow.location.pathname.substring(7),
-                a = section.split('/')[0],
-                b = location.pathname.substring(7).split('/')[0];
-            top.location = top.location.href.split('#')[0] + '#' + section + (a == b ? '' : '/in/' + b);
-        });
-        // init
-        if (section && section.indexOf('/') > 0){
-            $main.attr('src', '/admin/' + section);
-            $a.filter('.active').removeClass('active');
-            $a.filter('[href="/admin/' + section + '"]').addClass('active');
-        }else{
-            $main.attr('src', '{{ link.to(':admin/section') }}');
-        }
-        */
     });
     </script>
     {% block script %}{% endblock %}

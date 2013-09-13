@@ -1,7 +1,6 @@
 <?php
 
-use \Lemmon\Sql\Query as SqlQuery,
-    \Lemmon\Sql\Expression as SqlExpression;
+use \Lemmon\Sql\Query as SqlQuery;
 
 /**
 * Backend.
@@ -9,7 +8,6 @@ use \Lemmon\Sql\Query as SqlQuery,
 class Page extends AbstractPage
 {
     private $_temp = [];
-    static $_admin = true;
 
 
     function allowChildren()

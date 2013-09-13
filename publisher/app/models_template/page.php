@@ -8,6 +8,12 @@ class Page extends AbstractPage
     private $_selected;
 
 
+    function getCaption()
+    {
+        return $this->getData()['caption'] ?: $this->getData()['name'];
+    }
+
+
     function getChildren()
     {
         if ($this->id) {

@@ -73,7 +73,7 @@ class Route extends \Lemmon\Route
         if ($this->_extended->match($this)) {
             // user extended
         }
-        elseif ($this->match('p/$id(/$paginate)(/$action)', ['id' => '\d+', 'paginate' => '\d+', 'action' => '[\w\-]+']) and $page = Page::find(['id' => $this->id])) {
+        elseif ($this->match('p/($id|$slug)(/$paginate)(/$action)', ['id' => '\d+', 'slug' => '[\w\-]+', 'paginate' => '\d+', 'action' => '[\w\-]+']) and $page = Page::find($this->id ? ['id' => $this->id] : ['redirect' => $this->slug])) {
             // load page
             $this->_page = $page;
             // subpages
@@ -167,6 +167,8 @@ class Route extends \Lemmon\Route
         $this->register('home', '/');
         $this->register('page', 'p/$id');
         $this->register('page_id', 'p/%1');
+        $this->register('page_slug', 'p/$redirect');
+        $this->register('page_redirect', '$redirect');
         $this->register('post', 'a/$id');
         $this->register('category', 'c/$id');
         $this->register('paginate', '@/@/%1');
