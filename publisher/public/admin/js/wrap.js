@@ -25,6 +25,12 @@ $(function(){
 
     // init location
     refresh();
+    
+    
+    // window.hash
+    $(window).on('hashchange', function(){
+        refresh();
+    });
 
 
 });
@@ -69,7 +75,8 @@ function refresh(force) {
     }
     // force
     if (force){
-        setFrameLocation('/admin/' + section + '/main');
+        $frame.get(0).contentWindow.location.replace('/admin/' + section + '/main');
+        //setFrameLocation('/admin/' + section + '/main');
     }
 }
 

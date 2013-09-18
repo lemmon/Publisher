@@ -94,14 +94,9 @@ h2, h3 {
     color:mix(@textColor, @railBackgroundColor, 35%);
     text-shadow:0 1px 0 fade(#fff, 85%);
     height:@baseLineHeight;
+    .ellipsis();
 }
-h2 {
-    background-position:0 4px;
-    background-repeat:no-repeat;
-    margin-top:@baseLineHeight;
-    &:first-child {
-        margin-top:0;
-    }
+h2, h3 {
     a {
         color:inherit;
         &:hover {
@@ -110,20 +105,36 @@ h2 {
         }
     }
 }
+h2 {
+    background-position:0 4px;
+    background-repeat:no-repeat;
+    margin-top:@baseLineHeight;
+    &:first-child {
+        margin-top:0;
+    }
+}
 h3 {
     margin-top:@baseFontSize;
+    &:before {
+        position:absolute;
+        left:2px;
+        top:0;
+    }
     &.unlinked {
         &:before {
-            font-family:'FontAwesome';
-            content:"\f127";
-            position:absolute;
-            left:2px;
-            top:0;
+            .icon("\f127");
+        }
+    }
+    &.menu {
+        &:before {
+            .icon("\f0c1");
         }
     }
 }
-ul {
+p, ul {
     margin-top:round(@baseLineHeight / 3);
+}
+ul {
     ul {
         margin:0;
     }

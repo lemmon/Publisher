@@ -9,6 +9,54 @@ class Pages extends AbstractPages
 {
 
 
+
+
+    static function fetchTreeInLocale($locale_id)
+    {
+        $pages = [];
+        // load pages
+        foreach (Pages::find(['locale_id' => $locale_id]) as $page) {
+            // unlinked pages
+            if ($page->parent_id == -1)
+                $pages['unlinked'][$page->id] = $page;
+            // root pages
+            elseif (!$page->parent_id)
+                $pages['root'][$page->id] = $page;
+            // children pages
+            else
+                $pages['pages'][$page->parent_id][$page->id] = $page;
+        }
+        //
+        return $pages;
+    }
+
+
+    static function fetchLinearInLocale($locale_id)
+    {
+        function doit($query) {
+            $pages = [];
+            foreach ($query as $page) {
+                /* */
+                $pages[] = [
+                    'id'       => $page->id,
+                    'name'     => $page->name,
+                    'level'    => $page->level,
+                    'state_id' => $page->state_id,
+                ];
+                /* *
+                $page[] = $page;
+                /* */
+                $pages = array_merge($pages, doit($page->getChildren()));
+            }
+            return $pages;
+        }
+        return [
+            'root' => doit(Pages::find(['locale_id' => $locale_id, 'parent_id' => null])),
+            'unlinked' => doit(Pages::find(['locale_id' => $locale_id, 'parent_id' => -1])),
+        ];
+    }
+
+
     static function rebuildTree()
     {
         // load items

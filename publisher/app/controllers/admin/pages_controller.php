@@ -18,7 +18,7 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
     {
         if (Pages::find()->count()) {
             // has pages
-            $this->data['pages']   = Pages::fetchActiveByLanguage();
+            $this->data['pages']   = Pages::fetchAllByLanguage();
             $this->data['locales'] = Locales::fetchActive($this->site->locale_id);
         } else {
             // need to create first page
@@ -95,6 +95,25 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
         } else {
             // page not found
             die('Page not found.');
+        }
+    }
+
+
+    function menu()
+    {
+        if ($locale_id = $this->route->hash and $menu_id = $this->route->getParam(5) and $menu = Template::getConfig('menus')[$menu_id]) {
+            
+            // ok
+            $this->data += [
+                'menu'   => $menu + ['id' => $menu_id],
+                'pages'  => Pages::fetchLinearInLocale($locale_id),
+            ];
+            
+        } else {
+            
+            // 404
+            die('404');
+            
         }
     }
 

@@ -3,7 +3,7 @@
     {% for _page in _pages %}
     <li class="state-{{ _page.state.name|asciize }} level-{{ level + 0 }}">
 
-        <a class="name" target="main" href="{{ link.section(_page) }}">
+        <a class="name" href="{{ link.section(_page) }}">
             {% if (_page.state_id != 1) %}
             <span class="tag state-{{ _page.state.name|asciize }}">{{ _page.state.name }}</span>
             {% endif %}

@@ -8,6 +8,10 @@ class Application extends \Lemmon\Framework
     protected $site;
     protected $page;
     protected $i18n;
+    protected $cache;
+
+
+    protected function __initSection() {}
 
 
     final protected function __initApplication()
@@ -33,11 +37,6 @@ class Application extends \Lemmon\Framework
         //
         // section
         return $this->__initSection();
-    }
-
-
-    protected function __initSection()
-    {
     }
 
 

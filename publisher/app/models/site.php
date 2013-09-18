@@ -9,7 +9,7 @@ class Site extends \Lemmon\Model\AbstractRow
 {
     static protected $model = 'Sites';
 
-    static private $_current;
+    private static $_current;
 
     private $_cache = [];
 

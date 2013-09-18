@@ -28,6 +28,11 @@ abstract class AbstractFrontend_Controller extends Application
         //
         // init
         $this->__initModule();
+        //
+        // render page
+        if ($page) {
+            return $this->cache->put($this->template->render($this->data));
+        }
     }
 
 

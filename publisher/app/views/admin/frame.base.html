@@ -20,28 +20,11 @@
     </div>
 
     <script src="{{ link.jQuery }}"></script>
+    <script src="{{ link.publisher('admin/js/frame.js') }}"></script>
     <script>
     $(function(){
-        var $rail = $('#rail');
-            $a = $rail.find('a[target=main]'),
-            $main = $('iframe[name=main]'),
-            section = top.location.hash.indexOf('/in/') > -1 ? top.location.hash.replace(/^#/, '').split('/in/')[0] : null;
-        //
-        // onclick
-        $a.click(function(){
-            var $this = $(this);
-            $('.active').removeClass('active');
-            $this.parent().addClass('active');
-            $main.attr('src', $this.attr('href'));
-            return false;
-        });
-        //
-        // init
-        if (section){
-            $main.attr('src', '/admin/' + section);
-        }else{
-            $main.attr('src', '{{ link.to(':admin/section') }}');
-        }
+        var section = (top.location.hash.indexOf('/in/') > -1) ? top.location.hash.replace(/^#/, '').split('/in/')[0] : null;
+        $main.attr('src', '/admin/' + (top.location.hash.replace(/^#/, '').replace(/\/in\/.*/, '') || '{{ link.param(2) }}'));
     });
     </script>
     {% block script %}{% endblock %}

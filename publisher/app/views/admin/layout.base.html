@@ -15,6 +15,10 @@
     
     </div>
     
+    {#
+    <iframe name="form-frame"></iframe>
+    #}
+    
     <div id="modal-overlay"></div>
     <div id="modal-window"><iframe name="modal" src=""></iframe></div>
 
@@ -27,8 +31,8 @@
         //
         // forms submit
         $('form').each(function(){
-            var $form = $(this),
-                isRedir = false;
+            var $form = $(this);
+            //
             // form submit
             $form.submit(function(){
                 // parse editareas
@@ -52,20 +56,21 @@
                 // button loading state
                 $form.find('button:first').attr('disabled', true).addClass('loading');
             });
+            //
             // form result
-            $form.find('iframe[name=form-frame]').load(function(){
+            $('<iframe name="form-frame"></iframe>').appendTo('body').load(function(){
                 var $this = $(this),
                     res = $this.contents().text();
                 // try to parse result
                 try {
-                    res = $.parseJSON(res);
+                    res = $.parseJSON(res) || {};
                 } catch (e) {
                     res = {};
                 }
                 // process result
                 $form.find('.error').removeClass('error').find('.hint').show();
                 $form.find('.errormsg').remove();
-                if (res.flash && res.flash.errors){
+                if (res.flash && res.flash.errors) {
                     // on error
                     $notices.html('<div class="flash error">' + res.flash.errors.join('<br>') + '</div>');
                     $.each(res.flash.fields, function(field, messages){
@@ -76,25 +81,21 @@
                             $p.append('<span class="errormsg">' + messages.join('<br>') + '</span>');
                         }
                     });
-                    //alert(res.flash.errors.join('<br>'));
-                }else if (res.redir){
+                } else if (res.redir) {
                     if ($form.data('success') == 'true') {
                         $form.trigger('success', [res]);
                     } else {
                         var redir = res.redir.replace(/^\/\w+\//, '');
                             toSection = redir.match(/[^\/]+/)[0],
-                            toHash = '#!' + redir + ((sectionIn && sectionThis != sectionIn ? '/in/' + sectionIn : '') || (toSection != sectionThis ? '/in/' + sectionThis : ''));
-                        top.location.hash = to;
+                            toHash = '#' + redir + ((sectionIn && sectionThis != sectionIn ? '/in/' + sectionIn : '') || (toSection != sectionThis ? '/in/' + sectionThis : ''));
+                        top.location.hash = toHash;
                         top.refresh(true);
-                        isRedir = true;
+                        return;
                     }
                 }
-                // return buttons to normal states
-                if (!isRedir) {
-                    $form.find('button:first').removeClass('loading').attr('disabled', false);
-                }
                 //
-                return false;
+                // return buttons to normal states
+                $form.find('button:first').removeClass('loading').attr('disabled', false);
             });
         });
         

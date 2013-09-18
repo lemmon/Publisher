@@ -1,0 +1,35 @@
+{% extends '_templates/form.html' %}
+
+{% block form_fields %}
+
+    <select>
+        <option>Foo</option>
+        {% if (pages.root) %}
+        <option disabled>{{ "root"|t }}</option>
+        {% for _page in pages.root %}
+        <option value="{{ _page.id }}" style="padding-left:{{ _page.level * 15 + 21  }}px">{{ _page.name }}</option>
+        {% endfor %}
+        {% endif %}
+        {% if (pages.unlinked) %}
+        <option disabled>{{ "unlinked"|t }}</option>
+        {% for _page in pages.unlinked %}
+        <option value="{{ _page.id }}" style="padding-left:{{ _page.level * 15 + 21  }}px">{{ _page.name }}</option>
+        {% endfor %}
+        {% endif %}
+    </select>
+
+{% endblock %}
+
+{% block form_buttons_buttons %}
+<button class="primary" type="submit">{{ "Save menu"|t }}</button>
+{% endblock %}
+
+{% block script %}
+<script>
+$(function(){
+    
+    //
+    
+});
+</script>
+{% endblock %}

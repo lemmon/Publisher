@@ -1,4 +1,7 @@
 <?php
+
+use \Lemmon\Sql\Query as SqlQuery;
+
 /**
 * 
 */
@@ -26,7 +29,7 @@ abstract class AbstractPages extends \Lemmon\Model\AbstractModel
     }
 
 
-    static function fetchActiveByLanguage()
+    static function fetchAllByLanguage()
     {
         $pages = [];
         // load pages
@@ -42,26 +45,10 @@ abstract class AbstractPages extends \Lemmon\Model\AbstractModel
             else
                 $pages['pages'][$page->parent_id][$page->id] = $page;
         }
-        //
-        return $pages;
-    }
-
-
-    static function fetchTreeInLocale($locale_id)
-    {
-        $pages = [];
-        // load pages
-        foreach (Pages::find(['locale_id' => $locale_id]) as $page)
-        {
-            // unlinked pages
-            if ($page->parent_id == -1)
-                $pages['unlinked'][$page->id] = $page;
-            // root pages
-            elseif (!$page->parent_id)
-                $pages['root'][$page->id] = $page;
-            // children pages
-            else
-                $pages['pages'][$page->parent_id][$page->id] = $page;
+        // menus
+        $pages['menus'] = Template::getConfig('menus');
+        foreach ((new SqlQuery)->select('pages_to_menus')->where(['site_id' => defined('SITE_ID') ? SITE_ID : null])->order('top') as $item) {
+            $pages['menus']['pages'][$item->locale_id][] = $item->page_id;
         }
         //
         return $pages;

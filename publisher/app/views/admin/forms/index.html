@@ -1,0 +1,33 @@
+{% extends '_templates/module.index.html' %}
+
+{% block title page.name %}
+
+{% block form_action %}
+<a href="{{ link.to('@/@/structure/$id', page) }}">{% block form_action_name %}{{ "Update Form Structure"|t }}{% endblock %}</a>
+{% endblock %}
+
+{% block main_content_empty_caption "module/forms/inbox-empty"|t %}
+
+{% block main_content_post %}
+<div class="inner">
+
+    <div class="name">
+        <a href="{{ link.to(':admin/forms/response', item) }}">{{ item.response.name }}</a><span></span>
+    </div>
+    <div class="content">
+        <div class="row cols2">
+            <dl class="">
+                <dt>{{ "Name"|t }}</dt>
+                <dd>{{ item.response.name|default('-') }}</dd>
+                <dt>{{ "Email"|t }}</dt>
+                <dd>{{ item.response.email|default('-') }}</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="aside">
+        {{- "Created on"|t }}
+        <span>{{ item.created_at|tDateTime }}</span>
+    </div>
+
+</div>
+{% endblock %}

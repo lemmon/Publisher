@@ -7,7 +7,7 @@ use \Lemmon\Sql\Query as SqlQuery;
 */
 class Values
 {
-    static private $_cache = [];
+    private static $_cache = [];
 
 
     static function get($key)

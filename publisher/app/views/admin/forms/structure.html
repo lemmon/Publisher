@@ -1,0 +1,52 @@
+{% extends '_templates/form.html' %}
+
+{% block title "Contact Details"|t %}
+
+{% block form_lead %}
+<h2>{{ block('title') }}</h2>
+{% endblock %}
+
+{% block form_main %}
+
+    <style>
+    html, body {
+        overflow:hidden;
+    }
+    #editor {
+        position:absolute;
+        left:0;
+        right:0;
+        top:0;
+        bottom:94px;
+        height:auto;
+    }
+    form h2 {
+        display:none;
+    }
+    .buttons {
+        z-index:999;
+    }
+    </style>
+    <textarea name="structure"></textarea>
+    <pre id="editor">{{ f.structure }}</pre>
+
+{% endblock %}
+
+{% block form_buttons_buttons %}
+<button class="primary" type="submit">{{ "Update form"|t }}</button>
+<a class="back" href="{{ link.section(page) }}">{{ "back"|t }}</a>
+{% endblock %}
+
+{% block script %}
+<script src="{{ link.vendor('ace/ace.js') }}"></script>
+<script>
+var editor = ace.edit('editor');
+editor.setTheme('ace/theme/solarized_light');
+editor.getSession().setMode('ace/mode/yaml');
+$(function(){
+    $('form:has(textarea[name=structure])').submit(function(){
+        $('textarea[name=structure]').val(editor.getSession().getValue());
+    });
+});
+</script>
+{% endblock %}

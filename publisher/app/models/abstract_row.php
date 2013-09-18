@@ -4,7 +4,7 @@
 */
 class AbstractRow extends \Lemmon\Model\AbstractRow
 {
-    static private $_route;
+    private static $_route;
 
 
     static function setRoute($route)

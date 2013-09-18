@@ -12,6 +12,9 @@ abstract class AbstractModuleModel extends \Lemmon\Model\AbstractModel
     static $allowChildren = true;
 
 
+    protected function __initModule() {}
+
+
     final protected function __init()
     {
         //
@@ -31,11 +34,7 @@ abstract class AbstractModuleModel extends \Lemmon\Model\AbstractModel
     }
 
 
-    protected function __initModule()
-    {
-    }
-
-
+    /*
     static function fetchActiveByLanguage()
     {
         $data = [];
@@ -46,4 +45,5 @@ abstract class AbstractModuleModel extends \Lemmon\Model\AbstractModel
         //
         return $data;
     }
+    */
 }

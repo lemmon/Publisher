@@ -8,11 +8,18 @@ class Admin_Login_Controller extends Admin_Backend_Controller
 
     function index()
     {
+        // redir if user is already logged
+        if ($this->auth->hasIdentity()) {
+            return $this->route->to(':admin/home');;
+        }
+        
+        /* *
         // clear current identity if necessary
         if ($this->auth->hasIdentity()) {
             $this->auth->clearIdentity();
             return $this->route->getSelf();
         }
+        /* */
         
         // do login
         return $this->_res(function(){
