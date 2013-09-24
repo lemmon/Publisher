@@ -1,0 +1,8 @@
+<input {{- '' }} type="{% block field_type %}text{% endblock %}"
+       {{- '' }} id="f_{{ field.name|asciize('_') }}"
+       {{- '' }} name="{{ field.name }}"
+       {{- '' }} value="{{ field.value }}"
+       {{- '' }} size="{{ field.size|default(55) }}"
+       {{- '' }} maxlength="{{ field.maxlength|default(field.size)|default(255) }}"
+       {%- if (field.placeholder) %} placeholder="{{ field.placeholder }}"{% endif -%}
+       >

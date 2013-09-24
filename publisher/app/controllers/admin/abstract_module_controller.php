@@ -70,8 +70,8 @@ abstract class Admin_AbstractModule_Controller extends Admin_Backend_Controller
             'force' => [
                 'page_id'   => $page->id,
                 'locale_id' => $page->locale_id,
-            ] + $this->getConfig(),
-        ]));
+            ],
+        ] + $this->getConfig()));
     }
 
 
@@ -85,7 +85,7 @@ abstract class Admin_AbstractModule_Controller extends Admin_Backend_Controller
                 'redir' => function($item){
                     return (string)$this->route->getSection($item->getPage());
                 },
-            ]));
+            ] + $this->getConfig()));
         } else {
             // Item not found
             die('404: Entry not found');

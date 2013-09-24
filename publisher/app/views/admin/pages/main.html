@@ -20,14 +20,18 @@
         {% include '_listpages.html' with {'_pages': pages.unlinked[_locale.id]} %}
         {% endif %}
         
-        {% for _id, _menu in pages.menus %}
-        <h3 class="menu">
-            {%- spaceless -%}
-            <a href="{{ link.to(':admin/action', 'menu', _locale.id, _id) }}">{{ _menu.caption|default(_id|human) }}</a>
-            {%- endspaceless -%}
-        </h3>
-        {{ link.to(':admin/action', 'menu', _locale.id, _id) }}
-        {% endfor %}
+        {% if (pages.menus) %}
+        <h3 class="menus">{{ "Menus"|t }}</h3>
+        <ul>
+            {% for _id, _menu in pages.menus %}
+            <li class="menu">
+                {%- spaceless -%}
+                <a href="{{ link.to(':admin/action', 'menu', _locale.id, _id) }}">{{ _menu.caption|default(_id|human) }}</a>
+                {%- endspaceless -%}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         
     </div>
     {% endif %}

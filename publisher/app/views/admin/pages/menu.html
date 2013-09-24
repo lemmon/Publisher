@@ -1,22 +1,37 @@
 {% extends '_templates/form.html' %}
 
+{% block title menu.caption|default(menu.id|human) %}
+
 {% block form_fields %}
 
-    <select>
-        <option>Foo</option>
-        {% if (pages.root) %}
-        <option disabled>{{ "root"|t }}</option>
-        {% for _page in pages.root %}
-        <option value="{{ _page.id }}" style="padding-left:{{ _page.level * 15 + 21  }}px">{{ _page.name }}</option>
+    <h2>{{ block('title') }}</h2>
+    
+    <ul id="f_menu">
+
+        {% for _page in menu.pages %}
+        <li><input type="checkbox" name="pages[]" value="{{ _page.id }}" checked> {{ _page.name }}</li>
         {% endfor %}
-        {% endif %}
-        {% if (pages.unlinked) %}
-        <option disabled>{{ "unlinked"|t }}</option>
-        {% for _page in pages.unlinked %}
-        <option value="{{ _page.id }}" style="padding-left:{{ _page.level * 15 + 21  }}px">{{ _page.name }}</option>
-        {% endfor %}
-        {% endif %}
-    </select>
+        
+    </ul>
+
+    <p>
+        {{ forms.label('page_id', "Add Page") }}
+        <select id="f_page_id" name="page_id">
+            <option></option>
+            {% if (pages.root) %}
+            <option disabled>{{ "root"|t }}</option>
+            {% for _page in pages.root %}
+                <option value="{{ _page.id }}" style="padding-left:{{ _page.level * 15 + 21  }}px{% if menu.pages[_page.id] %};text-decoration:line-through{% endif %}">{{ _page.name }}</option>
+            {% endfor %}
+            {% endif %}
+            {% if (pages.unlinked) %}
+            <option disabled>{{ "unlinked"|t }}</option>
+            {% for _page in pages.unlinked %}
+            <option value="{{ _page.id }}" style="padding-left:{{ _page.level * 15 + 21  }}px{% if menu.pages[_page.id] %};text-decoration:line-through{% endif %}">{{ _page.name }}</option>
+            {% endfor %}
+            {% endif %}
+        </select>
+    </p>
 
 {% endblock %}
 
@@ -28,7 +43,18 @@
 <script>
 $(function(){
     
-    //
+    var $select = $('#f_page_id'),
+        $menu = $('#f_menu'),
+        tpl = '<li><input type="checkbox" name="pages[]" value="%id" checked> %name</li>';
+    
+    $select.change(function(){
+        
+        var $item = $select.find('option[value=' + $select.val() + ']');
+        $item.css('text-decoration', 'line-through');
+        $(tpl.replace(/%id/, $item.attr('value')).replace(/%name/, $item.text())).appendTo($menu);
+        $select.val('');
+        
+    });
     
 });
 </script>

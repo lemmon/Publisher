@@ -88,13 +88,6 @@ label.label {
     padding-top:@gutterHeight / 2;
     padding-bottom:@gutterHeight * 2 + 34px;
     & > * {
-        /*
-        max-width:900px;
-        margin:0 auto;
-        &.big {
-            max-width:none;
-        }
-        */
         padding:0 @gutterWidth;
     }
 }
@@ -150,6 +143,15 @@ label.label {
                 margin-bottom:@baseLineHeight;
             }
         }
+    }
+}
+.login {
+    max-width:480px;
+    p {
+        margin-bottom:@baseFontSize;
+    }
+    .fields {
+        padding-bottom:@gutterHeight * 1.5 + 34px;
     }
 }
 

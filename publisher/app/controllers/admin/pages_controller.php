@@ -1,6 +1,7 @@
 <?php
 
-use \Lemmon\Form\Scaffold;
+use \Lemmon\Form\Scaffold,
+    \Lemmon\Sql\Query as SqlQuery;
 
 /**
 * 
@@ -101,11 +102,42 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
 
     function menu()
     {
-        if ($locale_id = $this->route->hash and $menu_id = $this->route->getParam(5) and $menu = Template::getConfig('menus')[$menu_id]) {
+        if ($locale_id = $this->route->hash and $menu_id = $this->route->getParam(5) and $menus = Template::getConfig('menus') and array_key_exists($menu_id, $menus)) {
             
-            // ok
+            $menu = (array)$menus[$menu_id];
+            // on POST
+            if ($f = $_POST) {
+                return $this->_res(function() use ($f, $menu_id, $locale_id){
+                    // save menu
+                    foreach ((array)$f['pages'] as $i => $page_id) {
+                        (new SqlQuery)->replace('pages_to_menus')->set([
+                            'site_id'   => SITE_ID,
+                            'locale_id' => $locale_id,
+                            'menu_id'   => $menu_id,
+                            'page_id'   => $page_id,
+                            'top'       => $i + 1,
+                        ])->exec();
+                    }
+                    // remove old instances
+                    (new SqlQuery)->delete('pages_to_menus')->where([
+                        'site_id'   => SITE_ID,
+                        'locale_id' => $locale_id,
+                        'menu_id'   => $menu_id,
+                        '!page_id'  => $f['pages'],
+                    ])->exec();
+                    // redir
+                    $this->flash->setNotice('Menu updated successfully');
+                    return $this->route->getSelf();
+                });
+            }
+            // fetch menu
+            $pages = [];
+            foreach ((new SqlQuery)->select('pages_to_menus')->where(['site_id' => SITE_ID, 'locale_id' => $locale_id, 'menu_id' => $menu_id])->order('top')->distinct('page_id') as $page_id) {
+                $pages[$page_id] = Page::find($page_id);
+            }
+            // default data
             $this->data += [
-                'menu'   => $menu + ['id' => $menu_id],
+                'menu'   => $menu + ['id' => $menu_id, 'pages' => $pages],
                 'pages'  => Pages::fetchLinearInLocale($locale_id),
             ];
             

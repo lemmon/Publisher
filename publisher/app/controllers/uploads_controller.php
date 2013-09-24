@@ -19,7 +19,8 @@ class Uploads_Controller extends Application
         //
         // paths
         $image_source = Lemmon\Model\Schema::getDefaultUploadDir() . '/' . $this->route->image;
-        $image_cached = BASE_DIR . '/cache' . $this->route->getSelf();
+        #$image_cached = BASE_DIR . '/cache' . $this->route->getSelf();
+        $image_cached = BASE_DIR . $_SERVER['REDIRECT_URL'];
         //
         // source exists
         if (is_file($image_source)) {
@@ -46,8 +47,7 @@ class Uploads_Controller extends Application
             }
             elseif ($flags{0} == 'c') {
                 // crop
-                switch ($flags{1})
-                {
+                switch ($flags{1}) {
                     case '1': $crop_style = ZEBRA_IMAGE_CROP_TOPLEFT; break;
                     case '2': $crop_style = ZEBRA_IMAGE_CROP_TOPCENTER; break;
                     case '3': $crop_style = ZEBRA_IMAGE_CROP_TOPRIGHT; break;

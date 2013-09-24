@@ -1,0 +1,5 @@
+<textarea {{- '' }} id="f_{{ field.name|asciize('_') }}"
+          {{- '' }} name="{{ field.name }}"
+          {%- if (field.placeholder) %} placeholder="{{ field.placeholder }}"{% endif -%}
+          {%- if (field.rows) %} rows="{{ field.rows }}"{% endif -%}
+          >{{ field.value }}</textarea>

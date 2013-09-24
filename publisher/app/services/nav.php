@@ -1,4 +1,7 @@
 <?php
+
+use \Lemmon\Sql\Query as SqlQuery;
+
 /**
 * 
 */
@@ -93,5 +96,15 @@ class Nav
     function getLocales()
     {
         return Locales::fetchActive($this->_site->locale_id);
+    }
+
+
+    function getMenu($menu_id)
+    {
+        $pages = [];
+        foreach ((new SqlQuery)->select('pages_to_menus')->where(['site_id' => SITE_ID, 'locale_id' => self::getCurrentLocale()['id'], 'menu_id' => $menu_id])->order('top')->distinct('page_id') as $page_id) {
+            $pages[$page_id] = Page::find($page_id);
+        }
+        return $pages;
     }
 }

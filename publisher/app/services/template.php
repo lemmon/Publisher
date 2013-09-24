@@ -2,7 +2,7 @@
 /**
 * 
 */
-class Template
+class Template extends \Lemmon\Template\Template
 {
     private static $_cache = [];
 

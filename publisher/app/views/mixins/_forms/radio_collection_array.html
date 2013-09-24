@@ -1,0 +1,5 @@
+<span class="field">
+    {% for _value, _caption in collection %}
+    {% include '_forms/radio.html' with {item: {value: _value, caption: _caption}} %}
+    {% endfor %}
+</span>

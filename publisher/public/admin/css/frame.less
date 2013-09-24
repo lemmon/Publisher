@@ -118,16 +118,18 @@ h3 {
     &:before {
         position:absolute;
         left:2px;
-        top:0;
+        top:1px;
+        font-size:@baseFontSize - 1px;
     }
     &.unlinked {
         &:before {
             .icon("\f127");
         }
     }
-    &.menu {
+    &.menus {
         &:before {
             .icon("\f0c1");
+            .icon("\f07c");
         }
     }
 }
@@ -160,7 +162,7 @@ ul {
             border-color:fade(#06c, 6.5%);
         }
         /* */
-        &.level-0 {
+        & {
             background-position:@marginWidth 2px;
             a {
                 padding-left:@marginWidth + 21px;
@@ -176,6 +178,18 @@ ul {
             background-position:@marginWidth + 42px 2px;
             a {
                 padding-left:@marginWidth + 63px;
+            }
+        }
+        &.menu {
+            background-image:none;
+            &:before {
+                position:absolute;
+                left:@marginWidth + 2px;
+                top:1px;
+                color:mix(@textColor, @railBackgroundColor, 35%);
+                text-shadow:0 1px 0 fade(#fff, 85%);
+                font-size:@baseFontSize - 1px;
+                .icon("\f0c1");
             }
         }
     }

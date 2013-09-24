@@ -127,6 +127,7 @@ class Route extends \Lemmon\Route
             define('USER_DIR', BASE_DIR . '/user/' . $site->getLink());
         } else {
             // site not found
+            define('SITE_ID', null);
             die('Route/ Site not found');
         }
         //

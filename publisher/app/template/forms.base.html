@@ -1,0 +1,11 @@
+{% extends 'default.html' %}
+
+{% block content %}
+
+    {{ parent() }}
+
+    {% block form %}
+    {% include '_forms/form.html' %}
+    {% endblock %}
+
+{% endblock %}

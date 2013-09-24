@@ -36,15 +36,15 @@ class Pages extends AbstractPages
         function doit($query) {
             $pages = [];
             foreach ($query as $page) {
-                /* */
+                /* *
                 $pages[] = [
                     'id'       => $page->id,
                     'name'     => $page->name,
                     'level'    => $page->level,
                     'state_id' => $page->state_id,
                 ];
-                /* *
-                $page[] = $page;
+                /* */
+                $pages[] = $page;
                 /* */
                 $pages = array_merge($pages, doit($page->getChildren()));
             }

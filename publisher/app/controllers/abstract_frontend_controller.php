@@ -10,8 +10,11 @@ abstract class AbstractFrontend_Controller extends Application
     {
         //
         // templates
-        $this->template = (new \Lemmon\Template\Template(USER_DIR . '/template', 'index'))
-            ->setExtension(new TemplateExtensionUser($this->i18n));
+        $this->template = (new TemplateFrontend(ROOT_DIR . '/app/template', 'index'))
+            ->appendFilesystem(ROOT_DIR . '/app/views/mixins')
+            ->appendFilesystem(USER_DIR . '/template')
+            ->setExtension(new TemplateExtensionUser($this->i18n))
+            ->setCache($this->cache);
         //
         // default services
         $this->data += [
@@ -28,11 +31,6 @@ abstract class AbstractFrontend_Controller extends Application
         //
         // init
         $this->__initModule();
-        //
-        // render page
-        if ($page) {
-            return $this->cache->put($this->template->render($this->data));
-        }
     }
 
 

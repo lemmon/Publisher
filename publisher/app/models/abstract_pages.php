@@ -46,9 +46,11 @@ abstract class AbstractPages extends \Lemmon\Model\AbstractModel
                 $pages['pages'][$page->parent_id][$page->id] = $page;
         }
         // menus
-        $pages['menus'] = Template::getConfig('menus');
-        foreach ((new SqlQuery)->select('pages_to_menus')->where(['site_id' => defined('SITE_ID') ? SITE_ID : null])->order('top') as $item) {
-            $pages['menus']['pages'][$item->locale_id][] = $item->page_id;
+        if ($menus = Template::getConfig('menus')) {
+            $pages['menus'] = $menus;
+            foreach ((new SqlQuery)->select('pages_to_menus')->where(['site_id' => defined('SITE_ID') ? SITE_ID : null])->order('top') as $item) {
+                $pages['menus']['pages'][$item->locale_id][] = $item->page_id;
+            }
         }
         //
         return $pages;
