@@ -46,7 +46,7 @@ class Templates_Controller extends AbstractFrontend_Controller
         // parse
         $code = $less->parse();
         // cache
-        if ($file_cached and true) {
+        if ($file_cached and DO_CACHING === true) {
             if (!is_dir($_dir = dirname($file_cached))) {
                 mkdir($_dir, 0777, true);
             }

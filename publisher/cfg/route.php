@@ -39,7 +39,7 @@ class Route extends \Lemmon\Route
         //
         // services
         //
-        if ($this->match('user/($linkId/)(?P<file>(?P<fileBase>template/*).$action)$', ['linkId' => '[^/]+/[^/]+', 'action' => 'css'])/* and substr($this->getSelf(), -4) == '.css'*/) {
+        if ($this->match('user/($linkId/)(?P<file>(?P<fileBase>template/*)(.$version).$action)$', ['linkId' => '[^/]+/[^/]+', 'version' => '\d+', 'action' => 'css'], 'iU')) {
             Application::setController('templates');
             return 1;
         }
@@ -225,8 +225,13 @@ class Route extends \Lemmon\Route
     }
 
 
-    function getTemplate($link)
+    function getTemplate($link, $versioning = false)
     {
+        // versioning
+        if ($versioning and DO_VERSIONING === true) {
+            $link = preg_replace('/[^\.]+$/', time() . '.$0', $link);
+        }
+        // route
         return $this->_site->link_id ? $this->to('user/' . $this->_site->getLink() . '/template/' . $link) : $this->to('user/template/' . $link);
     }
 

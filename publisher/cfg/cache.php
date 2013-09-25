@@ -19,7 +19,7 @@ class Cache
         $this->_file = $file = BASE_DIR . '/cache/contents/' . substr($host, 0, 2) . '/' . substr($host, -2) . '/' . str_replace(':', ';', $host) . '/' . str_replace('/', ',,', $route) . '_.html';
         //
         // customised cache
-        if (substr($host, -5) != ':3001' and !$_POST and !$_GET and !$_SESSION['__FLASH__']['messages']) {
+        if (DO_CACHING === true and !$_POST and !$_GET and !$_SESSION['__FLASH__']['messages']) {
             if (file_exists($file)) {
                 @readfile($file);
                 $this->_cached = true;

@@ -1,8 +1,12 @@
-<form method="post" action="{{ link.self }}/submit">
+<form method="post" data-action="{{ link.self }}/submit">
     
-    {% for field in form.fields %}
-    {% include '_forms/field.html' with {field: field} %}
-    {% endfor %}
+    <div class="fields">
+
+        {% for field in form.fields %}
+        {% include '_forms/field.html' with {field: field} %}
+        {% endfor %}
+        
+    </div>
     
     <p class="buttons">
         <button class="primary" type="submit" disabled data-submit-caption="{{ "Please wait"|t }}&hellip;">{{ "Submit Form"|t }}</button>

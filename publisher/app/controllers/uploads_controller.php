@@ -69,39 +69,26 @@ class Uploads_Controller extends Application
         //
         // source not found
         else {
-            //
-            // dim
-            $w = current(array_filter([$width, $height, 150]));
-            $h = current(array_filter([$height, $width, 150]));
-            preg_match('/(\d*)x(\d*)/', $this->route->dim, $m);
-            //
-            // create empty image
-            $image = ImageCreateTrueColor($w, $h);
-            $bg_color = ImageColorAllocate($image, 200, 200, 200);
-            ImageFill($image, 0, 0, $bg_color);
-            //
-            // placeholder
-            if ($w >= 50 and $h >= 50) {
-                $placeholder = ImageCreateFromPNG(ROOT_DIR . '/public/img/image-placeholder.png');
-                if ($w >= 80 and $h >= 80) {
-                    $placeholder_w = $placeholder_h = 75;
-                } else {
-                    $placeholder_w = $placeholder_h = 45;
-                }
-                $placeholder_w_orig = ImagesX($placeholder);
-                $placeholder_h_orig = ImagesY($placeholder);
-                ImageCopyResized($image, $placeholder, round(($w - $placeholder_w) / 2), round(($h - $placeholder_h) / 2), 0, 0, $placeholder_w, $placeholder_h, $placeholder_w_orig, $placeholder_h_orig);
-            }
-            //
-            // flush image
-            header('X-Robots-Tag: noindex', true);
-            header('Content-type: image/png');
-            ImagePNG($image);
-            ImageDestroy($image);
+            return $this->_notFound($width, $height);
         }
         //
         //
         return false;
+    }
+
+
+    private function _notFound($width, $height)
+    {
+        //
+        // dim
+        $this->data += [
+            'width'  => current(array_filter([$width, $height, 150])),
+            'height' => current(array_filter([$height, $width, 150])),
+        ];
+        #header('Content-type: image/svg+xml');
+        #header('X-Robots-Tag: noindex', true);
+        return Lemmon\Template::display('image_not_found', $this->data); // legacy solution
+        return $this->template->display('image_not_found');
     }
 
 

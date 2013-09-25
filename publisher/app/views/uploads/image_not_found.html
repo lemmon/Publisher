@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<svg width="{{ width }}" height="{{ height }}" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    
+    <rect width="{{ width }}" height="{{ height }}" x="0" fill="#c8c8c8" />
+    {% if (width > 100 and height > 100) %}
+    <line x1="{{ (width / 2)|round - 50 }}" y1="{{ (height / 2)|round - 50 }}" x2="{{ (width / 2)|round + 50 }}" y2="{{ (height / 2)|round + 50 }}" stroke="#b0b0b0" stroke-width="1" />
+    <line x1="{{ (width / 2)|round + 50 }}" y1="{{ (height / 2)|round - 50 }}" x2="{{ (width / 2)|round - 50 }}" y2="{{ (height / 2)|round + 50 }}" stroke="#b0b0b0" stroke-width="1" />
+    {% elseif (width > 50 and height > 50) %}
+    <line x1="{{ (width / 2)|round - 25 }}" y1="{{ (height / 2)|round - 25 }}" x2="{{ (width / 2)|round + 25 }}" y2="{{ (height / 2)|round + 25 }}" stroke="#b0b0b0" stroke-width="1" />
+    <line x1="{{ (width / 2)|round + 25 }}" y1="{{ (height / 2)|round - 25 }}" x2="{{ (width / 2)|round - 25 }}" y2="{{ (height / 2)|round + 25 }}" stroke="#b0b0b0" stroke-width="1" />
+    {% endif %}
+
+</svg>
