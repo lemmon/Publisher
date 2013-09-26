@@ -1,21 +1,22 @@
+//
+// run
 $(function(){
     
     //
     // forms
-    $('form[data-action]').css('border', '1px dotted red').each(function(){
+    $('form[data-action]').each(function(){
         var $form = $(this),
             $submit = $form.find('button[type=submit]'),
-            url = $form.attr('action');
+            url = $form.data('action');
         $form.submit(function(){
-            var _caption = $submit.text();
-            $submit.attr('disabled', true).html('loading&hellip;').addClass('loading');
+            $submit.attr('disabled', true).addClass('loading');
             $.ajax({
                 url: url,
                 dataType: 'json',
                 type: 'POST',
                 data: $form.serialize()
             }).always(function(){
-                $submit.removeClass('loading').html(_caption).attr('disabled', false);
+                $submit.removeClass('loading').attr('disabled', false);
             }).fail(function(){
                 alert('Error');
             }).done(function(res){

@@ -9,6 +9,8 @@ class FormsResponse extends AbstractModuleRow
 {
     static protected $model = 'FormsResponses';
 
+
+    /*
     private $_data;
 
 

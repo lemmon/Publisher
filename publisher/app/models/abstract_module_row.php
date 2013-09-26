@@ -48,15 +48,15 @@ abstract class AbstractModuleRow extends AbstractRow
     }
 
 
-    final function getBlocks()
+    final function getData()
     {
-        return $this->cache['blocks'] ?: $this->cache['blocks'] = (new SqlQuery)->select('items_data')->where('item_id',  $this->id)->pairs('name', 'content');
+        return $this->cache['data'] ?: $this->cache['data'] = (new SqlQuery)->select('items_data')->where('item_id',  $this->id)->pairs('name', 'content');
     }
 
 
     final function getBlock($name)
     {
-        return $this->getBlocks()[$name];
+        return $this->getData()[$name];
     }
 
 
@@ -80,10 +80,10 @@ abstract class AbstractModuleRow extends AbstractRow
         $this->__validate($f);
         //
         // content
-        if (array_key_exists('blocks', $f)) {
+        if (array_key_exists('data', $f)) {
             // we have received general content
-            $this->_temp['blocks'] = $f['blocks'];
-            unset($f['blocks']);
+            $this->_temp['data'] = $f['data'];
+            unset($f['data']);
         }
         //
         // site_id
@@ -118,8 +118,8 @@ abstract class AbstractModuleRow extends AbstractRow
     private function _insertContent()
     {
         // insert content
-        if ($blocks = $this->_temp['blocks'] and is_array($blocks)) {
-            foreach ($blocks as $name => $content) {
+        if ($data = $this->_temp['data'] and is_array($data)) {
+            foreach ($data as $name => $content) {
                 // sanitize
                 do {
                     $content = preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $content, -1, $n);
@@ -134,7 +134,7 @@ abstract class AbstractModuleRow extends AbstractRow
             // remove old content
             (new SqlQuery)->delete('items_data')->where([
                 'item_id' => $this->id,
-                '!name'   => array_keys($blocks),
+                '!name'   => array_keys($data),
             ])->exec();
         }
         else {
