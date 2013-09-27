@@ -20,7 +20,7 @@ class Uploads_Controller extends Application
         // paths
         $image_source = Lemmon\Model\Schema::getDefaultUploadDir() . '/' . $this->route->image;
         #$image_cached = BASE_DIR . '/cache' . $this->route->getSelf();
-        $image_cached = BASE_DIR . $_SERVER['REDIRECT_URL'];
+        $image_cached = BASE_DIR . '/cache' . substr($image_source, strlen(BASE_DIR));
         //
         // source exists
         if (is_file($image_source)) {

@@ -24,7 +24,7 @@ class Templates_Controller extends AbstractFrontend_Controller
 
     function cssBase()
     {
-        if ($file = BASE_DIR . dirname($this->route->getSelf()) . '/' . substr(basename($this->route->getSelf()), 0, -4) . '.less' and file_exists($file)) {
+        if ($file = BASE_DIR . dirname($this->route->getSelf()) . '/' . preg_replace('/(\.\d+)?\.css$/', '', basename($this->route->getSelf())) . '.less' and file_exists($file)) {
             // ok
             $this->_cssParse(
                  $file // source file
