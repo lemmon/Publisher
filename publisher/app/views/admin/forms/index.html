@@ -12,21 +12,22 @@
 <div class="inner">
 
     <div class="name">
-        <a href="{{ link.to(':admin/forms/response', item) }}">{{ item.response.name }}</a><span></span>
+        <a href="{{ link.to(':admin/forms/response', item) }}">{{ item.name }}</a><span></span>
     </div>
     <div class="content">
         <div class="row cols2">
             <dl class="">
                 <dt>{{ "Name"|t }}</dt>
-                <dd>{{ item.response.name|default('-') }}</dd>
+                <dd>{{ item.get('name')|default('-') }}</dd>
                 <dt>{{ "Email"|t }}</dt>
-                <dd>{{ item.response.email|default('-') }}</dd>
+                <dd>{{ item.get('email')|default('-') }}</dd>
             </dl>
         </div>
     </div>
     <div class="aside">
-        {{- "Created on"|t }}
+        {{- "Received on"|t }}
         <span>{{ item.created_at|tDateTime }}</span>
+        {{- '' -}}
     </div>
 
 </div>

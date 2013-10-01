@@ -1,5 +1,19 @@
 <div id="notices">
     
-    
+    {% if (flash.errors) %}
+    <div class="flash-error">
+        {% for line in flash.errors %}
+        {{ line }}<br>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if (flash.notices) %}
+    <div class="flash-notice">
+        {% for line in flash.notices %}
+        {{ line }}<br>
+        {% endfor %}
+    </div>
+    {% endif %}
     
 </div>

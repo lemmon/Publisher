@@ -18,7 +18,7 @@ abstract class Admin_Backend_Controller extends Application
         }
         elseif (self::getController() != 'admin/login') {
             // must login
-            return $this->request->redir(':admin/login');
+            return $this->route->to(':admin/login');
         }
         //
         // i18n

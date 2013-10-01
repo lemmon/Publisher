@@ -1,0 +1,20 @@
+{% extends '_templates/module.default.html' %}
+
+{% block title page.name|t %}
+
+{% block form_section %}
+<a href="{{ link.section(page) }}">{{ "back"|t }}</a>
+{% endblock %}
+
+{% block main_content %}
+
+    <dl>
+        {% for field, value in response.data %}
+        <dt><strong>{{ field }}</strong></dt>
+        <dd>{{ value }}</dd>
+        {% endfor %}
+    </dl>
+    
+    <p><br>- {{ response.created_at|tDateTime }}</p>
+
+{% endblock %}

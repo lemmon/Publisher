@@ -9,8 +9,6 @@ abstract class AbstractModuleModel extends \Lemmon\Model\AbstractModel
     static $required  = ['page_id', 'state_id' => 'allow_null', 'name'];
     static $timestamp = ['created_at', 'updated_at'];
 
-    static $allowChildren = true;
-
 
     protected function __initModule() {}
 

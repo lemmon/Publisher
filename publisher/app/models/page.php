@@ -10,17 +10,6 @@ class Page extends AbstractPage
     private $_temp = [];
 
 
-    function allowChildren()
-    {
-        // different type
-        if ($this->type) {
-            return (bool)get_class_vars($this->type)['allowChildren'];
-        }
-        // everything else is okay
-        return true;
-    }
-
-
     function getChildren()
     {
         if ($this->id) {

@@ -70,12 +70,12 @@ class Admin_Categories_Controller extends Admin_Backend_Controller
             (new SqlQuery)->delete('posts_to_categories')->where('category_id', $id)->exec();
             (new SqlQuery)->delete('categories')->where('id', $id)->exec();
             $this->flash->setNotice('Category deleted');
-            return $this->request->redir(':admin/section');
+            return $this->route->to(':admin/section');
         }
         else
         {
             $this->flash->setError('Error');
-            return $this->request->redir(':admin/section');
+            return $this->route->to(':admin/section');
         }
     }
 }

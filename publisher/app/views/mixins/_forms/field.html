@@ -1,4 +1,4 @@
-<p {%- if (flash.error_fields[name]) %} class="error"{% endif %}>
+<p {%- if (flash.error_fields[name]) %} class="error"{% endif %} data-field="{{ field.name }}">
     {% include '_forms/label.html' %}
     {% include '_forms/' ~ field.type|default('input') ~ '.html' %}
 </p>

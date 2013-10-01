@@ -10,6 +10,6 @@ class Admin_Logout_Controller extends Admin_Backend_Controller
     {
         $this->auth->clearIdentity();
         $this->flash->setNotice('You have been signed out');
-        return $this->request->redir(':admin/login');
+        return $this->route->to(':admin/login');
     }
 }
