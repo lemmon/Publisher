@@ -17,9 +17,7 @@ abstract class AbstractModuleModel extends \Lemmon\Model\AbstractModel
     {
         //
         // site_id
-        if (defined('SITE_ID')) {
-            $this->where('site_id', SITE_ID);
-        }
+        $this->where('site_id', SITE_ID);
         //
         // item type
         $this->where('type_id', $this->getSchema()->rowClass);

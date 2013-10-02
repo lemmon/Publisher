@@ -85,7 +85,7 @@ class Forms_Controller extends AbstractFrontend_Controller
                 switch ($case) {
                     case 'email':
                         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                            $this->flash->setErrorField($id, 'This is NOT an email', 'validate-' . $case);
+                            $this->flash->setErrorField($id, 'This is NOT a valid email', 'validate-' . $case);
                             $ok = false;
                         }
                         break;

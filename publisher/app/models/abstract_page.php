@@ -11,48 +11,35 @@ abstract class AbstractPage extends AbstractRow
     static protected $model = 'Pages';
 
     protected $cache = [];
+    private $_blocksLoaded;
 
 
     function getContent()
     {
-        if (!array_key_exists('content', $this->cache)) {
-            return $this->cache['content'] = (new SqlQuery)->select('pages_blocks')->where([
-                'page_id' => $this->id,
-                'name'    => 'content',
-            ])->first()->content;
-        } else {
-            return $this->cache['content'];
+        return $this->getBlock('content');
+    }
+
+
+    protected function loadBlocks()
+    {
+        if (!$this->_blocksLoaded) {
+            $this->cache['blocks'] = (new SqlQuery)->select('pages_blocks')->where('page_id',  $this->id)->pairs('name', 'content');
+            $this->_blocksLoaded = true;
         }
+        return $this;
     }
 
 
     function getBlocks()
     {
-        return $this->cache['blocks'] ?: $this->cache['blocks'] = (new SqlQuery)->select('pages_blocks')->where('page_id',  $this->id)->pairs('name', 'content');
+        $this->loadBlocks();
+        return $this->cache['blocks'];
     }
 
 
     function getBlock($name)
     {
         return $this->getBlocks()[$name];
-    }
-
-
-    function setBlock($name, $content)
-    {
-        $this->cache['blocks'][$name] = $content;
-        $this->cache['blocks_to_save'][$name] = $name;
-        $this->requireSave();
-        return $this;
-    }
-
-
-    function setBlocks(array $blocks)
-    {
-        $this->cache['blocks'] = array_merge((array)$this->cache['blocks'], $blocks);
-        $this->cache['blocks_to_save'] = array_merge((array)$this->cache['blocks_to_save'], array_combine(array_keys($blocks), array_keys($blocks)));
-        $this->requireSave();
-        return $this;
     }
 
 

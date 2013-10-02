@@ -3,7 +3,7 @@
 {% block title page.name %}
 
 {% block form_action %}
-<a href="{{ link.to('@/@/structure/$id', page) }}">{% block form_action_name %}{{ "Update Form Structure"|t }}{% endblock %}</a>
+<a href="{{ link.to(':admin/action', 'structure', page.id) }}">{{ "Update form structure"|t }}</a>
 {% endblock %}
 
 {% block main_content_empty_caption "module/forms/inbox-empty"|t %}

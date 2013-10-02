@@ -27,7 +27,7 @@ class Admin_Forms_Controller extends Admin_AbstractModule_Controller
         // page
         $page = $this->getPage($this->route->id);
         // form
-        return $this->_res(function() use ($page) {
+        return $this->_res(function() use ($page){
         
             // on POST
             if ($f = $_POST) {
@@ -51,12 +51,15 @@ class Admin_Forms_Controller extends Admin_AbstractModule_Controller
     function response()
     {
         if ($id = $this->route->id and $form_response = FormsResponse::find($id) and $page = $this->getPage($form_response->page_id)) {
+            // load data
             $this->data += [
                 'structure' => $page->getBlock('form/structure'),
                 'response'  => $form_response,
             ];
         } else {
+            // n/a
             die('--error');
+            return $this->notFound();
         }
     }
 }

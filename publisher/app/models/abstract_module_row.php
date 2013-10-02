@@ -80,11 +80,9 @@ abstract class AbstractModuleRow extends AbstractRow
         $this->__validate($f);
         //
         // content
-        if (array_key_exists('data', $f)) {
-            // we have received general content
-            $this->_temp['data'] = $f['data'];
-            unset($f['data']);
-        }
+        $this->_temp['data'] = (array)$f['blocks'] + (array)$f['data'];
+        unset($f['blocks']);
+        unset($f['data']);
         //
         // site_id
         if (defined('SITE_ID')) {
@@ -122,14 +120,18 @@ abstract class AbstractModuleRow extends AbstractRow
             foreach ($data as $name => $content) {
                 // sanitize
                 do {
-                    $content = preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $content, -1, $n);
+                    $content = trim(preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $content, -1, $n));
                 } while ($n);
                 // save
-                (new SqlQuery)->replace('items_data')->set([
-                    'item_id' => $this->id,
-                    'name'    => $name,
-                    'content' => $content,
-                ])->exec();
+                if (strlen($content)) {
+                    (new SqlQuery)->replace('items_data')->set([
+                        'item_id' => $this->id,
+                        'name'    => $name,
+                        'content' => $content,
+                    ])->exec();
+                } else {
+                    unset($data[$name]);
+                }
             }
             // remove old content
             (new SqlQuery)->delete('items_data')->where([

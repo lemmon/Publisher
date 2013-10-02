@@ -1,6 +1,7 @@
 <?php
 
-use \Lemmon\Sql\Query as SqlQuery;
+use \Lemmon\Sql\Query as SqlQuery,
+    \Lemmon\Sql\Expression as SqlExpression;
 
 /**
 * Backend.
@@ -15,6 +16,28 @@ class Page extends AbstractPage
         if ($this->id) {
             return Pages::find(['parent_id' => $this->id]);
         }
+    }
+
+
+    function setBlock($name, $content)
+    {
+        $this->loadBlocks();
+        $this->cache['blocks'][$name] = $content;
+        $this->cache['blocks_to_save'][$name] = $name;
+        $this->requireSave();
+        return $this;
+    }
+
+
+    function setBlocks(array $blocks)
+    {
+        $this->loadBlocks();
+        foreach ($blocks as $name => $content) {
+            $this->cache['blocks'][$name] = $content;
+            $this->cache['blocks_to_save'][$name] = $name;
+        }
+        $this->requireSave();
+        return $this;
     }
 
 
@@ -76,19 +99,28 @@ class Page extends AbstractPage
     private function _insertContent()
     {
         // insert content
-        if ($this->_temp['blocks'] and is_array($this->_temp['blocks'])) {
+        if ($this->_temp['blocks']) {
+            $blocks_to_remove = [];
             foreach ($this->_temp['blocks'] as $name => $content) {
                 // sanitize
                 do {
-                    $content = preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $content, -1, $n);
+                    $content = trim(preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $content, -1, $n));
                 } while ($n);
-                // save
-                (new SqlQuery)->replace('pages_blocks')->set([
-                    'page_id' => $this->id,
-                    'name'    => $name,
-                    'content' => $content,
-                ])->exec();
+                // update content
+                if ($content) {
+                    // store to db
+                    (new SqlQuery)->replace('pages_blocks')->set([
+                        'page_id' => $this->id,
+                        'name'    => $name,
+                        'content' => $content,
+                    ])->exec();
+                } else {
+                    // blocks to remove
+                    $blocks_to_remove[] = $name;
+                }
             }
+            // remove unwanted content
+            (new SqlQuery)->delete('pages_blocks')->where(['page_id' => $this->id, new SqlExpression('(content IS NULL OR content = "" OR name IN (?))', $blocks_to_remove)])->exec();
         }
         // insert tags
         if ($tags = $this->_temp['tags']) {

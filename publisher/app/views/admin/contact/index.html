@@ -1,0 +1,6 @@
+{% extends 'forms/index.html' %}
+
+{% block form_action %}
+<a href="{{ link.to(':admin/action', 'details', page.id) }}">{{ "Update Info"|t }}</a>
+<a href="{{ link.to(':admin/section', 'forms', 'structure', page.id) }}">{{ "Update form structure"|t }}</a>
+{% endblock %}

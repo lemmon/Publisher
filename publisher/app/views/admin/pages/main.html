@@ -9,7 +9,7 @@
         <h2 style="background-image:url({{ link.vendor('flags/{$(country.code)}.png', _locale) }})">
             {%- spaceless -%}
             <span class="locale">{{ _locale.name }} ({{ _locale.country.code }})</span>
-            <span class="newpage"><a href="{{ link.to('@/@/create/%1', _locale.id) }}"><span class="caption">{{ "Create new"|t }}</span></a></span>
+            <span class="newpage"><a href="{{ link.to('@/@/create/%1', _locale.id) }}"><span class="caption">{{ "New page"|t }}</span></a></span>
             {%- endspaceless -%}
         </h2>
 
@@ -37,6 +37,7 @@
     {% endif %}
     {% endfor %}
     
+    {#
     <div class="section other">
 
         <h2 style="background-image:url({{ link.vendor('flags/_world.png', _locale) }})">
@@ -44,6 +45,7 @@
         </h2>
 
     </div>
+    #}
     
     <style>
     div.section h2 .newpage { display:none; }
