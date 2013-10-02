@@ -32,7 +32,7 @@
                 {{- "Published on"|t }}
                 <span>{{ item.published_at|tDateTime }}</span>
                     {%- if (item.updated_at and item.updated_at|toTs - item.published_at|toTs > 18000) -%}
-                    , {{ "updated at"|t }}
+                    , {{ "updated on"|t }}
                     <span>{{ item.updated_at|tDateTime }}</span>
                     {%- endif -%}
                 {%- else -%}

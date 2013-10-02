@@ -23,16 +23,15 @@ class Forms_Controller extends AbstractFrontend_Controller
     {
         //
         // no cache
-        header('Cache-Control: no-cache, must-revalidate');
-        header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
+        $this->noCache();
         //
         // process request
         return $this->_res(function(){
 
             //
             // process form
-            if ($f = $_POST) {
-                if ($this->_validate($f)) {
+            if ($f = $this->sanitize($_POST)) {
+                if ($this->_sanitize($f) !== false and $this->_validate($f) !== false) {
                     try {
                         (new FormsResponse)->set([
                             'name'      => $this->page->name,
@@ -49,7 +48,7 @@ class Forms_Controller extends AbstractFrontend_Controller
                     }
                     mail('publisher@lemmonjuice.com', $this->page->name, json_encode($f, JSON_PRETTY_PRINT));
                     $this->flash->setNotice('Form has been sent successfully');
-                    return $this->route->to($this->page->getUrl());
+                    return $this->page->getUrl();
                 } else {
                     // throw error
                     $this->flash->setError('Your input contains errors');
@@ -68,7 +67,13 @@ class Forms_Controller extends AbstractFrontend_Controller
     }
 
 
-    private function _validate($f)
+    private function _sanitize(&$f)
+    {
+        
+    }
+
+
+    private function _validate(&$f)
     {
         $ok = true;
         //

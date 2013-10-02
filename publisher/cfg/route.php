@@ -110,7 +110,8 @@ class Route extends \Lemmon\Route
             $this->_page = Page::find(['locale_id' => $this->_site->locale_id, 'parent_id' => null]);
         }
         else {
-            die('Route: 404');
+            // n/a
+            $this->notFound();
         }
     }
 
@@ -182,6 +183,13 @@ class Route extends \Lemmon\Route
         // routes for database items
         //
         AbstractRow::setRoute($this);
+    }
+
+
+    protected function notFound()
+    {
+        http_response_code(404);
+        die('404: Not Found');
     }
 
 
