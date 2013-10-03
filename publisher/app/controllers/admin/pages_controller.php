@@ -84,18 +84,33 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
 
     function update()
     {
-        if ($id = $this->route->id and $page = Page::find($id)) {
-            // options
-            $this->_getOptions($page->locale_id);
-            // scaffolding
-            return $this->_res(Scaffold::update($this, [
-                'redir' => function($item){
-                    return $this->route->getSection($item);
-                },
-            ]));
-        } else {
-            // page not found
-            die('Page not found.');
+        // page
+        $page = $this->getPage();
+        // options
+        $this->_getOptions($page->locale_id);
+        // scaffolding
+        return $this->_res(Scaffold::update($this, [
+            'redir' => function($item){
+                return $this->route->getSection($item);
+            },
+        ]));
+    }
+
+
+    function delete()
+    {
+        // page
+        $page = $this->getPage();
+        // on POST
+        if ($f = $_POST) {
+            return $this->_res(function() use ($f, $page){
+                if ($f['delete'] and $page->delete()) {
+                    $this->flash->setNotice('Page deleted successfully');
+                } else {
+                    $this->flash->setError('Page has NOT been deleted');
+                }
+                return $this->route->to(':admin/section');
+            });
         }
     }
 

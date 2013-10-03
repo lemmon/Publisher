@@ -1,6 +1,8 @@
 {% extends '_templates/form.html' %}
 
+
 {% block title item.name %}
+
 
 {% block form_fields %}
     
@@ -114,11 +116,26 @@
 
 {% endblock %}
 
+
 {% block form_buttons_buttons %}
 <button class="primary" type="submit">{{ "Update page"|t }}</button>
 {% endblock %}
 
+
 {% block form_buttons_back_link item.type ? link.section(item) : none %}
+
+{% block form_buttons %}
+
+    {{ parent() }}
+
+    {% if (item.id) %}
+    <p class="right">
+        <a target="" href="{{ link.to(':admin/action', 'delete', item.id) }}" class="button delete">{{ "Delete page"|t }}</a>
+    </p>
+    {% endif %}
+
+{% endblock %}
+
 
 {% block script %}
 {{ parent() }}

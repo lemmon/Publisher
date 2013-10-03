@@ -1,7 +1,8 @@
 <?php
 
 use \Lemmon\Sql\Query as SqlQuery,
-    \Lemmon\Sql\Expression as SqlExpression;
+    \Lemmon\Sql\Expression as SqlExpression,
+    \Lemmon\String;
 
 /**
 * 
@@ -30,6 +31,12 @@ abstract class AbstractPage extends AbstractRow
     }
 
 
+    function getData()
+    {
+        return $this->toArray();
+    }
+
+
     function getBlocks()
     {
         $this->loadBlocks();
@@ -40,6 +47,14 @@ abstract class AbstractPage extends AbstractRow
     function getBlock($name)
     {
         return $this->getBlocks()[$name];
+    }
+
+
+    function getItems()
+    {
+        if ($this->type) {
+            return call_user_func([String::tableToClassName($this->type), 'find'], ['page_id' => $this->id]);
+        }
     }
 
 

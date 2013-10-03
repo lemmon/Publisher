@@ -96,6 +96,34 @@ class Page extends AbstractPage
     }
 
 
+    function delete()
+    {
+        // items
+        if ($items = $this->getItems()) {
+            $items = $items->allByPrimary();
+        }
+        // trash
+        (new SqlQuery)->replace('trash')->set([
+            'site_id'    => SITE_ID,
+            'table'      => $this->getSchema()->table,
+            'id'         => $this->id,
+            'data'       => serialize($this->toArray() + ['data' => $this->getBlocks(), 'items' => @array_keys($items)]),
+            'created_at' => new SqlExpression('NOW()'),
+        ])->exec();
+        // delete items
+        if ($items) {
+            foreach ($items as $item) {
+                $item->delete();
+            }
+        }
+        // delete page
+        (new SqlQuery)->delete('pages_blocks')->where('page_id', $this->id)->exec();
+        (new SqlQuery)->delete('pages')->where(['site_id' => SITE_ID, 'id' => $this->id])->exec();
+        //
+        return true;
+    }
+
+
     private function _insertContent()
     {
         // insert content

@@ -78,7 +78,9 @@
                         $p.addClass('error');
                         if (messages) {
                             $p.find('.hint').hide();
-                            $p.append('<span class="errormsg">' + messages.join('<br>') + '</span>');
+                            $.each(messages, function(_case, message){
+                                $p.append('<span class="errormsg">' + message + '</span>');
+                            });
                         }
                     });
                 } else if (res.redir) {

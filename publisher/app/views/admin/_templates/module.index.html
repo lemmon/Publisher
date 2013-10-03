@@ -13,14 +13,14 @@
     {% block main_content_post %}
 
         {% if (item.image) %}
-        <div class="image"><a href="{{ link.to(':admin/update', item) }}"><img src="{{ link.upload(item.image, '250x250m') }}"></a></div>
+        <div class="image"><a href="{{ link.to(':admin/update', item) }}"><img src="{{ item.image('250x250m') }}"></a></div>
         {% endif %}
         <div class="inner">
             <div class="name">
                 {% if (item.state is not none) %}
                 {% if (item.state_id != 1) %}<span class="tag state-{{ item.state.name|asciize }}">{{ item.state.name|t }}</span>{% endif %}
                 {% endif %}
-                <a href="{{ link.to(':admin/update', item) }}">{{ item.name }}</a><span></span>
+                <a href="{{ link.to(':admin/update', item) }}">{{ item.name|default("(untitled)"|t) }}</a><span></span>
             </div>
             <div class="content">
                 {% block post_content %}

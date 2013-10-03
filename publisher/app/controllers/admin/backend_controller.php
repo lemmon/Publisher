@@ -35,6 +35,18 @@ abstract class Admin_Backend_Controller extends Application
     }
 
 
+    protected function getPage($id = null)
+    {
+        if (($id or $id = $this->route->id) and $page = Page::find($id)) {
+            // page found
+            return $this->data['page'] = $this->page = $page;
+        } else {
+            // n/a
+            return $this->route->notFound();
+        }
+    }
+
+
     protected function _res($res = null, $add = [])
     {
         // Route instance

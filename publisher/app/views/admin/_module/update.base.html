@@ -1,6 +1,8 @@
 {% extends '_templates/form.html' %}
 
+
 {% block title item.default('name') %}
+
 
 {% block form_fields %}
 
@@ -38,11 +40,27 @@
 
 {% endblock %}
 
+
 {% block form_buttons_back_link link.section(item.page) %}
+
 
 {% block form_buttons_buttons %}
 <button class="primary" type="submit">{{ "Update entry"|t }}</button>
 {% endblock %}
+
+
+{% block form_buttons %}
+
+    {{ parent() }}
+
+    {% if (item.id) %}
+    <p class="right">
+        <a target="" href="{{ link.to(':admin/action', 'delete', item.id) }}" class="button delete">{{ "Delete entry"|t }}</a>
+    </p>
+    {% endif %}
+
+{% endblock %}
+
 
 {% block script %}
 {% include '_tinymce.html' %}

@@ -25,7 +25,7 @@ class Admin_Forms_Controller extends Admin_AbstractModule_Controller
     function structure()
     {
         // page
-        $page = $this->getPage($this->route->id);
+        $page = $this->getPage();
         // form
         return $this->_res(function() use ($page){
         

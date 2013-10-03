@@ -9,7 +9,7 @@ class Admin_Contact_Controller extends Admin_Forms_Controller
     function details()
     {
         // page
-        $page = $this->getPage($this->route->id);
+        $page = $this->getPage();
         // form
         return $this->_res(function() use ($page){
         

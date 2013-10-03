@@ -441,6 +441,15 @@ button {
     }
 }
 
+#container {
+    a.delete {
+        color:@gray;
+        &:hover {
+            background:mix(@red, @backgroundColor, 20%);
+        }
+    }
+}
+
 button::-moz-focus-inner {
     border:0;
 }
