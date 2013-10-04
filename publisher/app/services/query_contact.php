@@ -49,6 +49,11 @@ class QueryContact extends AbstractQueryModel
     }
 
 
-    function inLocale() {}
+    function inLocale()
+    {
+        return $this;
+    }
+
+
     function getRecent() {}
 }

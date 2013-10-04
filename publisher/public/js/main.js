@@ -3,6 +3,16 @@
 $(function(){
     
     var $notices = $('#notices');
+
+    //
+    // fix emails
+    $('[data-email]').each(function(){
+        var $this = $(this),
+            email = $this.data('email')
+                .replace(/\$./, '@').replace(/\+/g, '.')
+                .replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
+        $this.html('<a class="' + $this.attr('class') + '" href="mailto:' + email + '">' + email + '</a>').find('a').unwrap();
+    });
     
     //
     // forms

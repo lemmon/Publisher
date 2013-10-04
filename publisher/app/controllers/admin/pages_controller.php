@@ -84,6 +84,9 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
 
     function update()
     {
+        dump($this->template);
+        dump($this->template->getFilesystem());
+        die('--p');
         // page
         $page = $this->getPage();
         // options
