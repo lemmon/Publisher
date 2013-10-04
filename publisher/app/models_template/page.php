@@ -10,7 +10,7 @@ class Page extends AbstractPage
 
     function getCaption()
     {
-        return $this->getDefault('caption') ?: $this->getDefault('name');
+        return $this->data['caption'] ?: $this->data['name'];
     }
 
 

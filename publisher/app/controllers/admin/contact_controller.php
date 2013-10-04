@@ -31,9 +31,9 @@ class Admin_Contact_Controller extends Admin_Forms_Controller
                     'zip'       => $f['zip'],
                     'city'      => $f['city'],
                     'country'   => $f['country'],
-                    'phone'     => $f['phone'],
-                    'fax'       => $f['fax'],
-                    'email'     => $f['email'],
+                    'phones'    => $f['phones'],
+                    'faxes'     => $f['faxes'],
+                    'emails'    => $f['emails'],
                     'geo_lat'   => $f['geo_lat'],
                     'geo_lng'   => $f['geo_lng'],
                 ];

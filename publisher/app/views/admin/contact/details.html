@@ -34,27 +34,27 @@
                 {{ forms.input('country', f.country) }}
             </p>
             {{ forms.p('phone', flash) }}
-                {{ forms.label('phone[]', null) }}
-                {% for _phone in f.phone %}
-                {{ forms.input('phone[]', _phone) }}
+                {{ forms.label('phone') }}
+                {% for _phone in f.phones %}
+                {{ forms.input('phones[]', _phone) }}
                 {% else %}
-                {{ forms.input('phone[]', f.phone) }}
+                {{ forms.input('phones[]', f.phone) }}
                 {% endfor %}
             </p>
             {{ forms.p('fax', flash) }}
-                {{ forms.label('fax[]', null) }}
-                {% for _fax in f.fax %}
-                {{ forms.input('fax[]', _fax) }}
+                {{ forms.label('fax') }}
+                {% for _fax in f.faxes %}
+                {{ forms.input('faxes[]', _fax) }}
                 {% else %}
-                {{ forms.input('fax[]', f.fax) }}
+                {{ forms.input('faxes[]', f.fax) }}
                 {% endfor %}
             </p>
             {{ forms.p('email', flash) }}
-                {{ forms.label('email[]', null) }}
-                {% for _email in f.email %}
-                {{ forms.input('email[]', _email) }}
+                {{ forms.label('email') }}
+                {% for _email in f.emails %}
+                {{ forms.input('emails[]', _email) }}
                 {% else %}
-                {{ forms.input('email[]', f.email) }}
+                {{ forms.input('emails[]', f.email) }}
                 {% endfor %}
             </p>
 

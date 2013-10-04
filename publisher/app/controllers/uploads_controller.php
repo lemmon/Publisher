@@ -85,8 +85,8 @@ class Uploads_Controller extends Application
             'width'  => current(array_filter([$width, $height, 150])),
             'height' => current(array_filter([$height, $width, 150])),
         ];
-        #header('Content-type: image/svg+xml');
-        #header('X-Robots-Tag: noindex', true);
+        header('Content-type: image/svg+xml');
+        header('X-Robots-Tag: noindex', true);
         return Lemmon\Template::display('image_not_found', $this->data); // legacy solution
         return $this->template->display('image_not_found');
     }

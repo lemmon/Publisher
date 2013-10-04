@@ -85,9 +85,12 @@ class Values
     }
 
 
-    static function getMany($prefix) {
+    static function getMany($prefix, &$raw = null) {
+        $raw = [];
         $res = [];
-        foreach (self::get("{$prefix}/%") as $key => $val) {
+        $len = strlen($prefix);
+        foreach ($_raw = self::get("{$prefix}/%") as $key => $val) {
+            $raw[substr($key, $len + 1)] = $val;
             $res0 = &$res;
             foreach (explode('/', $key) as $key0) {
                 $res0 = &$res0[$key0];
