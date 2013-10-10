@@ -7,6 +7,7 @@ class Route extends \Lemmon\Route
     private $_extend;
     private $_site;
     private $_page;
+    private $_version;
 
 
     protected function __initAdmin()
@@ -106,8 +107,15 @@ class Route extends \Lemmon\Route
         }
         elseif (!$this->getParam(1)) {
             // frontpage
-            Application::setController('pages');
             $this->_page = Page::find(['locale_id' => $this->_site->locale_id, 'parent_id' => null]);
+            // type
+            if ($this->_page->type) {
+                // special page
+                Application::setController($this->_page->type);
+            } else {
+                // generic frontpage
+                Application::setController('pages');
+            }
         }
         else {
             // n/a
@@ -202,6 +210,12 @@ class Route extends \Lemmon\Route
     function getPage()
     {
         return $this->_page;
+    }
+
+
+    function getVersion()
+    {
+        return $this->_version = time();
     }
 
 

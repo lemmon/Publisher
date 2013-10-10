@@ -9,7 +9,21 @@ abstract class AbstractQueryModel implements AbstractQueryModelInterface, \Itera
 
     function __construct($where = null)
     {
-        $this->model = $this->__model()->where($where);
+        // load model
+        $model = $this->__model();
+        // query
+        if ($where instanceof AbstractPage) {
+            // locate page
+            $model->where('page_id', $where->id);
+        } elseif (is_array($where)) {
+            // where
+            $model->where($where);
+        } elseif ($where) {
+            // error
+            throw new \Exception('Error.');
+        }
+        //
+        return $this->model = $model;
     }
 
 

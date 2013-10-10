@@ -84,11 +84,14 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
 
     function update()
     {
-        dump($this->template);
-        dump($this->template->getFilesystem());
-        die('--p');
         // page
         $page = $this->getPage();
+        //
+        if ($page->type or $page->template) {
+            if (file_exists(USER_DIR . '/app/views/' . self::getController() . '/' . $page->getTemplateName() . '.' . self::getAction() . '.html')) {
+                $this->template->display($page->getTemplateName() . '.' . self::getAction());
+            }
+        }
         // options
         $this->_getOptions($page->locale_id);
         // scaffolding

@@ -23,6 +23,8 @@
     </div>
     <div class="tab">
         
+        {% block f_content_before none %}
+        
         {% block f_content %}
         <div>
             {{ forms.label('blocks[content]', 'Content', 'recommended') }}
@@ -31,6 +33,8 @@
             </article>
         </div>
         {% endblock %}
+
+        {% block f_content_after none %}
 
     </div>
     {#
