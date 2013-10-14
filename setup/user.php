@@ -1,13 +1,14 @@
 <?php
 
-$t = -microtime(true);
-
+//
 // config
 require '../config.php';
 
+//
 // bootstrap
 require '../publisher/Bootstrap.php';
 
+//
 // run
 $env    = new Env;
 $db     = new Db;
@@ -35,4 +36,6 @@ if ($f = $_GET and $f['email'] and $f['password']) {
     }
 }
 
+//
+//
 die('--na');
