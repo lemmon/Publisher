@@ -29,15 +29,28 @@ abstract class AbstractQueryModel implements AbstractQueryModelInterface, \Itera
 
 
 
-    function inLocale($locale)
+    function inLocale($locale = null)
     {
-        if (is_string($locale)) {
+        if (!$locale) {
+            // default page locale
+            $this->model->where(['locale_id' => Nav::getCurrentLocale()['id']]);
+        } elseif (is_string($locale)) {
+            // locale by string
             $this->model->where(['locale_id' => $locale]);
         } elseif (is_array($locale) and $locale['id']) {
+            // locale by array
             $this->model->where(['locale_id' => $locale['id']]);
         } else {
+            // n/a
             throw new \Exception('Unknown locale.');
         }
+        return $this;
+    }
+
+
+    function random()
+    {
+        $this->model->order('RAND()');
         return $this;
     }
 
