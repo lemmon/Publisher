@@ -52,9 +52,16 @@ class Route extends \Lemmon\Route
         //
         // uploads
         //
-        elseif ($this->match('*/uploads(/0$dim)(/$image)$', ['dim' => '\d*x\d*[\w]*', 'image' => '.*\.(jpe?g|gif|png)'])) {
+        elseif ($this->match('*/(?<path>uploads/0$dim/$image)$', ['dim' => '\d*x\d*[\w]*', 'image' => '.*\.(jpe?g|gif|png)'])) {
+            // image to resize
             Application::setController('uploads');
             Application::setAction('image');
+            return 1;
+        }
+        elseif ($this->match('*/(?<path>uploads/0$dim(.$fileType))$', ['dim' => '\d*x\d*[\w]*', 'fileType' => 'svg'])) {
+            // svg placeholder
+            Application::setController('uploads');
+            Application::setAction('placeholder');
             return 1;
         }
     }
@@ -215,7 +222,23 @@ class Route extends \Lemmon\Route
 
     function getVersion()
     {
-        return $this->_version = time();
+        if ($version = $this->_version) {
+            // version already decided
+            return $version;
+        } elseif (DO_CACHING === true) {
+            // cached version
+            if (!(is_file($file_cached = BASE_DIR . '/cache/user/' . $this->_site->getLink() . '/_version') and $version = file_get_contents($file_cached))) {
+                // we need to assign new version
+                if (!is_dir($_dir = dirname($file_cached))) {
+                    mkdir($_dir, 0777, true);
+                }
+                file_put_contents($file_cached, $version = time());
+            }
+            return $this->_version = $version;
+        } else {
+            // assign version on the fly
+            return $this->_version = time();
+        }
     }
 
 
@@ -251,7 +274,7 @@ class Route extends \Lemmon\Route
     {
         // versioning
         if ($versioning and DO_VERSIONING === true) {
-            $link = preg_replace('/[^\.]+$/', time() . '.$0', $link);
+            $link = preg_replace('/[^\.]+$/', $this->getVersion() . '.$0', $link);
         }
         // route
         return $this->_site->link_id ? $this->to('user/' . $this->_site->getLink() . '/template/' . $link) : $this->to('user/template/' . $link);
@@ -260,7 +283,19 @@ class Route extends \Lemmon\Route
 
     function getUpload($file, $dim = null)
     {
-        return '/user/uploads/' . ($dim ? "0{$dim}/" : '') . $file;
+        if ($dim) {
+            if ($file)
+                $file = "0{$dim}/{$file}";
+            else
+                $file = "0{$dim}.svg";
+        }
+        return $this->_site->link_id ? $this->to('user/' . $this->_site->getLink() . '/uploads/' . $file) : $this->to('user/uploads/' . $file);
+    }
+
+
+    function getImagePlaceholder($w, $h)
+    {
+        return $this->to("user/uploads/0{$w}x{$h}.svg");
     }
 
 

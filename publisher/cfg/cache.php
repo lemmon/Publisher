@@ -16,12 +16,12 @@ class Cache
         $host = $_SERVER['HTTP_HOST'];
         $uri = $_SERVER['REQUEST_URI'];
         $route = substr($uri, 1);
-        $this->_file = $file = BASE_DIR . '/cache/contents/' . substr($host, 0, 2) . '/' . substr($host, -2) . '/' . str_replace(':', ';', $host) . '/' . str_replace('/', ',,', $route) . '_.html';
+        $this->_file = $file = BASE_DIR . '/cache/contents/' . join(str_split(substr(md5($host), 0, 4), 2), '/') . '/' . str_replace(':', ';', $host) . '/' . str_replace('/', ',,', $route) . '_.html';
         //
         // customised cache
-        if (DO_CACHING === true and !$_POST and !$_GET and !$_SESSION['__FLASH__']['messages']) {
+        if (1 or DO_CACHING === true and !$_POST and !$_GET and !$_SESSION['__FLASH__']['messages']) {
             if (file_exists($file)) {
-                @readfile($file);
+                readfile($file);
                 $this->_cached = true;
                 exit;
             } else {
@@ -29,16 +29,6 @@ class Cache
             }
         }
     }
-
-
-    /*
-    function __destruct()
-    {
-        if (!$_POST) {
-            echo '<!-- ' . round((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']) * 1000, 2) . 'ms ' . ($this->_cached ? '(CACHED) ' : '') . '-->';
-        }
-    }
-    */
 
 
     function getFile()
@@ -58,5 +48,12 @@ class Cache
             $res = file_put_contents($file, $contents);
         }
         return $contents;
+    }
+
+
+    function flush()
+    {
+        dump(dirname($this->_file));
+        die('--flush');
     }
 }

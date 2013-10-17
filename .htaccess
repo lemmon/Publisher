@@ -67,14 +67,15 @@ AddCharset utf-8 .html .css .js .xml .json .rss
 <IfModule mod_rewrite.c>
 # versioning
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteRule ^(.+)\.(\d+)\.(js|css)$ $1.$3 [L]
+  RewriteRule ^(.+)\.(\d+)\.(js|css)$ /$1.$3 [L]
 # user
   RewriteCond %{HTTP_HOST} ^([^\.]+)\.([^:]+).dev [NC]
-  RewriteRule user/((template|uploads)/.*) user/%2/%1/$1 [L]
+  RewriteRule user/((template|uploads)/.*) /user/%2/%1/$1 [L]
 # cache
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^((user(/[\w\_\.]+){2}/(template|uploads)|publisher/public)/.*) /cache/$1 [L]
 # common root files
+  RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^([\w\-]+\.(png|ico|txt|xml))$ /publisher/public/home/$1 [L]
 # framework
   RewriteCond %{REQUEST_FILENAME} !-f

@@ -6,21 +6,22 @@ class Uploads_Controller extends Application
 {
 
 
+    private function _getDim()
+    {
+        preg_match('/(?<width>\d*)x(?<height>\d*)(?<flags>\w*)/', $this->route->dim, $dim);
+        return [$dim['width'], $dim['height'], $dim['flags']];
+    }
+
+
     function image()
     {
         //
-        // parse dim
-        preg_match('/(?<width>\d*)x(?<height>\d*)(?<flags>\w*)/', $this->route->dim, $dim);
-        $width  = $dim['width'];
-        $height = $dim['height'];
-        $flags  = $dim['flags'];
-        #if ($flags = $dim['flags'] and $flags = str_split($flags) or $flags = []);
-        #    $flags = array_combine($flags, $flags);
+        // dim
+        list($width, $height, $flags) = $this->_getDim();
         //
         // paths
         $image_source = Lemmon\Model\Schema::getDefaultUploadDir() . '/' . $this->route->image;
-        #$image_cached = BASE_DIR . '/cache' . $this->route->getSelf();
-        $image_cached = BASE_DIR . '/cache' . substr($image_source, strlen(BASE_DIR));
+        $image_cached = BASE_DIR . '/cache/user/' . $this->site->getLink() . '/' . $this->route->path;
         //
         // source exists
         if (is_file($image_source)) {
@@ -77,6 +78,13 @@ class Uploads_Controller extends Application
     }
 
 
+    function placeholder()
+    {
+        list($width, $height) = $this->_getDim();
+        return $this->_notFound($width, $height);
+    }
+
+
     private function _notFound($width, $height)
     {
         //
@@ -88,7 +96,7 @@ class Uploads_Controller extends Application
         header('Content-type: image/svg+xml');
         header('X-Robots-Tag: noindex', true);
         return Lemmon\Template::display('image_not_found', $this->data); // legacy solution
-        return $this->template->display('image_not_found');
+        #return $this->template->display('image_not_found');
     }
 
 

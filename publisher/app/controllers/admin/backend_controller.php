@@ -32,6 +32,11 @@ abstract class Admin_Backend_Controller extends Application
             ->appendFilesystem(self::getController(), USER_DIR . '/app/views')
             ->setExtension(new TemplateExtensionAdmin($this->i18n));
             ;
+        //
+        // frontend cache control
+        if ($_POST and $user) {
+            $this->cache->flush();
+        }
     }
 
 
