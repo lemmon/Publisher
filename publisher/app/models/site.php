@@ -24,8 +24,7 @@ class Site extends \Lemmon\Model\AbstractRow
     {
         if ($this->link_id) {
             return $this->link_id;
-        }
-        elseif (!array_key_exists('link', $this->_cache)) {
+        } elseif (!array_key_exists('link', $this->_cache)) {
             return $this->_cache['link'] = preg_replace('/^([^\.]+)\.(.*)(.dev)?(:\d+)?$/U', '$2/$1', $this->host);
         } else {
             return $this->_cache['link'];

@@ -1,4 +1,7 @@
 <?php
+
+use \Lemmon\Sql\Expression as SqlExpression;
+
 /**
  * Handles authentication
  * @see \Lemmon\Auth\AbstractAuth
@@ -25,8 +28,7 @@ class Auth extends \Lemmon\Auth\AbstractAuth
      */
     protected function onAuthenticate($username, $password)
     {
-        if ($user = Users::find(['email' => $username])->first() and Auth::check($user->password, $password))
-        {
+        if ($user = User::find(['email' => $username, new SqlExpression('(SELECT user_id FROM users_to_sites WHERE user_id = id AND site_id = ?)', SITE_ID)]) and $this->check($user->password, $password)) {
             return $user->id;
         }
     }
@@ -38,7 +40,7 @@ class Auth extends \Lemmon\Auth\AbstractAuth
      * @param  bool   $permanent
      * @see    \Lemmon\Auth\AbstractAuth::authenticate()
      */
-    protected function onStoreIdentity($id, $permanent=false)
+    protected function onStoreIdentity($id, $permanent = false)
     {
         $_SESSION['__AUTH__'] = $id;
     }
