@@ -3,7 +3,7 @@
 {% import '_forms.html' as forms %}
 
 {% block main %}
-<form method="post" target="-form-frame" action="{% block form_action %}{{ link.self.includeQuery }}{% endblock %}" {% block form_type %}{% if (block('form_type_upload')) %}enctype="multipart/form-data"{% endif %}{% endblock %}>
+<form method="post" target="form-frame" action="{% block form_action %}{{ link.self.includeQuery }}{% endblock %}" {% block form_type %}{% if (block('form_type_upload')) %}enctype="multipart/form-data"{% endif %}{% endblock %}>
 
     {% block form_lead %}{% endblock %}
 

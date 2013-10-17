@@ -107,7 +107,6 @@ td.child-node {
     .post {
         position:relative;
         padding:1px;
-        //height:@baseLineHeight * 3 + 28;
         border-top:1px solid #f0f0f0;
         &:last-child {
             border-bottom:1px solid #f0f0f0;
@@ -150,16 +149,26 @@ td.child-node {
             }
         }
         .inner {
+            position:relative;
             padding:14px;
             margin-right:101px;
-        }
-        .name {
-            .ellipsis();
-            a {
-                //font-weight:600;
+            & > * {
+                position:relative;
             }
         }
-        .content {
+        .weight {
+            position:absolute;
+            right:@gutterWidth / 2;
+            top:50%;
+            font-size:@baseLineHeight * 3;
+            line-height:0;
+            margin-top:-0.04em;
+            font-weight:@noteFontWeight;
+            background:@yellow;
+            vertical-align:top;
+            color:mix(@textColor, @backgroundColor, 5%);
+        }
+        .name, .content {
             .ellipsis();
         }
         .aside {

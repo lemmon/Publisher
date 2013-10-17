@@ -19,7 +19,7 @@ class Cache
         $this->_file = $file = BASE_DIR . '/cache/contents/' . join(str_split(substr(md5($host), 0, 4), 2), '/') . '/' . str_replace(':', ';', $host) . '/' . str_replace('/', ',,', $route) . '_.html';
         //
         // customised cache
-        if (1 or DO_CACHING === true and !$_POST and !$_GET and !$_SESSION['__FLASH__']['messages']) {
+        if (DO_CACHING === true and !$_POST and !$_GET and !$_SESSION['__FLASH__']['messages']) {
             if (file_exists($file)) {
                 readfile($file);
                 $this->_cached = true;
@@ -53,7 +53,8 @@ class Cache
 
     function flush()
     {
-        dump(dirname($this->_file));
-        die('--flush');
+        foreach (glob(dirname($this->_file) . '/*.html') as $file) {
+            @unlink($file);
+        }
     }
 }
