@@ -1,0 +1,152 @@
+{% extends '_templates/form.html' %}
+
+{% block title "Contact Details"|t %}
+
+{% block form_lead %}
+<h2>{{ block('title') }}</h2>
+{% endblock %}
+
+{% block form_fields %}
+    
+    {% block f_before none %}
+
+    <div class="cols2" style="position:relative;">
+        <div>
+            
+            {{ forms.p('name', flash, {class: 'fit big'}) }}
+                {{ forms.label('name', null, 'recommended') }}
+                {{ forms.input('name', f.name) }}
+            </p>
+            {{ forms.p('address', flash, {class: 'fit'}) }}
+                {{ forms.label('address', null, 'recommended') }}
+                {{ forms.text('address', f.address, {style: 'height:76px;resize:none'}) }}
+            </p>
+            <div class="cols3">
+                {{ forms.p('zip', flash) }}
+                    {{ forms.label('zip', 'ZIP', 'recommended') }}
+                    {{ forms.input('zip', f.zip) }}
+                </p>
+                {{ forms.p('city', flash, {class: 'span2'}) }}
+                    {{ forms.label('city', null, 'recommended') }}
+                    {{ forms.input('city', f.city) }}
+                </p>
+            </div>
+            {{ forms.p('country', flash) }}
+                {{ forms.label('country', null, 'recommended') }}
+                {{ forms.input('country', f.country) }}
+            </p>
+            {{ forms.p('phone', flash) }}
+                {{ forms.label('phone') }}
+                {% for _phone in f.phones %}
+                {{ forms.input('phones[]', _phone) }}
+                {% else %}
+                {{ forms.input('phones[]', f.phone) }}
+                {% endfor %}
+            </p>
+            {{ forms.p('fax', flash) }}
+                {{ forms.label('fax') }}
+                {% for _fax in f.faxes %}
+                {{ forms.input('faxes[]', _fax) }}
+                {% else %}
+                {{ forms.input('faxes[]', f.fax) }}
+                {% endfor %}
+            </p>
+            {{ forms.p('email', flash) }}
+                {{ forms.label('email') }}
+                {% for _email in f.emails %}
+                {{ forms.input('emails[]', _email) }}
+                {% else %}
+                {{ forms.input('emails[]', f.email) }}
+                {% endfor %}
+            </p>
+
+        </div>
+        <div>
+            
+            {{ forms.p('geolocation', flash) }}
+                <label class="label">{{ "Geolocation"|t }} <span>(<a id="map-canvas-reset" href="#">{{ "reset location"|t }}</a>)</span></label>
+                <span class="fieldset" id="map-canvas" style="padding:0;height:215px"></span>
+            </p>
+            <div class="cols2">
+                {{ forms.p('geo_lat', flash) }}
+                    {{ forms.label('geo_lat', 'Latitude', 'recommended') }}
+                    {{ forms.input('geo_lat', f.geo_lat) }}
+                </p>
+                {{ forms.p('geo_lng', flash) }}
+                    {{ forms.label('geo_lng', 'Longitude', 'recommended') }}
+                    {{ forms.input('geo_lng', f.geo_lng) }}
+                </p>
+            </div>
+            
+        </div>
+    </div>
+
+    {% block f_after none %}
+    
+{% endblock %}
+
+{% block form_buttons_buttons %}
+<button class="primary" type="submit">{{ "Update info"|t }}</button>
+<a class="back" href="{{ link.section(page) }}">{{ "back"|t }}</a>
+{% endblock %}
+
+{% block script %}
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script>
+var map = null,
+    marker = null,
+    geocoder = new google.maps.Geocoder();
+function initmap(){
+    {% if (f.geo_lat and f.geo_lng) %}
+    var myZoom = 15,
+        myLatLng = new google.maps.LatLng({{ f.geo_lat }}, {{ f.geo_lng }});
+    {% else %}
+    var myZoom = 4,
+        myLatLng = new google.maps.LatLng(48.148376, 17.10731);
+    {% endif %}
+    map = new google.maps.Map(document.getElementById('map-canvas'), {
+        zoom: myZoom,
+        center: myLatLng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        scrollwheel: false
+    });
+    marker = new google.maps.Marker({
+        map: map,
+        position: myLatLng,
+        draggable: true
+    });
+    google.maps.event.addListener(marker, 'dragend', function(){
+        $('#f_geo_lat').val(this.getPosition().lat());
+        $('#f_geo_lng').val(this.getPosition().lng());
+        //$('#f_geo_accurate').attr('checked', true);
+    });
+}
+google.maps.event.addDomListener(window, 'load', initmap);
+function getAddress() {
+    return $.trim($('#f_address').val()).replace(/[\s]+/, ' ') + ', ' + $('#f_city').val() + ', ' + $('#f_country').val();
+}
+$(function(){
+    $('#map-canvas-reset').click(function(){
+        geocoder.geocode({address: getAddress()}, function(results, status){
+            if (status == google.maps.GeocoderStatus.OK){
+                // ok result
+                var myLatLng = results[0].geometry.location;
+                map.setCenter(myLatLng);
+                marker.setPosition(myLatLng);
+                $('#f_geo_lat').val(myLatLng.lat());
+                $('#f_geo_lng').val(myLatLng.lng());
+                if (results[0].geometry.location_type == 'ROOFTOP'){
+                    map.setZoom(16);
+                } else {
+                    map.setZoom(14);
+                }
+            }else{
+                // error returning result
+                alert('Error.');
+            }
+        });
+        return false;
+    });
+});
+</script>
+{% endblock %}

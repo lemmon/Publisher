@@ -50,22 +50,25 @@ class Application extends \Lemmon\Framework
 
     protected function sanitize($in, $remove_empty = false)
     {
-        function r($in, $remove_empty) {
-            if (is_array($in)) {
-                foreach ($in as $key => $val) {
-                    if ($res = r($val, $remove_empty) or !($remove_empty and ($res === null or $res === []))) {
-                        $in[$key] = $res;
-                    } else {
-                        unset($in[$key]);
-                    }
+        return $this->_sanitize($in, $remove_empty);
+    }
+
+
+    private function _sanitize($in, $remove_empty)
+    {
+        if (is_array($in)) {
+            foreach ($in as $key => $val) {
+                if ($res = $this->_sanitize($val, $remove_empty) or !($remove_empty and ($res === null or $res === []))) {
+                    $in[$key] = $res;
+                } else {
+                    unset($in[$key]);
                 }
-            } else {
-                $in = trim($in);
-                if (strlen($in) == 0) $in = null;
             }
-            return $in;
+        } else {
+            $in = trim($in);
+            if (strlen($in) == 0) $in = null;
         }
-        return r($in, $remove_empty);
+        return $in;
     }
 
 
