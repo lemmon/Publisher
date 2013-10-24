@@ -10,6 +10,12 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
 {
 
 
+    static function __type()
+    {
+        return 'page';
+    }
+
+
     function index()
     {
     }

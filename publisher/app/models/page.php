@@ -66,6 +66,11 @@ class Page extends AbstractPage
             unset($f['tags']);
         }
         //
+        // type
+        if ($f['type'] and !is_callable(['Admin_' . \Lemmon\String::tableToClassName($f['type']) . '_Controller', '__type'])) {
+            $this->setError('type', _t('Invalid type'));
+        }
+        //
         // template
         if ($f['template']) {
             $f['template'] = \Lemmon\String::asciize($f['template'], '_');

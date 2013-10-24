@@ -103,7 +103,7 @@
             </div>
             <div>
                 
-                <p class="fit">
+                {{ forms.p('type', flash) }}
                     {{ forms.label('type', null, 'optional') }}
                     {{ forms.input('type', f.type) }}
                 </p>

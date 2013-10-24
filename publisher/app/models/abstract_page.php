@@ -118,6 +118,9 @@ abstract class AbstractPage extends AbstractRow
             if ($redirect{0} == '/') {
                 return $this->getRoute()->to($redirect);
             }
+            elseif ($redirect{0} == ':') {
+                return ($page = $this->getChildren()[0]) ? $page->getUrl() : '#';
+            }
             elseif (preg_match('#:?//#', $redirect)) {
                 return $this->getRoute()->to($redirect);
             }

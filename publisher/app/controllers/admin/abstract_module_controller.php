@@ -10,6 +10,12 @@ abstract class Admin_AbstractModule_Controller extends Admin_Backend_Controller
     protected $config = [];
 
 
+    static function __type()
+    {
+        return 'module';
+    }
+
+
     protected function getConfig()
     {
         return $this->config;

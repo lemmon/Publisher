@@ -41,7 +41,7 @@ class Templates_Controller extends AbstractFrontend_Controller
     private function _cssParse($file, $file_cached = null)
     {
         // less css
-        require_once LIBS_DIR . '/lessphp/lessc.inc.php';
+        require_once LIBS_DIR . '/lessphp_FIX/lessc.inc.php';
         $less = new lessc($file);
         // parse
         $code = $less->parse();
