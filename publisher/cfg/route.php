@@ -31,7 +31,7 @@ class Route extends \Lemmon\Route
         $this->register('admin/crud', 'admin/@$_section/$action/$id');
 
         $this->register('admin/login', 'admin/login');
-        $this->register('admin/logout', 'admin/logout');
+        $this->register('admin/logout', 'admin/account/logout');
     }
 
 
@@ -258,9 +258,23 @@ class Route extends \Lemmon\Route
     }
 
 
-    function getPublisher($link)
+    function isLocal()
     {
-        return '/publisher/public/' . $link;
+        return $_SERVER['REMOTE_ADDR'];
+    }
+
+
+    private function _doVersioning($link, $versioning)
+    {
+        return ($versioning and DO_VERSIONING === true)
+             ? preg_replace('/[^\.]+$/', $this->getVersion() . '.$0', $link)
+             : $link;
+    }
+
+
+    function getPublisher($link, $versioning = false)
+    {
+        return $this->to('publisher/public/' . $this->_doVersioning($link, $versioning));
     }
 
 
@@ -272,12 +286,7 @@ class Route extends \Lemmon\Route
 
     function getTemplate($link, $versioning = false)
     {
-        // versioning
-        if ($versioning and DO_VERSIONING === true) {
-            $link = preg_replace('/[^\.]+$/', $this->getVersion() . '.$0', $link);
-        }
-        // route
-        return $this->_site->link_id ? $this->to('user/' . $this->_site->getLink() . '/template/' . $link) : $this->to('user/template/' . $link);
+        return $this->to('user/' . ($this->_site->link_id ? $this->_site->getLink() . '/' : '') . 'template/' . $this->_doVersioning($link, $versioning));
     }
 
 

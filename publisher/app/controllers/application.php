@@ -34,9 +34,6 @@ class Application extends \Lemmon\Framework
         // page
         $this->page = $this->route->getPage();
         //
-        // i18n
-        $this->i18n = new \Lemmon\I18n\I18n();
-        //
         // section
         return $this->__initSection();
     }

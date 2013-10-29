@@ -1,0 +1,36 @@
+nav {
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:@navWidth;
+    height:auto;
+    ul {
+        position:absolute;
+        &.last {
+            bottom:0;
+        }
+    }
+    li {
+        text-align:center;
+        a {
+            display:block;
+            width:@navWidth;
+            height:@navHeight;
+            line-height:@navHeight / 7 * 2;
+            text-decoration:none !important;
+            &:before {
+                .icon('\f069');
+                font-size:round(@navWidth / 4);
+                text-indent:0;
+                text-align:center;
+                display:block;
+                height:@navHeight / 7 * 3;
+                line-height:@navHeight / 7 * 3;
+                padding-top:@navHeight / 7;
+                .animate();
+            }
+        }
+        &.nav-account    a:before { content:"\f007"; }
+    }
+}

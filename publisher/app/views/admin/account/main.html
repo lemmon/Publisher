@@ -1,32 +1,20 @@
-{% extends 'layout.html' %}
+{% extends 'frame.html' %}
 
-{% block title "Account"|t %}
-
-{% block main %}
+{% block rail %}
 
     <style>
-    #glyph {
-        width:100px;
-        height:100px;
-        position:absolute;
-        left:50%;
-        top:50%;
-        margin-top:-50px;
-        margin-left:-50px;
-    }
-    #glyph:before {
-        display:block;
-        width:100px;
-        height:100px;
-        line-height:100px;
-        font-size:66.66px;
-        text-align:center;
-        font-family:'FontAwesome';
-        content:'\f007';
-        color:#000;
-        opacity:.2;
-    }
+    #nav li.nav-signout a:before { content:"\f08b"; }
     </style>
-    <div id="glyph"></div>
+
+    <nav id="nav">
+        <ul>
+            {% block nav %}
+            <li class="nav-account"><a href="{{ link.to(':admin/section') }}">{{ "Account"|t }}</a></li>
+            {% endblock %}
+        </ul>
+        <ul class="last">
+            <li class="nav-signout"><a target="_top" href="{{ link.to(':admin/logout') }}">{{ "Sign out"|t }}</a></li>
+        </ul>
+    </nav>
 
 {% endblock %}

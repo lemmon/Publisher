@@ -48,6 +48,12 @@ abstract class AbstractPage extends AbstractRow
     }
 
 
+    function getSite()
+    {
+        return Site::find($this->site_id);
+    }
+
+
     function getData()
     {
         return $this->toArray();

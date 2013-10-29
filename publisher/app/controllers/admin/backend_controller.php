@@ -23,6 +23,7 @@ abstract class Admin_Backend_Controller extends Application
         //
         // i18n
         $this->i18n->setLocale($this->site->locale_id);
+        $this->i18n->load(BASE_DIR . "/i18n/{$this->site->locale_id}/admin.php");
         $this->i18n->load(USER_DIR . "/i18n/{$this->site->locale_id}/admin.php");
         //
         // templating

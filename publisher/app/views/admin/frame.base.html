@@ -6,21 +6,23 @@
 
 {% block body %}
 
-    <div id="rail">
-        <div class="inner">
+    <div class="{% block type none %}">
+
+        <div id="rail">
             
             {% block rail %}{% endblock %}
 
         </div>
-    </div>
-    <div id="main">
+        <div id="main">
         
-        <iframe name="main"></iframe>
+            <iframe name="main"></iframe>
         
+        </div>
+
     </div>
 
     <script src="{{ link.jQuery }}"></script>
-    <script src="{{ link.publisher('admin/js/frame.js') }}"></script>
+    <script src="{{ link.publisher('admin/js/frame.js', true) }}"></script>
     <script>
     $(function(){
         var section = (top.location.hash.indexOf('/in/') > -1) ? top.location.hash.replace(/^#/, '').split('/in/')[0] : null;

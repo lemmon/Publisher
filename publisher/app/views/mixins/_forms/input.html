@@ -4,5 +4,5 @@
        {{- '' }} value="{{ field.value }}"
        {{- '' }} size="{{ field.size|default(55) }}"
        {{- '' }} maxlength="{{ field.maxlength|default(field.size)|default(255) }}"
-       {%- if (field.placeholder) %} placeholder="{{ field.placeholder }}"{% endif -%}
+       {%- if (field.placeholder) %} placeholder="{{ field.placeholder|t }}"{% endif -%}
        >

@@ -16,7 +16,7 @@ $(function(){
 
 
     // menu active states
-    $rail.find('ul a').click(function(){
+    $rail.find('ul a[target=main]').click(function(){
         var $this = $(this);
         $('.active').removeClass('active');
         $this.parent().addClass('active');

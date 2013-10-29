@@ -7,11 +7,13 @@ use \Symfony\Component\Yaml\Yaml;
 */
 class Form
 {
+    private $_page;
     private $_form;
 
 
     function __construct($page)
     {
+        $this->_page = $page;
         // load form
         $form = Yaml::parse($page->getBlock('form/structure'));
         // fields
@@ -48,5 +50,11 @@ class Form
     function getFields()
     {
         return $this->_form['fields'];
+    }
+
+
+    function getEmail()
+    {
+        return $this->_page->getSite()->email;
     }
 }

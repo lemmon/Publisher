@@ -34,7 +34,7 @@ class TemplateExtensionUser extends \Lemmon\Template\ExtensionTwig
 
     function t($foo)
     {
-        return call_user_func_array([$this->i18n, 't'], func_get_args());
+        return call_user_func_array('_t', func_get_args());
     }
 
 

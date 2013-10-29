@@ -46,13 +46,13 @@ class Forms_Controller extends AbstractFrontend_Controller
                     } catch (\Lemmon\Model\ValidationException $e) {
                         $this->flash->setError('Error submitting form');
                     }
-                    mail('publisher@lemmonjuice.com', $this->page->name, json_encode($f, JSON_PRETTY_PRINT));
-                    $this->flash->setNotice('Form has been sent successfully');
+                    mail($this->form->getEmail(), $this->page->name, json_encode($f, JSON_PRETTY_PRINT));
+                    $this->flash->setNotice(_t('Form has been sent successfully'));
                     return $this->page->getUrl();
                 } else {
                     // throw error
-                    $this->flash->setError('Your input contains errors');
-                    $this->flash->setError('Form has NOT been sent');
+                    $this->flash->setError(_t('Your input contains errors'));
+                    $this->flash->setError(_t('Form has NOT been sent'));
                 }
             }
             
@@ -82,7 +82,7 @@ class Forms_Controller extends AbstractFrontend_Controller
             $value = $f[$id];
             // required
             if ($case = $field['weight'] and $case == 'required' and !$value) {
-                $this->flash->setErrorField($id, 'This field is required', $case);
+                $this->flash->setErrorField($id, _t('This field is required'), $case);
                 $ok = false;
             }
             // validate
@@ -90,7 +90,7 @@ class Forms_Controller extends AbstractFrontend_Controller
                 switch ($case) {
                     case 'email':
                         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                            $this->flash->setErrorField($id, 'This is NOT a valid email', 'validate-' . $case);
+                            $this->flash->setErrorField($id, _t('This is NOT a valid email'), 'validate-' . $case);
                             $ok = false;
                         }
                         break;

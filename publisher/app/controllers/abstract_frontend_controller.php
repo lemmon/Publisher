@@ -38,7 +38,8 @@ abstract class AbstractFrontend_Controller extends Application
     {
         // i18n
         $this->i18n->setLocale($page->locale_id);
-        $this->i18n->load(USER_DIR . "/i18n/{$page->locale_id}/frontend.php");
+        $this->i18n->load(BASE_DIR . "/i18n/{$page->locale_id}/template.php");
+        $this->i18n->load(USER_DIR . "/i18n/{$page->locale_id}/template.php");
         // nav
         Nav::setCurrentPage($page, $active);
     }

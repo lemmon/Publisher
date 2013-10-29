@@ -12,5 +12,6 @@ function dump($data) {
 //
 // i18n
 function _t($s) {
-    return call_user_func_array('sprintf', func_get_args());
+    global $i18n;
+    return call_user_func_array([$i18n, 't'], func_get_args());
 }

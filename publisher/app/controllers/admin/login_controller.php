@@ -29,11 +29,11 @@ class Admin_Login_Controller extends Admin_Backend_Controller
                 if ($this->auth->authenticate($f['email'], $f['password'])) {
                     // ok
                     $this->auth->storeIdentity();
-                    $this->flash->setNotice('You have been successfully logged in');
+                    $this->flash->setNotice(_t('You have been successfully logged in'));
                     return $this->route->to(':admin/home');
                 }
                 else {
-                    $this->flash->setError('Invalid email or password entered');
+                    $this->flash->setError(_t('Invalid email or password entered'));
                 }
             }
 

@@ -19,6 +19,50 @@ html, body {
     height:100%;
 }
 
+a {
+    color:@accentColor;
+    text-decoration:none;
+    &:hover {
+        text-decoration:underline;
+    }
+}
+
+
+//  Grid
+//  ------------------------------------------------------------  //
+
+
+#rail {
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:@navWidth;
+    height:auto;
+}
+
+#main {
+    position:fixed;
+    left:@navWidth;
+    right:0;
+    top:0;
+    bottom:0;
+    height:auto;
+    iframe {
+        width:100%;
+        height:100%;
+    }
+}
+
+.wider {
+    #rail {
+        width:@railWidth;
+    }
+    #main {
+        left:@railWidth;
+    }
+}
+
 
 //  Sidebar
 //  ------------------------------------------------------------  //
@@ -27,65 +71,136 @@ html, body {
 @railBackgroundColor: mix(#06c, #fff, 3.5%);
 
 #rail {
-    position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    width:@railWidth;
-    height:auto;
     background:@railBackgroundColor;
     border-right:1px solid fade(#06c, 6.5%);
-    //border-right:1px solid #d5e7f7;
     margin-left:-1px;
     overflow-y:auto;
-    & > .inner {
-        padding:@marginHeight @marginWidth;
-    }
-    .section {
-        position:relative;
-        margin-bottom:@gutterHeight;
-        a.more-button {
-            position:absolute;
-            right:0;
-            top:(@baseLineHeight - 18px) / 2;
-            text-shadow:none;
-            text-decoration:none;
-            display:inline-block;
-            padding:0 4px;
-            font-size:12px;
-            line-height:18px;
-            height:18px;
-            text-transform:uppercase;
-            font-style:normal;
-            background:@gray;
-            color:@white;
-            .borderRadius(2px);
-            display:none;
+}
+
+
+//  Nav
+//  ------------------------------------------------------------  //
+
+
+@import '_nav.less';
+
+nav {
+    li {
+        a {
+            color:mix(@textColor, @railBackgroundColor, 80%);
             &:hover {
-                background-color:@red;
-                background-color:#000;
+                color:mix(@accentColor, @railBackgroundColor, 85%);
             }
         }
+        &.active a {
+            //color:mix(@white, @textColor, 85%);
+        }
+    }
+}
+
+
+//  Wide Sidebar
+//  ------------------------------------------------------------  //
+
+
+.section {
+    position:relative;
+    margin:@marginHeight @marginWidth;
+    a.more-button {
+        position:absolute;
+        right:0;
+        top:(@baseLineHeight - 18px) / 2;
+        text-shadow:none;
+        text-decoration:none;
+        display:inline-block;
+        padding:0 4px;
+        font-size:12px;
+        line-height:18px;
+        height:18px;
+        text-transform:uppercase;
+        font-style:normal;
+        background:@gray;
+        color:@white;
+        .borderRadius(2px);
+        display:none;
         &:hover {
-            a.more-button {
-                display:inline-block;
+            background-color:@red;
+            background-color:#000;
+        }
+    }
+    &:hover {
+        a.more-button {
+            display:inline-block;
+        }
+    }
+    & > ul {
+        margin-left:-@marginWidth;
+        margin-right:-@marginWidth;
+    }
+    p, ul {
+        margin-top:round(@baseLineHeight / 3);
+    }
+    ul {
+        ul {
+            margin:0;
+        }
+        li {
+            position:relative;
+            background:url(../img/subpath.png) 0 2px no-repeat;
+            a {
+                display:block;
+                font-size:14px;
+                height:@baseLineHeight;
+                border:1px solid transparent;
+                border-width:1px 0;
+                .animate(none);
+                &:hover {
+                    text-decoration:none;
+                    background-color:desaturate(fade(#06c, 6.5%), 100%);
+                    border-color:desaturate(fade(#06c, 6.5%), 100%);
+                }
+            }
+            &.active > a {
+                background-color:fade(#06c, 6.5%);
+                border-color:fade(#06c, 6.5%);
+            }
+            & {
+                background-position:@marginWidth 2px;
+                a {
+                    padding-left:@marginWidth + 21px;
+                }
+            }
+            &.level-1 {
+                background-position:@marginWidth + 21px 2px;
+                a {
+                    padding-left:@marginWidth + 42px;
+                }
+            }
+            &.level-2 {
+                background-position:@marginWidth + 42px 2px;
+                a {
+                    padding-left:@marginWidth + 63px;
+                }
+            }
+            &.menu {
+                background-image:none;
+                &:before {
+                    position:absolute;
+                    left:@marginWidth + 2px;
+                    top:1px;
+                    color:mix(@textColor, @railBackgroundColor, 35%);
+                    text-shadow:0 1px 0 fade(#fff, 85%);
+                    font-size:@baseFontSize - 1px;
+                    .icon("\f0c1");
+                }
             }
         }
-        & > ul {
-            margin-left:-@marginWidth;
-            margin-right:-@marginWidth;
-        }
     }
 }
 
 
-a {
-    color:@accentColor;
-    text-decoration:none;
-    &:hover {
-        text-decoration:underline;
-    }
-}
+//  More Stuff
+//  ------------------------------------------------------------  //
 
 
 h2, h3 {
@@ -133,67 +248,6 @@ h3 {
         }
     }
 }
-p, ul {
-    margin-top:round(@baseLineHeight / 3);
-}
-ul {
-    ul {
-        margin:0;
-    }
-    li {
-        position:relative;
-        background:url(../img/subpath.png) 0 2px no-repeat;
-        a {
-            display:block;
-            font-size:14px;
-            height:@baseLineHeight;
-            border:1px solid transparent;
-            border-width:1px 0;
-            .animate(none);
-            &:hover {
-                text-decoration:none;
-                background-color:desaturate(fade(#06c, 6.5%), 100%);
-                border-color:desaturate(fade(#06c, 6.5%), 100%);
-            }
-        }
-        /* */
-        &.active > a {
-            background-color:fade(#06c, 6.5%);
-            border-color:fade(#06c, 6.5%);
-        }
-        /* */
-        & {
-            background-position:@marginWidth 2px;
-            a {
-                padding-left:@marginWidth + 21px;
-            }
-        }
-        &.level-1 {
-            background-position:@marginWidth + 21px 2px;
-            a {
-                padding-left:@marginWidth + 42px;
-            }
-        }
-        &.level-2 {
-            background-position:@marginWidth + 42px 2px;
-            a {
-                padding-left:@marginWidth + 63px;
-            }
-        }
-        &.menu {
-            background-image:none;
-            &:before {
-                position:absolute;
-                left:@marginWidth + 2px;
-                top:1px;
-                color:mix(@textColor, @railBackgroundColor, 35%);
-                text-shadow:0 1px 0 fade(#fff, 85%);
-                font-size:@baseFontSize - 1px;
-                .icon("\f0c1");
-            }
-        }
-    }
-}
 div.newitem {
     padding-left:21px;
     background:url(../img/subpath.png) 0 2px no-repeat;
@@ -203,23 +257,5 @@ div.newitem {
         &:hover {
             color:@linkColor;
         }
-    }
-}
-
-
-//  Main
-//  ------------------------------------------------------------  //
-
-
-#main {
-    position:fixed;
-    left:@railWidth;
-    right:0;
-    top:0;
-    bottom:0;
-    height:auto;
-    iframe {
-        width:100%;
-        height:100%;
     }
 }

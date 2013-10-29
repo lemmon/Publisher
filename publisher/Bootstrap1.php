@@ -14,6 +14,10 @@ $loader->add('$root/app/services/$file.php');
 $loader->register(Lemmon\Autoloader::INCLUDE_PSR0);
 
 //
+// i18n
+$i18n = new \Lemmon\I18n\I18n;
+
+//
 // cache
 Lemmon_Cache::setBase('/../cache');
 
