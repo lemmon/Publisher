@@ -260,7 +260,7 @@ class Route extends \Lemmon\Route
 
     function isLocal()
     {
-        return $_SERVER['REMOTE_ADDR'];
+        return $_SERVER['REMOTE_ADDR'] == '127.0.0.1';
     }
 
 

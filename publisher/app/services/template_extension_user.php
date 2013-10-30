@@ -15,12 +15,16 @@ class TemplateExtensionUser extends \Lemmon\Template\ExtensionTwig
 
     function getFilters()
     {
-        return [
+        return array_merge(
+        
+            parent::getFilters(), [
         
             't'         => new \Twig_Filter_Function([$this, 't']),
             'pp'        => new \Twig_Filter_Function('TemplateExtensionUser::pp'/*, ['is_safe' => ['html']]*/),
             'noImages'  => new \Twig_Filter_Function('TemplateExtensionUser::noImages'/*, ['is_safe' => ['html']]*/),
             'emailHide' => new \Twig_Filter_Function('TemplateExtensionUser::emailHide'/*, ['is_safe' => ['html']]*/),
+
+            'tDate'    => new \Twig_Filter_Function([$this, 'tDate']),
 
             /*
             new \Twig_SimpleFilter('t', function(){
@@ -28,13 +32,25 @@ class TemplateExtensionUser extends \Lemmon\Template\ExtensionTwig
             }),
             */
         
-        ] + parent::getFilters();
+        ]);
     }
 
 
     function t($foo)
     {
         return call_user_func_array('_t', func_get_args());
+    }
+
+
+    function tDate($t, $format = '%e %b %Y')
+    {
+        $ts = strtotime($t);
+        $format = str_replace([
+            '%e.'
+        ], [
+            date('jS', $ts),
+        ], $format);
+        return strftime($format, $ts);
     }
 
 
