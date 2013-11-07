@@ -20,6 +20,15 @@ class QueryPosts extends AbstractQueryModel
     }
 
 
+    function exclude($post)
+    {
+        if ($post instanceof Post) {
+            $this->model->where('!id', $post->id);
+        }
+        return $this;
+    }
+
+
     function getPagination()
     {
         return $this->_pagination;

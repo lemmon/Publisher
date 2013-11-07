@@ -15,7 +15,7 @@ abstract class AbstractPage extends AbstractRow
     private $_blocksLoaded;
 
 
-    function getTemplateName()
+    function getTemplateName($action = null)
     {
         // template is defined
         if ($this->template) {
@@ -23,7 +23,7 @@ abstract class AbstractPage extends AbstractRow
         }
         // type is defined
         elseif ($this->type) {
-            return $this->type . (Application::getAction() == 'index' ? '' : '_' . Application::getAction());
+            return $this->type . (($action and $action != 'index') ? '_' . $action : '');
         }
         // default
         else {

@@ -101,10 +101,18 @@ abstract class AbstractModuleRow extends AbstractRow
         //
         // files uploads
         if ($files = $_FILES) {
+            // files
             foreach ($files as $handle => $file) {
                 if ($file['error'] != UPLOAD_ERR_OK and $file['error'] != UPLOAD_ERR_NO_FILE) {
                     $this->setError('data/image', _t('Error uploading file'), 'upload');
                 }
+            }
+            // upload directory
+            $dir_base = \Lemmon\Model\Schema::getDefaultUploadDir();
+            $dir_file = String::classToTableName(self::getModelName(), '-') . '/' . strftime('%Y-%m');
+            if ((!is_dir($dir_base . '/' . $dir_file) and !@mkdir($dir_base . '/' . $dir_file, 0777, true)) or !is_writable($dir_base . '/' . $dir_file)) {
+                foreach (array_keys($files) as $handle)
+                    $this->setError($handle, _t('Upload directory not writable'), 'upload/dir');
             }
         }
         //
@@ -153,8 +161,6 @@ abstract class AbstractModuleRow extends AbstractRow
             // base dir
             $dir_base = \Lemmon\Model\Schema::getDefaultUploadDir();
             $dir_file = String::classToTableName(self::getModelName(), '-') . '/' . strftime('%Y-%m');
-            if (!is_dir($dir_base . '/' . $dir_file))
-                mkdir($dir_base . '/' . $dir_file, 0777, true);
             // upload files
             foreach ($files as $handle => $file) {
                 if ($file['error'] == UPLOAD_ERR_OK) {

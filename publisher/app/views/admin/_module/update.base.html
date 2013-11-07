@@ -18,6 +18,8 @@
 
     </div>
     <div class="tab">
+        
+        {% block f_content_before %}{% endblock %}
   
         {% block f_content %}
         <div>
@@ -27,6 +29,8 @@
             </article>
         </div>
         {% endblock %}
+
+        {% block f_content_after %}{% endblock %}
         
     </div>
     <div class="tab">

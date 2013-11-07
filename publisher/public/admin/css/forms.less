@@ -193,28 +193,6 @@ label.label {
 // Notices
 // ------------------------------------------------------------ //
 
-/*
-#notices {
-    position:absolute;
-    left:2px;
-    right:2px;
-    top:2px;
-    z-index:1001;
-    .flash_error,
-    .flash_notice {
-        padding:8px 0 7px;
-        text-align:center;
-    }
-    .flash_error {
-        background:fade(mix(@red, @backgroundColor, 35%), 95%);
-        //border-bottom:1px solid fade(@red, 65%);
-    }
-    .flash_notice {
-        background:fade(mix(@yellow, @backgroundColor, 35%), 95%);
-        //border-bottom:1px solid fade(@yellow, 65%);
-    }
-}
-*/
 #notices {
     .flash {
         display:block;
@@ -254,11 +232,19 @@ article {
             margin-bottom:0;
         }
     }
+    p, ul, ul, dl {
+        line-height:inherit;
+    }
     h1, h2, h3, h4, h5, h6, p, ol, ul {
         margin:15px 0;
     }
-    p, ul, ul, dl {
-        line-height:inherit;
+    p {
+        &.highlight {
+            font-size:@baseFontSize + 4px;
+            line-height:@baseLineHeight + 2px;
+            font-style:italic;
+            background-color:mix(@black, @backgroundColor, 7%)
+        }
     }
     ul {
         list-style:square outside;

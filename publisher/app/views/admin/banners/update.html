@@ -1,0 +1,17 @@
+{% extends 'update.base.html' %}
+
+
+{% block form_type_upload true %}
+
+
+{% block f_content %}
+
+    {{ forms.p('image', flash) }}
+        {{ forms.label('image', 'Image', 'required') }}
+        {{ forms.file('image') }}
+        {% if (f.get('image')) %}
+        <br><img src="{{ link.upload(f.get('image')) }}" style="max-width:100%;max-height:400px">
+        {% endif %}
+    </p>
+
+{% endblock %}

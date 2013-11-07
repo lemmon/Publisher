@@ -1,8 +1,10 @@
 {% extends '_templates/module.default.html' %}
 
+
 {% block form_action %}
 <a href="{{ link.to("@/@/create/$id", page) }}">{% block form_action_name %}{{ "Create new Item"|t }}{% endblock %}</a>
 {% endblock %}
+
 
 {% block main_content %}
 {% if (data|length) %}
@@ -26,9 +28,7 @@
                 <a href="{{ link.to(':admin/update', item) }}">{{ item.name|default("(untitled)"|t) }}</a><span></span>
             </div>
             <div class="content">
-                {% block post_content %}
-                {{ item.content|p|line(-1)|default("-") }}
-                {% endblock %}
+                {% block post_content item.content|p|line(-1)|default("-") %}
             </div>
             <div class="aside">
                 {%- if (item.published_at) -%}

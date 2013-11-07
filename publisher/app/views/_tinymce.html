@@ -22,8 +22,11 @@ $(function(){
             toolbar1: 'undo redo | formatselect | blockquote | visualblocks',
             toolbar2: 'bold italic | link | bullist numlist outdent indent',
             plugins: 'link, visualblocks',
-            block_formats: 'Paragraph=p;Header 1=h1;Header 2=h2;Header 3=h3;Header 4=h4;Header 5=h5',
-            valid_elements : 'p,strong/b,em/i,br,h1,h2,h3,h4,h5,ul,ol,li,blockquote,dl,dt,dd,a[href|target]'
+            formats: {
+                'highlight': {/*selector: 'p.highlight',*/ block: 'p', classes: 'highlight'}
+            },
+            block_formats: 'Paragraph=p;Highlight=highlight;Header 1=h1;Header 2=h2;Header 3=h3;Header 4=h4;Header 5=h5',
+            valid_elements : 'p[class<highlight],strong/b,em/i,br,h1,h2,h3,h4,h5,ul,ol,li,blockquote,dl,dt,dd,a[href|target]'
                 /*
                 + ',div[class]'
                 */

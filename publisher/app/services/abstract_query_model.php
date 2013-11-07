@@ -48,8 +48,25 @@ abstract class AbstractQueryModel implements AbstractQueryModelInterface, \Itera
     }
 
 
-    function random()
+    function limit($limit, $scope = null)
     {
+        if ($scope) {
+            if (preg_match('/^\w+$/', $scope)) {
+                $this->model->order($scope . '_at DESC');
+            } else {
+                throw new \Exception('Invalid scope.');
+            }
+        }
+        $this->model->limit($limit);
+        return $this;
+    }
+
+
+    function random($limit = null)
+    {
+        if ($limit) {
+            $this->limit($limit);
+        }
         $this->model->order('RAND()');
         return $this;
     }
@@ -57,18 +74,11 @@ abstract class AbstractQueryModel implements AbstractQueryModelInterface, \Itera
 
     function getRecent($limit = null, $scope = 'created')
     {
-        if (preg_match('/^\w+$/', $scope)) {
-            $this->model->order($scope . '_at DESC');
-        } else {
-            throw new \Exception('Invalid scope.');
-        }
         if ($limit) {
-            $this->model->limit($limit);
+            $this->limit($limit, $scope);
         }
         return $this;
     }
-
-
 
 
     function getIterator()
