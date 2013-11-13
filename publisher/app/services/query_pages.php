@@ -18,6 +18,13 @@ class QueryPages extends AbstractQueryModel
     }
 
 
+    function byTag($tag)
+    {
+        $this->model->where(['id' => (new \Lemmon\Sql\Query)->select('pages_tags')->where(['site_id' => SITE_ID, 'tag LIKE ?' => $tag])->distinct('page_id')]);
+        return $this;
+    }
+
+
     function byType($type)
     {
         $this->model->where(['type' => $type]);

@@ -48,6 +48,32 @@ abstract class AbstractQueryModel implements AbstractQueryModelInterface, \Itera
     }
 
 
+    function byPage($pages)
+    {
+        if ($pages instanceof QueryPages) {
+            // pages query
+            return $this->byPage($pages->getIterator()->all());
+        } elseif (is_array($pages)) {
+            // array of page objects
+            $query = [];
+            foreach ($pages as $page) {
+                if (is_int($page))
+                    $query[] = $page;
+                elseif ($page instanceof Page)
+                    $query[] = $page->id;
+            }
+            $this->model->where(['page_id' => $query]);
+        } elseif (is_numeric($pages)) {
+            // singe page id
+            $this->model->where(['page_id' => $pages]);
+        } elseif ($pages instanceof Page) {
+            // singe page object
+            $this->model->where(['page_id' => $pages->id]);
+        }
+        return $this;
+    }
+
+
     function limit($limit, $scope = null)
     {
         if ($scope) {

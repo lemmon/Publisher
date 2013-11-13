@@ -162,7 +162,7 @@ class Page extends AbstractPage
             // sanitize and save
             foreach ($tags as $i => $tag) {
                 if ($tag = \Lemmon\String::asciize($tag)) {
-                    (new SqlQuery)->replace('pages_tags')->set(['page_id' => $this->id, 'tag' => $tag])->exec();
+                    (new SqlQuery)->replace('pages_tags')->set(['site_id' => SITE_ID, 'page_id' => $this->id, 'tag' => $tag])->exec();
                     $tags[$i] = $tag;
                 } else {
                     unset($tags[$i]);
