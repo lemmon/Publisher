@@ -74,6 +74,12 @@ abstract class AbstractQueryModel implements AbstractQueryModelInterface, \Itera
     }
 
 
+    function like($item)
+    {
+        return $this->byPage($item->getPage());
+    }
+
+
     function limit($limit, $scope = null)
     {
         if ($scope) {

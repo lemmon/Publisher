@@ -44,10 +44,13 @@ class Page extends AbstractPage
     protected function onValidate(&$f)
     {
         //
-        // site_id
-        if (defined('SITE_ID')) {
-            $f['site_id'] = SITE_ID;
+        // type
+        if ($f['type'] and !is_callable(['Admin_' . \Lemmon\String::tableToClassName($f['type']) . '_Controller', '__type'])) {
+            $this->setError('type', _t('Invalid type'));
         }
+        //
+        // files uploads
+        $this->_validateUploads($_FILES);
         //
         // content
         if (array_key_exists('blocks', $f)) {
@@ -66,10 +69,8 @@ class Page extends AbstractPage
             unset($f['tags']);
         }
         //
-        // type
-        if ($f['type'] and !is_callable(['Admin_' . \Lemmon\String::tableToClassName($f['type']) . '_Controller', '__type'])) {
-            $this->setError('type', _t('Invalid type'));
-        }
+        // site_id
+        $f['site_id'] = SITE_ID;
         //
         // template
         if ($f['template']) {
@@ -131,10 +132,16 @@ class Page extends AbstractPage
 
     private function _insertContent()
     {
+        $data = $this->_temp['blocks'];
+        $tags = $this->_temp['tags'];
+        //
+        // upload files
+        $this->_saveUploads($data);
+        //
         // insert content
-        if ($this->_temp['blocks']) {
+        if ($data) {
             $blocks_to_remove = [];
-            foreach ($this->_temp['blocks'] as $name => $content) {
+            foreach ($data as $name => $content) {
                 // sanitize
                 do {
                     $content = trim(preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $content, -1, $n));
@@ -155,8 +162,9 @@ class Page extends AbstractPage
             // remove unwanted content
             (new SqlQuery)->delete('pages_blocks')->where(['page_id' => $this->id, new SqlExpression('(content IS NULL OR content = "" OR name IN (?))', $blocks_to_remove)])->exec();
         }
+        //
         // insert tags
-        if ($tags = $this->_temp['tags']) {
+        if ($tags) {
             // insert tags
             $tags = explode(',', $tags);
             // sanitize and save
