@@ -26,7 +26,7 @@ abstract class AbstractFrontend_Controller extends Application
         if ($page = $this->page) {
             $this->data['page'] = $this->page;
             $this->setCurrentPage($page, (string)$page->getUrl() == (string)$this->route->getSelf());
-            $this->template->display($page->getTemplateName());
+            $this->template->display(file_exists(USER_DIR . '/template/' . $page->getTemplateName() . '.html') ? $page->getTemplateName() : 'default');
         }
         //
         // init
