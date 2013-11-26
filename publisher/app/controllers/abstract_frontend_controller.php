@@ -26,12 +26,16 @@ abstract class AbstractFrontend_Controller extends Application
         if ($page = $this->page) {
             $this->data['page'] = $this->page;
             $this->setCurrentPage($page, (string)$page->getUrl() == (string)$this->route->getSelf());
-            $this->template->display(file_exists(USER_DIR . '/template/' . $page->getTemplateName() . '.html') ? $page->getTemplateName() : 'default');
+            $action = self::getAction() != 'index' ? self::getAction() : null;
+            $this->template->display(file_exists(USER_DIR . '/template/' . $page->getTemplateName($action) . '.html') ? $page->getTemplateName($action) : 'default');
         }
         //
         // init
         $this->__initModule();
     }
+
+
+    protected function __initModule() {}
 
 
     protected function setCurrentPage($page, $active = true)
@@ -45,7 +49,28 @@ abstract class AbstractFrontend_Controller extends Application
     }
 
 
-    protected function __initModule() {}
+    function index()
+    {
+        $class_name = substr(get_class($this), 0, -11);
+        $query_class_name = 'Query' . $class_name;
+        $this->data[\Lemmon\String::classToTableName($class_name)] = new $query_class_name($this->page);
+    }
+
+
+    function detail()
+    {
+        $class_name = \Lemmon\String::sg(substr(get_class($this), 0, -11));
+        // nav
+        if ($id = $this->route->id and $item = call_user_func([$class_name, 'find'], $id) and $page = Page::find($item->page_id)) {
+            // current page
+            $this->setCurrentPage($page, false);
+            // template
+            $this->data[\Lemmon\String::classToTableName($class_name)] = $item;
+        } else {
+            // Post not found
+            die('404');
+        }
+    }
 
 
     protected function _res($res = null, $add = [], $default = null)

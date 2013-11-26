@@ -81,7 +81,7 @@ class Route extends \Lemmon\Route
         if ($this->_extended->match($this)) {
             // user extended
         }
-        elseif ($this->match('p/($id|$slug)(/$paginate)(/$action)', ['id' => '\d+', 'slug' => '[\w\-]+', 'paginate' => '\d+', 'action' => '[\w\-]+']) and $page = Page::find($this->id ? ['id' => $this->id] : ['redirect' => $this->slug])) {
+        elseif ($this->match('^p/($id|$slug)(/$paginate)(/$action)(/$hash)', ['id' => '\d+', 'slug' => '[\w\-]+', 'paginate' => '\d+', 'action' => '[\w\-]+', 'hash' => '[\w\-]+']) and $page = Page::find($this->id ? ['id' => $this->id] : ['redirect' => $this->slug])) {
             // load page
             $this->_page = $page;
             // subpages
@@ -96,15 +96,9 @@ class Route extends \Lemmon\Route
         }
         //
         // module item detail
-        elseif ($this->match('^$id/in/$page_id', ['id' => '\d+', 'page_id' => '\d+']) and $page = Page::find(['id' => $this->page_id, '!type' => null])) {
-            // load page
+        elseif ($this->match('^e/$id', ['id' => '\d+']) and $item = (new \Lemmon\Sql\Query)->select('items')->where(['id' => $this->id])->first(1) and $page = Page::find($item->page_id)) {
             $this->_page = $page;
-            Application::setController($page->type);
-            Application::setAction('detail');
-        }
-        elseif ($this->match('a/$id', ['id' => '\d+'])) {
-            // posts
-            Application::setController('posts');
+            Application::setController(\Lemmon\String::pl(\Lemmon\String::classToTableName($item->type_id)));
             Application::setAction('detail');
         }
         elseif ($this->match('c/$id(/$paginate)', ['id' => '\d+', 'paginate' => '\d+'])) {
@@ -186,10 +180,9 @@ class Route extends \Lemmon\Route
         $this->register('page_id', 'p/%1');
         $this->register('page_slug', 'p/$redirect');
         $this->register('page_redirect', '$redirect');
-        $this->register('post', 'a/$id');
+        $this->register('module_item', 'e/$id');
         $this->register('category', 'c/$id');
         $this->register('paginate', '@/@/%1');
-        $this->register('module_item', '$id/in/$page.id');
         //
         // user defined routes
         //
@@ -217,6 +210,12 @@ class Route extends \Lemmon\Route
     function getPage()
     {
         return $this->_page;
+    }
+
+
+    function paginate($id)
+    {
+        return $this->to(':paginate', $id);
     }
 
 

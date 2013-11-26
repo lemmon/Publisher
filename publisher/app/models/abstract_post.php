@@ -12,12 +12,6 @@ abstract class AbstractPost extends AbstractModuleRow
     private $_temp = [];
 
 
-    function getUrl()
-    {
-        return $this->getRoute()->to(':post', $this);
-    }
-
-
     function getCategories()
     {
         if (array_key_exists('categories', $this->_cache)) {

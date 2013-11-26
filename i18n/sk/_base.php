@@ -11,7 +11,7 @@ return [
     'Name' => 'Meno',
     'optional' => 'voliteľné',
     'Phone' => 'Telefón',
-    'Published on' => 'Poblikované',
+    'Published on' => 'Publikované',
     'recommended' => 'odporúčané',
     'required' => 'povinné',
     'City' => 'Mesto',

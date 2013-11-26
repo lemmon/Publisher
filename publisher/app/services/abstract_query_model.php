@@ -113,6 +113,13 @@ abstract class AbstractQueryModel implements AbstractQueryModelInterface, \Itera
     }
 
 
+    function filter($key, $value)
+    {
+        $this->model->getStatement()->join('items_data', ['item_id' => ':id', 'name' => $key, 'content' => $value]);
+        return $this;
+    }
+
+
     function getIterator()
     {
         return $this->model;
