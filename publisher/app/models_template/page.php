@@ -28,6 +28,12 @@ class Page extends AbstractPage
     }
 
 
+    function hasChildren()
+    {
+        return (bool)$this->getChildren()->count();
+    }
+
+
     function isActive($active = null)
     {
         return is_null($_ = $this->_active)

@@ -8,6 +8,7 @@ class Route extends \Lemmon\Route
     private $_site;
     private $_page;
     private $_version;
+    private $_track = [];
 
 
     protected function __initAdmin()
@@ -84,6 +85,8 @@ class Route extends \Lemmon\Route
         elseif ($this->match('^p/($id|$slug)(/$paginate)(/$action)(/$hash)', ['id' => '\d+', 'slug' => '[\w\-]+', 'paginate' => '\d+', 'action' => '[\w\-]+', 'hash' => '[\w\-]+']) and $page = Page::find($this->id ? ['id' => $this->id] : ['redirect' => $this->slug])) {
             // load page
             $this->_page = $page;
+            $this->_track['type'] = 0;
+            $this->_track['id'] = $page->id;
             // subpages
             if ($page->type) {
                 // special page
@@ -98,6 +101,8 @@ class Route extends \Lemmon\Route
         // module item detail
         elseif ($this->match('^e/$id', ['id' => '\d+']) and $item = (new \Lemmon\Sql\Query)->select('items')->where(['id' => $this->id])->first(1) and $page = Page::find($item->page_id)) {
             $this->_page = $page;
+            $this->_track['type'] = 1;
+            $this->_track['id'] = $item->id;
             Application::setController(\Lemmon\String::pl(\Lemmon\String::classToTableName($item->type_id)));
             Application::setAction('detail');
         }
@@ -108,7 +113,9 @@ class Route extends \Lemmon\Route
         }
         elseif (!$this->getParam(1)) {
             // frontpage
-            $this->_page = Page::find(['locale_id' => $this->_site->locale_id, 'parent_id' => null]);
+            $this->_page = $page = Page::find(['locale_id' => $this->_site->locale_id, 'parent_id' => null]);
+            $this->_track['type'] = 0;
+            $this->_track['id'] = $page->id;
             // type
             if ($this->_page->type) {
                 // special page
@@ -132,7 +139,14 @@ class Route extends \Lemmon\Route
         // site
         //
         if ($site = Site::findCurrent()) {
+            // check for valid host
+            if ($_SERVER['HTTP_HOST'] != $site->host and !$_POST) {
+                header('Location: ' . (($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://') . $site->host . $_SERVER['REQUEST_URI'], true, 301);
+                exit;
+            }
+            //
             $this->_site = $site;
+            $this->_track['site_id'] = $site->id;
             define('SITE_ID', $site->id);
             define('USER_DIR', BASE_DIR . '/user/' . $site->getLink());
         } else {
@@ -216,6 +230,14 @@ class Route extends \Lemmon\Route
     function paginate($id)
     {
         return $this->to(':paginate', $id);
+    }
+
+
+    function getTrack()
+    {
+        // 0: page
+        // 1: itemw
+        return join(', ', $this->_track);
     }
 
 

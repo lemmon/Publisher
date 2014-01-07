@@ -16,7 +16,18 @@ class Site extends \Lemmon\Model\AbstractRow
 
     static function findCurrent()
     {
-        return self::$_current ?: (self::$_current = self::find(['host' => $_SERVER['HTTP_HOST']]));
+        if (self::$_current) {
+            // site already found
+            return self::$_current;
+        } else {
+            // find site...
+            $host = $_SERVER['HTTP_HOST'];
+            $host_alt = (substr($host, 0, 4) == 'www.') ? substr($host, 4) : 'www.' . $host;
+            // ...in db
+            if ($site = self::find(['host' => [$host, $host_alt]])) {
+                return self::$_current = $site;
+            }
+        }
     }
 
 

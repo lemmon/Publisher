@@ -15,6 +15,13 @@ $(function(){
     $('a').filter(':not([target])').attr('target', 'main');
 
 
+    // menu sublinks
+    $('[data-href]').click(function(){
+        $main.attr('src', $(this).data('href'));
+        return false;
+    })
+    
+
     // menu active states
     $rail.find('ul a[target=main]').click(function(){
         var $this = $(this);
@@ -23,7 +30,6 @@ $(function(){
         $main.attr('src', $this.attr('href'));
         return false;
     });
-    
 
-    
+
 });

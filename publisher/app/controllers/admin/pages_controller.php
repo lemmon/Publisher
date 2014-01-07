@@ -34,12 +34,31 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
     }
 
 
-    private function _getOptions($locale_id)
+    private function _getOptions($locale_id = null)
     {
-        $this->data += [
-            'pages'  => Pages::fetchTreeInLocale($locale_id),
-            'states' => States::getOptions(),
-        ];
+        // states
+        $this->data['states'] = States::getOptions();
+        // pages
+        if ($locale_id) {
+            $this->data['pages'] = Pages::fetchTreeInLocale($locale_id);
+        }
+    }
+
+
+    private function _create(array $force = [])
+    {
+        // options
+        $this->_getOptions();
+        // scaffolding
+        return $this->_res(Scaffold::create($this, [
+            'default' => [
+                'state_id' => 1,
+            ],
+            'force' => $force,
+            'redir' => function($item) {
+                return $this->route->getSection($item);
+            },
+        ]));
     }
 
 
@@ -47,21 +66,14 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
     {
         if ($locale_id = $this->route->hash and $locale = Locales::fetch($locale_id)) {
 
-            // options
-            $this->_getOptions($locale['id']);
-            // scaffolding
-            return $this->_res(Scaffold::create($this, [
-                'default' => [
-                    'state_id' => 1,
-                ],
-                'force' => [
-                    'locale_id' => $locale_id,
-                ],
-                'redir' => function($item){
-                    return $this->route->getSection($item);
-                },
-            ]));
+            // page with locale
+            return $this->_create(['locale_id' => $locale_id]);
 
+        } elseif ($page_id = $this->route->id and $page = Page::find($page_id)) {
+
+            // subpage
+            return $this->_create(['locale_id' => $page->locale_id, 'parent_id' => $page_id]);
+            
         } elseif ($f = $_POST and array_key_exists('locale_id', $f)) {
 
             // creating first page
@@ -82,7 +94,6 @@ class Admin_Pages_Controller extends Admin_Backend_Controller
                 'state_id' => 1,
                 'locale_id' => !Pages::find(['locale_id' => $this->site->locale_id])->count() ? $this->site->locale_id : null,
             ];
-            #return $this->template->display('empty');
 
         }
     }

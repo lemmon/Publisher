@@ -11,6 +11,7 @@
                 {{- _page.name -}}
                 {%- if (_page.caption) %} ({{ _page.caption }}){% endif -%}
             </span>
+            <span class="newpage" data-href="{{ link.to(':admin/action', 'create', _page.id) }}">+</span>
         </a>
 
         {% include '_listpages.html' with {'_pages': pages.pages[_page.id], 'level': level + 1} %}
