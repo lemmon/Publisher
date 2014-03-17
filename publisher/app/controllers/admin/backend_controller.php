@@ -56,13 +56,14 @@ abstract class Admin_Backend_Controller extends Application
     protected function _res($res = null, $add = [])
     {
         // Route instance
-        if ($res instanceof \Lemmon\Route\Link or $f_errors = $this->flash->getErrors()) {
+        if ($res instanceof \Lemmon\Route\Link or $f_errors = $this->flash->getErrors() /*or $f_notices = $this->flash->getNotices()*/) {
             header('Content-Type: application/json');
             echo json_encode([
                 'redir' => (string)$res,
                 'flash' => [
                     'errors' => $f_errors,
                     'fields' => $this->flash->getFields(),
+                    'notices' => $f_notices,
                 ],
             ] + (array)(is_callable($add) ? $add() : $add), JSON_PRETTY_PRINT);
             exit;

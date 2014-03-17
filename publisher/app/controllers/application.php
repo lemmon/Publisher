@@ -18,12 +18,10 @@ class Application extends \Lemmon\Framework
 
     final protected function __initApplication()
     {
-        // FLASH MESSAGES
-        $this->data['flash'] = $this->flash = new \Lemmon\Form\Flash($this->route);
-        // /FLASH
-        
         Env::setDev(true);
-        
+        //
+        // flash
+        $this->data['flash'] = $this->flash = new \Lemmon\Form\Flash($this->route);
         //
         // site
         if ($site = $this->route->getSite()) {
@@ -36,12 +34,6 @@ class Application extends \Lemmon\Framework
         //
         // section
         return $this->__initSection();
-    }
-
-
-    static function getDb()
-    {
-        return self::getInstance()->db;
     }
 
 

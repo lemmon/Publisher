@@ -25,10 +25,10 @@ class Admin_Media_Controller extends Admin_Backend_Controller
 
     function create()
     {
-        $this->route->register('section', 'admin/@');
-        return $this->_res(Scaffold::create($this, [], $item), function() use ($item){
+        return $this->_res(Scaffold::create($this, ['redir' => '/'], $item), function() use ($item){
+            $this->flash->getNotices();
             return [
-                'file' => $this->route->getUpload($item->file),
+                'file' => (string)$this->route->getUpload($item->file),
                 'file_id' => $item->id,
             ];
         });

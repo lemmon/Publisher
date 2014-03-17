@@ -1,7 +1,7 @@
 {% extends 'boilerplate.html' %}
 
 {% block head_append %}
-<link rel="stylesheet" href="{{ link.publisher('admin/css/master.css') }}">
+<link rel="stylesheet" href="{{ link.publisher('admin/css/master.css', true) }}">
 {% endblock %}
 
 {% block body %}
@@ -38,12 +38,23 @@
                 // parse editareas
                 $form.find('div[rel=article]').remove();
                 $form.find('article.edit').each(function(){
-                    var $this = $(this),
-                        $article = $this.clone(),
+                    var $this = $(this);
+                    // remove empty html areas
+                    $this.children('.html').filter(function(){
+                        return $.trim($(this).text().replace(/&nbsp;/gim, ' ')).length == 0;
+                    }).remove();
+                    // parse
+                    var $article = $('<article></article>', {
+                            html: $this.html()
+                        }),
                         $fields = $('<div rel="article"></div>').insertAfter($this),
                         name = $this.data('name');
                     // sanitize html
+                    $article.find('.controls').remove();
+                    $article.children(':empty').remove();
                     $article.children('.html').replaceWith(function(){ return $(this).html() });
+                    $article.find('.image').removeAttr('tabindex').removeClass('ui-draggable').removeClass('ui-draggable-handle').find('img').removeClass('ui-droppable').siblings('.resize-sw,.resize-se').remove();
+                    //
                     $('<input>', {
                         type: 'hidden',
                         name: 'blocks[' + name + ']',

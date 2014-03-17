@@ -13,7 +13,9 @@ abstract class AbstractFrontend_Controller extends Application
         $this->template = (new TemplateFrontend(ROOT_DIR . '/app/template', 'index'))
             ->appendFilesystem(ROOT_DIR . '/app/views/mixins')
             ->appendFilesystem(USER_DIR . '/template')
-            ->setExtension(new TemplateExtensionUser($this->i18n))
+            ->setExtensions(function($twig){
+                $twig->addExtension(new TemplateExtensionUser($this->i18n));
+            })
             ->setCache($this->cache);
         //
         // default services

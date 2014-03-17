@@ -1,7 +1,14 @@
 <script src="{{ link.vendor('tinymce/tinymce.min.js') }}"></script>
 <script src="{{ link.vendor('tinymce/jquery.tinymce.min.js') }}"></script>
+<script src="{{ link.vendor('jquery/jquery-ui-git.js') }}"></script>
 <script>
 $(function(){
+    var $placeholder = $('<div class="sortable-placeholder"></div>').appendTo('body'),
+        $targets, $droppable,
+        draggable = {},
+        droppable = {},
+        article = {},
+        $_ = $('<div>-</div>')/** /.appendTo('body')/**/.wrap('<div class="-debug"></div>');
     $('article.edit').each(function(){
         var $article = $(this);
         // parse blocks
@@ -14,26 +21,297 @@ $(function(){
             $article.append('<div class="html">');
         }
         // tinymce
-        $article.children('.html').tinymce({
-            inline: true,
-            hidden_input: false,
-            menubar: false,
-            height: 480,
-            toolbar1: 'undo redo | formatselect | blockquote | visualblocks',
-            toolbar2: 'bold italic | link | bullist numlist outdent indent',
-            plugins: 'link, visualblocks',
-            formats: {
-                'highlight': {/*selector: 'p.highlight',*/ block: 'p', classes: 'highlight'}
-            },
-            block_formats: 'Paragraph=p;Highlight=highlight;Header 1=h1;Header 2=h2;Header 3=h3;Header 4=h4;Header 5=h5',
-            valid_elements : 'p[class<highlight],strong/b,em/i,br,h1,h2,h3,h4,h5,ul,ol,li,blockquote,dl,dt,dd,a[href|target]'
-                /*
-                + ',div[class]'
-                */
-                + ',img[src|width|height|class<left?right]'
-                + ',iframe[width|height|src|frameborder:0|allowfullscreen]'
-        });
-        
-    })
+        rtInitHtml($article.children('.html'));
+        // control buttons
+        var $controls = $('<div class="controls"></div>');
+        $('<a href="#" class="controls-html" rel="html"></a>').click(function(){
+            if ($controls.prev().hasClass('html')) {
+                $controls.prev().tinymce().focus();
+            } else {
+                rtInitHtml($('<div class="html"></div>').insertBefore($controls)).focus();
+            }
+            return false;
+        }).appendTo($controls);
+        $('<a href="#" class="controls-image" rel="image"></a>').click(function(){
+            var $button = $(this);
+            if (!$button.hasClass('loading')) {
+                var $formWrap = $('<div style="width:1px;height:1px;position:fixed;overflow:hidden;bottom:0"><form method="post" target="image-upload" action="{{ link.to(':admin/section', 'media', 'create') }}" enctype="multipart/form-data"><input type="hidden" name="name"><input type="file" name="file"><button type="submit"></button></form><iframe name="image-upload"></iframe></div>').appendTo('body');
+                $formWrap.find('iframe').load(function(){
+                    var $this = $(this),
+                        res = $this.contents().text();
+                    // try to parse result
+                    if (res) {
+                        try {
+                            res = $.parseJSON(res) || {};
+                        } catch (e) {
+                            res = {};
+                        }
+                        if (res.file) {
+                            rtInitImage($('<div></div>', {
+                                class: 'image',
+                                html: $('<img>', {
+                                            src: res.file,
+                                        }),
+                                data: {
+                                id: res.file_id,
+                                }
+                            }).insertBefore($controls));
+                        }
+                        $formWrap.remove();
+                    }
+                    $button.removeClass('loading');
+                });
+                $formWrap.find('input').click().change(function(){
+                    $button.addClass('loading');
+                    $formWrap.find('form').submit();
+                });
+            }
+            return false;
+        }).appendTo($controls);
+        $controls.appendTo($article);
+        // init elements
+        rtInitImage($article.children('div.image'));
+        // functions
+        function rtInitImage($images) {
+            $images.each(function(){
+                var $image = $(this);
+                $image.attr('tabindex', '-1');
+                $image.draggable({
+                    helper: function(){
+                        return $('<div class="draggable-helper"></div>');
+                    },
+                    cursor: 'move',
+                    cursorAt: {top: 7, left: 7},
+                    start: function(e, ui){
+                        $targets = $article.children('div.html,div.image').children();
+                        $targets.droppable({
+                            over: function(){
+                                droppable.$swap = $(this);
+                            }
+                        });
+                        article = {
+                            $: $article,
+                            w: $article.width(),
+                            x: $article.offset().left
+                        }
+                        draggable = {
+                            w: $image.width(),
+                            x: $image.offset().left + 10
+                        }
+                        draggable.float = (draggable.w / article.w) < 0.7;
+                        $placeholder.css({
+                            width: article.w,
+                            left: article.x + 10,
+                            top: $image.offset().top - 4,
+                            display: 'block'
+                        });
+                    },
+                    drag: function(e, ui){
+                        if (droppable.$swap != undefined) {
+                            if ($droppable != undefined) {
+                                $droppable.removeAttr('style');
+                            }
+                            $droppable = droppable.$swap;
+                            droppable = {
+                                h: $droppable.height(),
+                                y: $droppable.position().top
+                            };
+                        }
+                        if ($droppable != undefined) {
+                            var x = Math.round(ui.position.left / article.w * 3),
+                                y = (ui.position.top - droppable.y) / droppable.h;
+                            if (y < 0.5) {
+                                if (droppable.insert != 'above') {
+                                    droppable.insert = 'above';
+                                    $placeholder.css('top', $droppable.offset().top - 8);
+                                }
+                            } else {
+                                if (droppable.insert != 'below') {
+                                    droppable.insert = 'below';
+                                    $placeholder.css('top', $droppable.offset().top + droppable.h + 7);
+                                }
+                            }
+                            if (draggable.float) {
+                                if (x <= 0) {
+                                    if (droppable.float != 'left') {
+                                        droppable.float = 'left';
+                                        $placeholder.css({
+                                            width: article.w / 3,
+                                            left: article.x + 10,
+                                        });
+                                    }
+                                } else if (x >= 3) {
+                                    if (droppable.float != 'right') {
+                                        droppable.float = 'right';
+                                        $placeholder.css({
+                                            width: article.w / 3,
+                                            left: article.x + 10 + article.w - article.w / 3,
+                                        });
+                                    }
+                                } else if (droppable.float != undefined) {
+                                    droppable.float = undefined;
+                                    $placeholder.css({
+                                        width: article.w,
+                                        left: article.x + 10,
+                                    });
+                                }
+                            }
+                        }
+                    },
+                    stop: function(e, ui){
+                        $placeholder.hide();
+                        if ($droppable != undefined) {
+                            $targets.droppable('destroy');
+                            if (droppable.insert == 'above') {
+                                if ($droppable.prevAll().size() == 0) {
+                                    $image.insertBefore($droppable.parent());
+                                    // merging html
+                                    if ($image.next().hasClass('html') && $image.next().next().hasClass('html')) {
+                                        $image.nextAll(':lt(2)').filter('div.html.mce-content-body').tinymce().remove();
+                                        $image.next().next().children().appendTo($image.next());
+                                        $image.next().next().remove();
+                                    }
+                                } else {
+                                    $droppable = $droppable.prev();
+                                    droppable.insert = 'below';
+                                }
+                            }
+                            if (droppable.insert == 'below') {
+                                $image.insertAfter($droppable.parent());
+                                var $items = $droppable.nextAll();
+                                if ($items.size() > 0) {
+                                    // splitting html
+                                    $items.remove();
+                                    var $this = $image.prev(),
+                                        $next = $image.next();
+                                    $this.tinymce().remove();
+                                    if ($next.hasClass('html')) {
+                                        $next.tinymce().remove();
+                                        $items.prependTo($next);
+                                    } else {
+                                        $next = $('<div class="html"></div>').append($items).insertAfter($image);
+                                    }
+                                }
+                                // merging html
+                                if ($image.prev().hasClass('html') && $image.prev().prev().hasClass('html')) {
+                                    $image.prevAll(':lt(2)').filter('div.html.mce-content-body').tinymce().remove();
+                                    $image.prev().prev().children().prependTo($image.prev());
+                                    $image.prev().prev().remove();
+                                }
+                            }
+                            switch (droppable.float) {
+                                case 'left':
+                                    $image.addClass('left')
+                                          .removeClass('right');
+                                    break;
+                                case 'right':
+                                    $image.addClass('right')
+                                          .removeClass('left');
+                                    break;
+                                default:
+                                    $image.removeClass('left')
+                                          .removeClass('right');
+                            }
+                            rtInitHtml($article.children('.html:not(.mce-content-body)'));
+                            $image.focus();
+                        }
+                    }
+                });
+                $image.keypress(function(e){
+                    if (e.keyCode == 8 || e.keyCode == 46) {
+                        $image.remove();
+                        return false;
+                    }
+                });
+                var image = {}
+                $('<div class="resize-sw"></div>').appendTo($image).draggable({
+                    helper: function(){
+                        return $('<div class="resize-helper"></div>');
+                    },
+                    cursor: 'sw-resize',
+                    cursorAt: {top: 25, left: 25},
+                    appendTo: 'body',
+                    start: function(e, ui){
+                        image = {
+                            w: $image.parent().width(),
+                            left: $image.parent().offset().left + 10,
+                            float: $image.hasClass('right')
+                        }
+                    },
+                    drag: function(e, ui){
+                        var x = image.float
+                              ? Math.round(10 - (ui.offset.left - image.left) / (image.w - 50) * 10) * 10
+                              : Math.round(10 - (ui.offset.left - image.left) / (image.w / 2) * 10) * 10;
+                        if (x > 100) {
+                            x = 100;
+                        } else if (x < 10) {
+                            x = 10;
+                        }
+                        image.w1 = x;
+                        $image.css('width', x + '%');
+                    },
+                    stop: function(){
+                        if (image.float && image.w1 > 70) {
+                            $image.removeClass('right');
+                        }
+                        $image.focus();
+                    }
+                });
+                $('<div class="resize-se"></div>').appendTo($image).draggable({
+                    helper: function(){
+                        return $('<div class="resize-helper"></div>');
+                    },
+                    cursor: 'se-resize',
+                    cursorAt: {top: 25, left: 25},
+                    appendTo: 'body',
+                    start: function(e, ui){
+                        image = {
+                            w: $image.parent().width(),
+                            left: $image.parent().offset().left + 10,
+                            float: $image.hasClass('left')
+                        }
+                    },
+                    drag: function(e, ui){
+                        var x = image.float
+                              ? Math.round((ui.offset.left - image.left) / (image.w - 50) * 10) * 10
+                              : Math.round((ui.offset.left + 50 - image.left - (image.w / 2)) / (image.w / 2) * 10) * 10;
+                        if (x > 100) {
+                            x = 100;
+                        } else if (x < 10) {
+                            x = 10;
+                        }
+                        image.w1 = x;
+                        $image.css('width', x + '%');
+                    },
+                    stop: function(){
+                        if (image.float && image.w1 > 70) {
+                            $image.removeClass('left');
+                        }
+                        $image.focus();
+                    }
+                });
+            });
+        }
+        function rtInitHtml($items) {
+            return $items.tinymce({
+                inline: true,
+                hidden_input: false,
+                menubar: false,
+                height: 480,
+                toolbar1: 'bold italic | link | bullist numlist outdent indent | formatselect | blockquote | visualblocks',
+                plugins: 'link, visualblocks',
+                formats: {
+                    'highlight': {/*selector: 'p.highlight',*/ block: 'p', classes: 'highlight'}
+                },
+                block_formats: 'Paragraph=p;Highlight=highlight;Header 1=h1;Header 2=h2;Header 3=h3;Header 4=h4;Header 5=h5',
+                valid_elements : 'p[class<highlight],strong/b,em/i,br,h1,h2,h3,h4,h5,ul,ol,li,blockquote,dl,dt,dd,a[href|target]'
+                    /*
+                    + ',div[class]'
+                    + ',img[src|width|height|class<left?right]'
+                    + ',iframe[width|height|src|frameborder:0|allowfullscreen]'
+                    */
+            });
+        }
+    });
 });
 </script>
