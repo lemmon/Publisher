@@ -28,7 +28,7 @@
             {% for _id, _menu in pages.menus %}
             <li class="menu">
                 {%- spaceless -%}
-                <a href="{{ link.to(':admin/action', 'menu', _locale.id, _id) }}">{{ _menu.caption|default(_id|human) }}</a>
+                <a class="name" href="{{ link.to(':admin/action', 'menu', _locale.id, _id) }}">{{ _menu.caption|default(_id|human) }}</a>
                 {%- endspaceless -%}
             </li>
             {% endfor %}

@@ -143,9 +143,7 @@ abstract class AbstractModuleRow extends AbstractRow
         if ($data) {
             foreach ($data as $name => $content) {
                 // sanitize
-                do {
-                    $content = trim(preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $content, -1, $n));
-                } while ($n);
+                $content = Template::sanitizeHtml($content);
                 // save
                 if (strlen($content)) {
                     (new SqlQuery)->replace('items_data')->set([

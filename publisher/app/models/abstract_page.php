@@ -119,6 +119,27 @@ abstract class AbstractPage extends AbstractRow
 
     function getUrl()
     {
+        // hosts alias
+        if ($aliases = $this->getSite()->getAliases() and $_host = array_search($this->locale_id, $aliases)) {
+            if ($this->parent_id == null and $this->top == 1) {
+                if ($_host != $this->getRoute()->getHost()) {
+                    return $this->getRoute()->to(':home')->includeHost($_host);
+                } else {
+                    return $this->getRoute()->to(':home');
+                }
+            } else {
+                return $this->_getUrl()->includeHost($_host);
+            }
+        } elseif ($this->getRoute()->getHost() != $this->getSite()->host) {
+            return $this->_getUrl()->includeHost($this->getSite()->host);
+        } else {
+            return $this->_getUrl();
+        }
+    }
+
+
+    private function _getUrl()
+    {
         if ($redirect = $this->redirect) {
             // redirect
             if ($redirect{0} == '/') {

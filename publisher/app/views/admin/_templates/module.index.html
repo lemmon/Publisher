@@ -28,7 +28,7 @@
                 <a href="{{ link.to(':admin/update', item) }}">{{ item.name|default("(untitled)"|t) }}</a><span></span>
             </div>
             <div class="content">
-                {% block post_content item.content|p|line(-1)|default("-") %}
+                {%- block post_content item.content|p|line(-1)|default("-") -%}
             </div>
             <div class="aside">
                 {%- if (item.published_at) -%}

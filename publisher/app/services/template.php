@@ -21,4 +21,15 @@ class Template extends \Lemmon\Template\Template
     {
         return $section ? self::_getConfig()[$section] : self::_getConfig();
     }
+
+
+    static function sanitizeHtml($html)
+    {
+        // remove &nbsp+space
+        $html = preg_replace('/&nbsp;\s+/', '&nbsp;', $html);
+        // remove whitespace bullshit
+        do { $html = trim(preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $html, -1, $n)); } while ($n);
+        //
+        return $html;
+    }
 }

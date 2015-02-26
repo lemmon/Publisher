@@ -27,8 +27,6 @@ abstract class AbstractQueryModel implements AbstractQueryModelInterface, \Itera
     }
 
 
-
-
     function inLocale($locale = null)
     {
         if (!$locale) {

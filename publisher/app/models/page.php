@@ -143,9 +143,7 @@ class Page extends AbstractPage
             $blocks_to_remove = [];
             foreach ($data as $name => $content) {
                 // sanitize
-                do {
-                    $content = trim(preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $content, -1, $n));
-                } while ($n);
+                $content = Template::sanitizeHtml($content);
                 // update content
                 if ($content) {
                     // store to db

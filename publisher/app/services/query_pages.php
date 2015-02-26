@@ -25,6 +25,13 @@ class QueryPages extends AbstractQueryModel
     }
 
 
+    function byTemplate($type)
+    {
+        $this->model->where(['template' => $type]);
+        return $this;
+    }
+
+
     function byType($type)
     {
         $this->model->where(['type' => $type]);

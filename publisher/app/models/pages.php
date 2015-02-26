@@ -9,8 +9,6 @@ class Pages extends AbstractPages
 {
 
 
-
-
     static function fetchTreeInLocale($locale_id)
     {
         $pages = [];

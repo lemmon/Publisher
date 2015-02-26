@@ -113,9 +113,10 @@ class Route extends \Lemmon\Route
         }
         elseif (!$this->getParam(1)) {
             // frontpage
-            $this->_page = $page = Page::find(['locale_id' => $this->_site->locale_id, 'parent_id' => null]);
+            $this->_page = $page = Page::find(['locale_id' => $this->_site->getAliases()[$this->getHost()] ?: $this->_site->locale_id, 'parent_id' => null]);
             $this->_track['type'] = 0;
             $this->_track['id'] = $page->id;
+            
             // type
             if ($this->_page->type) {
                 // special page
@@ -134,17 +135,10 @@ class Route extends \Lemmon\Route
 
     protected function __init()
     {
-        $this->_extended = new RouteExtended;
         //
         // site
         //
         if ($site = Site::findCurrent()) {
-            // check for valid host
-            if ($_SERVER['HTTP_HOST'] != $site->host and !$_POST) {
-                header('Location: ' . (($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://') . $site->host . $_SERVER['REQUEST_URI'], true, 301);
-                exit;
-            }
-            //
             $this->_site = $site;
             $this->_track['site_id'] = $site->id;
             define('SITE_ID', $site->id);
@@ -169,6 +163,25 @@ class Route extends \Lemmon\Route
         $loader->add(USER_DIR . '/app/services/$file.php');
         $loader->register(\Lemmon\Autoloader::PREPEND);
         //
+        // extended routes
+        //
+        $this->_extended = new RouteExtended;
+        //
+        // routes for database items
+        //
+        AbstractRow::setRoute($this);
+        //
+        // paths
+        //
+        $this->register('home', '/');
+        $this->register('page', 'p/$id');
+        $this->register('page_id', 'p/%1');
+        $this->register('page_slug', 'p/$redirect');
+        $this->register('page_redirect', '$redirect');
+        $this->register('module_item', 'e/$id');
+        $this->register('category', 'c/$id');
+        $this->register('paginate', '@/@/%1');
+        //
         // backend
         //
         if ($this->getParam(1) == 'admin') {
@@ -187,24 +200,9 @@ class Route extends \Lemmon\Route
             $this->__initFrontend();
         }
         //
-        // paths
-        //
-        $this->register('home', '/');
-        $this->register('page', 'p/$id');
-        $this->register('page_id', 'p/%1');
-        $this->register('page_slug', 'p/$redirect');
-        $this->register('page_redirect', '$redirect');
-        $this->register('module_item', 'e/$id');
-        $this->register('category', 'c/$id');
-        $this->register('paginate', '@/@/%1');
-        //
         // user defined routes
         //
         $this->_extended->register($this);
-        //
-        // routes for database items
-        //
-        AbstractRow::setRoute($this);
     }
 
 

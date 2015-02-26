@@ -30,4 +30,4 @@ require ROOT_DIR . '/cfg/route.php';
 //
 // error handling
 \Lemmon\Debugger::init();
-\Lemmon\Environment::isDev(true);
+#\Lemmon\Environment::setDev(true);

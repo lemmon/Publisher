@@ -14,9 +14,7 @@
     <div class="tabs">
 
         <a href="#">{{ "Content"|t }}</a>
-        {#
         <a href="#">{{ "SEO"|t }}</a>
-        #}
         <a href="#">{{ "Navigation"|t }}</a>
         <a href="#">{{ "Settings"|t }}</a>
 
@@ -37,8 +35,12 @@
         {% block f_content_after none %}
 
     </div>
-    {#
     <div class="tab">
+
+        <p class="fit">
+            {{ forms.label('blocks[title]', 'Title', 'optional') }}
+            {{ forms.input('blocks[title]', f.blocks['title'] | default(f.block('title'))) }}
+        </p>
 
         <p class="fit">
             {{ forms.label('blocks[meta-description]', 'Meta Description', 'optional') }}
@@ -46,7 +48,6 @@
         </p>
 
     </div>
-    #}
     <div class="tab">
         
         <div class="row cols2">
