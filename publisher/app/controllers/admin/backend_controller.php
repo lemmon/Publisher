@@ -35,7 +35,7 @@ abstract class Admin_Backend_Controller extends Application
             ;
         //
         // frontend cache control
-        if ($_POST and $user and DO_CACHING === true) {
+        if ($_POST and $user and DO_CACHING === TRUE) {
             $this->cache->flush();
         }
     }

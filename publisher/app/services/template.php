@@ -25,11 +25,22 @@ class Template extends \Lemmon\Template\Template
 
     static function sanitizeHtml($html)
     {
-        // remove &nbsp+space
-        $html = preg_replace('/&nbsp;\s+/', '&nbsp;', $html);
-        // remove whitespace bullshit
-        do { $html = trim(preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $html, -1, $n)); } while ($n);
-        //
-        return $html;
+        if ($html) {
+            // sanitize
+            $html = strtr($html, ["\n" => '', "\r" => '']);
+            $html = preg_replace('#<!--.*-->#muU', '', $html);
+            $html = preg_replace('#&nbsp;#', ' ', $html);
+            $html = preg_replace('#\s{2,}#', ' ', $html);
+            $html = preg_replace('#</(strong|b|em|i)><\1>#', '', $html);
+            $html = preg_replace('#\s+</#', '</', $html);
+            $html = preg_replace('#(<(ul|ol|li|p|div)>)\s+#', '\1', $html);
+            $html = preg_replace('#(</(ul|ol|li|p|div)>)\s+#', '\1', $html);
+            $html = str_replace('„', '&ldquo;', $html);
+            $html = str_replace('“', '&rdquo;', $html);
+            // remove whitespace bullshit
+            do { $html = trim(preg_replace('#<(\w+)[^>]*>(\xC2\xA0|\s+)*</\1>#', '', $html, -1, $n)); } while ($n);
+            //
+            return $html;
+        }
     }
 }

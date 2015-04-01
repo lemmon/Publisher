@@ -158,7 +158,7 @@ class Page extends AbstractPage
                 }
             }
             // remove unwanted content
-            (new SqlQuery)->delete('pages_blocks')->where(['page_id' => $this->id, new SqlExpression('(content IS NULL OR content = "" OR name IN (?))', $blocks_to_remove)])->exec();
+            (new SqlQuery)->delete('pages_blocks')->where(['page_id' => $this->id, $blocks_to_remove ? new SqlExpression('(content IS NULL OR content = "" OR name IN (?))', $blocks_to_remove) : new SqlExpression('(content IS NULL OR content = "")')])->exec();
         }
         //
         // insert tags

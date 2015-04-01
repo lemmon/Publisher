@@ -40,11 +40,13 @@
         <p class="fit">
             {{ forms.label('blocks[title]', 'Title', 'optional') }}
             {{ forms.input('blocks[title]', f.blocks['title'] | default(f.block('title'))) }}
+            <em>max. 50-60 znakov</em>
         </p>
 
         <p class="fit">
             {{ forms.label('blocks[meta-description]', 'Meta Description', 'optional') }}
             {{ forms.text('blocks[meta-description]', f.blocks['meta-description']|default(f.block('meta-description'))) }}
+            <em>max. 150-160 znakov</em>
         </p>
 
     </div>

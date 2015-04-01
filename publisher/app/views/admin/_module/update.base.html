@@ -39,6 +39,8 @@
             {{ forms.label('weight', null, 'optional') }}
             {{ forms.input('weight', f.weight) }}
         </p>
+        
+        {% block f_nav_after %}{% endblock %}
 
     </div>
 

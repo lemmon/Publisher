@@ -15,6 +15,7 @@ abstract class AbstractModuleRow extends AbstractRow
 
     protected function __initItem() {}
     protected function __validate(array &$f) {}
+    protected function __validateAfter(array &$f) {}
     protected function __children() {}
 
 
@@ -97,7 +98,7 @@ abstract class AbstractModuleRow extends AbstractRow
         //
         // ok?
         if ($this->_isInvalid()) {
-            return false;
+            return FALSE;
         }
         //
         // content
@@ -115,8 +116,11 @@ abstract class AbstractModuleRow extends AbstractRow
         if ($f['state_id'] and !$this->dataDefault['state_id']) {
             $f['published_at'] = ($this->dataDefault['published_at']) ?: new \Lemmon\Sql\Expression('NOW()');
         } elseif (!$f['state_id']) {
-            $f['published_at'] = null;
+            $f['published_at'] = NULL;
         }
+        //
+        // validate hack
+        $this->__validateAfter($f);
     }
 
 

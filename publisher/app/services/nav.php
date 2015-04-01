@@ -73,7 +73,7 @@ class Nav
     {
         return new QueryPages([
             'locale_id' => self::$_locale,
-            'parent_id' => null,
+            'parent_id' => NULL,
         ]);
     }
 
@@ -82,7 +82,7 @@ class Nav
     {
         return Page::find([
             'locale_id' => self::$_locale,
-            'parent_id' => null,
+            'parent_id' => NULL,
         ]);
     }
 
