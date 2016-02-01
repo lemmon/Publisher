@@ -43,7 +43,7 @@ class QueryPosts extends AbstractQueryModel
     }
 
 
-    function getRecent($limit = null, $scope = 'published')
+    function getRecent($limit = NULL, $scope = 'published')
     {
         return parent::getRecent($limit, $scope);
     }

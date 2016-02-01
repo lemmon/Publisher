@@ -27,7 +27,7 @@ class Template extends \Lemmon\Template\Template
     {
         if ($html) {
             // sanitize
-            $html = strtr($html, ["\n" => '', "\r" => '']);
+            $html = preg_replace('#[ \r\t]+\n[ \t]*#', "\n", $html);
             $html = preg_replace('#<!--.*-->#muU', '', $html);
             $html = preg_replace('#&nbsp;#', ' ', $html);
             $html = preg_replace('#\s{2,}#', ' ', $html);

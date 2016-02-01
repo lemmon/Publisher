@@ -24,6 +24,16 @@ class TemplateExtensionUser extends \Lemmon\Template\ExtensionTwig
             'noImages'  => new \Twig_Filter_Function('TemplateExtensionUser::noImages'/*, ['is_safe' => ['html']]*/),
             'emailHide' => new \Twig_Filter_Function('TemplateExtensionUser::emailHide'/*, ['is_safe' => ['html']]*/),
 
+            'urlLink' => new \Twig_Filter_Function(function($a) {
+                return preg_replace('#^\w+://#', '', $a);
+            }),
+            'urlHref' => new \Twig_Filter_Function(function($a) {
+                if (!preg_match('#^\w+://#', $a)) {
+                    $a = 'http://' . $a;
+                }
+                return $a;
+            }),
+
             'tDate'    => new \Twig_Filter_Function([$this, 'tDate']),
 
             /*
